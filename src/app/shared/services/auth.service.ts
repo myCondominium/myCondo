@@ -46,15 +46,10 @@ export class AuthService {
             const userDataObject: UserData = userData.data() as UserData;
 
             if (userDataObject.passwordChanged) {
-              if (userDataObject.isAdmin) {
-                this.redirectToAdminPage();
-              } else {
-                this.redirectToUserPage();
-              }
+              this.redirectByRole(userDataObject.isAdmin);
             } else {
               if (email) {
                 await this.resetPassword(email);
-
                 await this.firestore.collection('users').doc(uid).update({
                   passwordChanged: true
                 });
@@ -67,10 +62,8 @@ export class AuthService {
         }
       }
     } catch (error) {
-      //console.error('Hiba a bejelentkezéskor: ', error);
       console.log("Hibás bejelentkezési adatok!");
       this.openLoginFailedModal();
-
     }
   }
 
@@ -84,10 +77,14 @@ export class AuthService {
     } catch (error) {
       console.error('Hiba a jelszó resetnél:', error);
     }
-
   }
+
   private async getUserData(uid: string): Promise<any> {
     return this.firestore.collection('users').doc(uid).get().pipe(first()).toPromise();
+  }
+
+  private redirectByRole(isAdmin: any) {
+    isAdmin ? this.redirectToAdminPage() : this.redirectToUserPage();
   }
 
   private redirectToUserPage(): void {
