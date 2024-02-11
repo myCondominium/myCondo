@@ -1,0 +1,77 @@
+<app-header></app-header>
+
+<div class="row d-flex justify-content-center space-up">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      
+    <div *ngIf="!enableDictate">
+        <div class="reminder">
+            <p>Az állások rögzítése még nem aktuális!<br>
+            Diktálás minden hónap: {{startDictate}}. és {{endDictate}}. között.</p>
+        </div>
+    </div>
+
+    <div *ngIf="errorMessage">
+        <div class="reminder">
+            <p>Nem töltöttél ki minden mezőt!</p>
+        </div>
+    </div>
+
+    <div *ngIf="message">
+        <div class="reminder">
+            <p>{{ message }}</p>
+        </div>
+    </div>
+
+    <div *ngIf="enableDictate" class="meters row">
+
+    
+            <div class="meter">
+            <p>Hideg</p>
+            <div class="box">
+                <input class="blue" type="number" placeholder="00000" [(ngModel)]="cold1">
+            </div>
+        </div> 
+        
+        <div class="meter">
+            <p>Meleg</p>
+            <div class="box">
+                <input class="red" type="number" placeholder="00000" [(ngModel)]="hot1">
+            </div>
+        </div> 
+
+        <div *ngIf="meterNum==4">
+            
+            <div class="meter">
+                <p>Hideg II.</p>
+                <div class="box">
+                    <input class="blue" type="number" placeholder="00000" [(ngModel)]="cold2">
+                </div>
+            </div> 
+            
+            <div class="meter">
+                <p>Meleg II.</p>
+                <div class="box">
+                    <input class="red" type="number" placeholder="00000" [(ngModel)]="hot2">
+                </div>
+            </div> 
+
+        </div>
+
+        <div class="meter">
+            <p>Hőmennyiség</p>
+            <div class="box">
+                <input class="brown" type="number" placeholder="00000" [(ngModel)]="heat">
+            </div>
+        </div> 
+        <div class="meter save">
+            <p>Mentés</p>
+            <div class="box">
+                <div class="savemeter"><div (click)="save();" class="fa-regular fa-floppy-disk"></div></div>
+            </div>
+        </div> 
+
+    </div>
+
+    </div>
+
+<app-userfooter></app-userfooter>

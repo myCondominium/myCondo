@@ -1,0 +1,83 @@
+<app-adminmenu></app-adminmenu>
+
+<div class="container">
+  <h2 class="mt-2">Lakók adatai</h2>
+
+  
+  <div class="row search">
+    <div class="paginationControl search-left col-lg-6 col-sm-12">
+    <ngb-pagination [collectionSize]="filteredUsers.length" [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [rotate]="false" [ellipses]="true" [boundaryLinks]="false">
+    </ngb-pagination>
+    <span class="ms-3 me-1">Lakó/oldal:</span>
+    <select class="form-select-sm" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+</div>
+<div class="search-right col-lg-6 col-sm-12">
+    <a class="" href="admin/add">
+      <img src="assets/icons/add-icon.png" alt="" title="lakó hozzáadása">
+    </a>
+    <input type="text" class="search-input" placeholder="keresés..." [(ngModel)]="searchTerm" (input)="filterUsers()">
+  </div>
+  </div>
+
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead class="user-thead">
+        <tr>
+          <th>Név</th>
+          <th>Lakás</th>
+          <th class="d-none d-lg-table-cell">Email</th>
+          <th class="d-none d-lg-table-cell">Telefon</th>
+          <th class="d-none d-lg-table-cell">m<sup>2</sup></th>
+          <th class="d-none d-lg-table-cell">Egyenleg</th>
+          <th class="d-none d-lg-table-cell">Admin?</th>
+          <th>Műveletek</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <td class="user-name" (click)="toggleDetails(user.id)">
+            <div class="d-lg-none">
+              <strong>{{ user.name }}</strong>
+             
+              <div class="user-details" *ngIf="expandedUserId === user.id">
+                <hr>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Telefon:</strong> {{ user.phone }}</p>
+                <p><strong>Egyenleg:</strong> {{ user.balance }}</p>
+                <p><strong>Admin:</strong> {{ user.isAdmin ? 'Igen' : 'Nem' }}</p>
+                <hr>
+              </div>
+            </div>
+            <div class="d-none d-lg-block">{{ user.name }}</div>
+          </td>
+          <td>
+            {{ user.building + ' - ' + user.floor + ' - ' + user.door }}
+          </td>
+          <td class="d-none d-lg-table-cell">{{ user.email }}</td>
+          <td class="d-none d-lg-table-cell">{{ user.phone }}</td>
+          <td class="d-none d-lg-table-cell">{{ user.squaremeter }}</td>
+          <td class="d-none d-lg-table-cell">{{ user.balance }}</td>
+          <td class="d-none d-lg-table-cell">{{ user.isAdmin ? 'Igen' : 'Nem' }}</td>
+          <td>
+            <div class="d-flex">
+              <a href="admin/update/{{user.id}}" class="me-3">
+                <img src="assets/icons/modify-icon.png" title="módosítás">
+              </a>
+              <a (click)="openModal(user.name, user.id)">
+                <img src="assets/icons/delete-icon.png" title="törlés">
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-adminfooter></app-adminfooter>

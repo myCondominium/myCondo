@@ -1,0 +1,17 @@
+.modal-header {
+    background-color: #000;
+    color: orange;
+    border: 1px solid orange;
+    border-bottom: 4px solid orange;
+}
+
+.btn-primary {
+    background-color: #000;
+    color: orange;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: orange;
+    color: #000;
+}

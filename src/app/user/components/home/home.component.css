@@ -1,0 +1,26 @@
+.container {
+    box-shadow: 0 0 40px -10px #000;
+    background-color: #fff;
+    border-radius: 4px;
+    padding-top: 1rem;
+    margin-top: 1.5em;
+    border-bottom: 8px solid orange;
+
+}
+
+.reminder {
+    background-color: #000;
+    border-radius: 4px;
+    box-shadow: 0 0 40px -10px #000;
+
+}
+
+.reminder p {
+    text-align: center;
+    padding: 0.5rem 0;
+    color: orange;
+}
+
+.space-up {
+    margin-top: 6em;
+}

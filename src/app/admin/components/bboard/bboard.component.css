@@ -1,0 +1,37 @@
+.editor-icons {
+    width: 100%;
+    margin: 1rem 1rem 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+tr th {
+    background-color: #495464;
+    color: #F4F4F2;
+    font-weight: normal;
+    border-right: 1px solid #F4F4F2;
+}
+
+td {
+    border-right: 1px solid #ccc;
+}
+
+td:first-child {
+    border-left: 1px solid #ccc;
+}
+
+.icons {
+    width: 2rem;
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.container {
+    margin-top: 4rem;
+}

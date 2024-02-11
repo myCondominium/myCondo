@@ -1,0 +1,27 @@
+button {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    background-color: #000;
+    border-color: #000;
+    color: orange;
+}
+
+.modal-header {
+    background-color: #000;
+    color: orange;
+    border: 1px solid orange;
+    border-bottom: 4px solid orange;
+}
+
+button:focus {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    background-color: #000;
+    border-color: #000;
+    color: orange;
+}
+
+button:hover {
+    background-color: #000;
+    color: #FFD580;
+}

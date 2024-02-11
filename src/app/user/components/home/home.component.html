@@ -1,0 +1,26 @@
+<app-header></app-header>
+        
+<div class="row d-flex justify-content-center space-up">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <div *ngIf="enableDictate" class="reminder">
+            <p>Az óraállások leadhatóak!</p>
+        </div>
+<div class="container">
+    <div class="row">
+        <div class="">
+            <div class="bulletin-container mb-4" *ngFor="let bulletin of bulletinBoardData;">
+                <div>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</div>
+                <br>
+                <div [innerHTML]="sanitizeHTML(bulletin.content)"></div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<app-userfooter></app-userfooter>
+

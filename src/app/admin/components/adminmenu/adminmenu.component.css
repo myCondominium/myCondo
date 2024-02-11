@@ -1,0 +1,41 @@
+.container-fluid {
+    background-color: #495464;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.navbar {
+    background-color: #ddd !important;
+}
+
+ul li a {
+    color: #F4F4F2;
+    font-size: 1.2em;
+}
+
+ul li a:hover {
+    color: #aaa;
+}
+
+ul li button {
+    text-shadow: 1px 1px 1px #000;
+    color: #F4F4F2;
+}
+
+ul li div {
+    color: #F4F4F2;
+}
+
+.custom-toggler {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.bar {
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background-color: #F4F4F2;
+    margin: 7px 0;
+}

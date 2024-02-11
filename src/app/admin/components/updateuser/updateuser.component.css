@@ -1,0 +1,8 @@
+.row {
+    margin: 1rem auto;
+}
+
+img {
+    width: 2em;
+    cursor: pointer;
+}

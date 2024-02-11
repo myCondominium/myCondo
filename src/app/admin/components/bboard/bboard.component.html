@@ -1,0 +1,61 @@
+<app-adminmenu></app-adminmenu>
+<div class="container">
+  <h2 class="mt-3">Faliújság</h2>
+  <p>A létrehozott tartalmakat a lakók a kezdőoldalon látják majd.</p>
+  <angular-editor [(ngModel)]="editorContent" [config]="editorConfig"></angular-editor>
+  <div class="editor-icons">
+    <a *ngIf="isEditing" (click)="cancelModification()">
+      <img class="icons me-4" src="assets/icons/back-icon.png" title="mégse">
+    </a>
+    <a (click)="saveToDatabase(this.selectedBulletin, this.editorContent)">
+      <img class="icons" src="assets/icons/save-icon.png" alt="">
+    </a>
+  </div>
+
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Előző tartalmak</th>
+        <th>Létrehozva</th>
+        <th>Műveletek</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bulletin of bulletinBoardData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td [innerHTML]="sanitizeHTML(bulletin.content)"></td>
+        <td>{{ formatTimestamp(bulletin.timestamp) }}</td>
+  
+    <td>
+      <div class="d-flex">
+        <a (click)="modifyBulletin(bulletin)">
+          <img class="icons" src="assets/icons/modify-icon.png" title="módosítás">
+        </a>
+        <a (click)="openModal(bulletin.id, bulletinModal)"> 
+          <img class="icons" src="assets/icons/delete-icon.png" title="törlés">
+        </a>
+      </div>
+    </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-adminfooter></app-adminfooter>
+
+
+
+
+<ng-template #bulletinModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Törlés</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  </div>
+  <div class="modal-body">Biztosan törlöd a faliújságot?</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Mégse</button>
+    <button type="button" class="btn btn-primary" (click)="closeAndDelete()">Törlés</button>
+  </div>
+</ng-template>
+

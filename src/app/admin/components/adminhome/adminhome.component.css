@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-container {
+    width: 25%;
+    margin-top: 2rem;
+}
+
+.logo-container img {
+    width: 100%;
+}
+
+.text {
+    width: 70%;
+}
+
+.container {
+    margin-top: 4rem;
+}

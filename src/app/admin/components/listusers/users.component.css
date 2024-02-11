@@ -1,0 +1,118 @@
+ul.nav-navbar li {
+    display: inline-block;
+
+}
+
+.add-button {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    background-color: #495464;
+    border-color: #495464;
+    color: #F4F4F2;
+}
+
+.add-button:hover {
+    background-color: #495464;
+    color: #BBBFCA;
+}
+
+.add-button:focus {
+    background-color: #495464;
+    color: #fff;
+}
+
+img {
+    width: 2em;
+}
+
+a {
+    cursor: pointer;
+}
+
+
+
+tr th {
+    background-color: #495464;
+    color: #F4F4F2;
+    font-weight: normal;
+    border-right: 1px solid #F4F4F2;
+}
+
+td {
+    border-right: 1px solid #ccc;
+}
+
+td:first-child {
+    border-left: 1px solid #ccc;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem 0 1rem;
+}
+
+.list-header,
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+::ng-deep .pagination .page-item .page-link {
+    color: #495464;
+    border: 1px solid #495464;
+    background-color: #eee;
+    border-radius: 0;
+}
+
+ngb-pagination::ng-deep .page-link:focus {
+    box-shadow: none;
+    background-color: #495464;
+    color: #eee;
+}
+
+.paginationControl {
+    display: flex;
+    align-items: center;
+}
+
+select {
+    background-color: #F4F4F2;
+    border: none;
+}
+
+option:checked,
+option:hover {
+    background-color: #495464;
+    color: #F4F4F2;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.search-left {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-right {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-input {
+    padding: 0.375rem;
+}
+
+ngb-pagination {
+    padding-top: 1rem;
+}
+
+.container {
+    margin-top: 4rem;
+}

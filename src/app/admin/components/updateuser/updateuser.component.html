@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="addsection">
+      <div class="text-center mt-2"><h2>Lakó módosítása</h2></div>
+      
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="data-input">
+             <form [formGroup]="addForm" novalidate class="form">
+              <div *ngFor="let field of formFields" class="row">
+                  <div class="col-md-6">{{ field.label }}:</div>
+                  <div class="col-md-6">
+                      <input *ngIf="field.type !== 'select'; else selectField" 
+                             type="{{ field.type }}" 
+                             class="form-control" 
+                             [name]="field.name" 
+                             [formControlName]="field.name">
+                      <ng-template #selectField>
+                          <select class="form-control" [name]="field.name" [formControlName]="field.name">
+                              <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+                          </select>
+                      </ng-template>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <a href="admin/users" class="me-5">
+                          <img src="assets/icons/back-icon.png" alt="">
+                      </a>
+                      <a (click)="onUpdate()">
+                          <img src="assets/icons/save-icon.png" alt="">
+                      </a>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>

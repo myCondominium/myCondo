@@ -1,0 +1,96 @@
+.reminder {
+    background-color: #000;
+    border-radius: 4px;
+    box-shadow: 0 0 40px -10px #000;
+
+}
+
+.reminder p {
+    text-align: center;
+    padding: 0.5rem 0;
+    color: orange;
+}
+
+.meters {
+    margin-top: 2em;
+}
+
+.meter {
+    margin-top: 2em;
+    height: 3em;
+    display: flex;
+    flex-direction: row;
+}
+
+.meter p {
+    width: 100%;
+    height: 100%;
+    padding: 0.4em 0.7em;
+    font-size: 1.25em;
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+    border-radius: 4px 0 0 4px;
+}
+
+.meter .box {
+    height: 3em;
+    margin-left: -1em;
+    transform: skewX(-20deg);
+}
+
+.box {
+    width: 100%;
+}
+
+.box input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-left: 2px solid #000;
+    font-size: 2em;
+    text-align: end;
+    letter-spacing: 0.25em;
+    padding: 0.25em;
+    color: #fff;
+}
+
+.box input::placeholder {
+    color: #fff;
+}
+
+.box .fa-regular {
+    width: 100%;
+    padding-top: 0.1em;
+    font-size: 2.5em;
+    color: #fff;
+    display: block;
+    text-align: center;
+}
+
+.save {
+    margin-top: 5em;
+}
+
+.savemeter {
+    width: 100%;
+    height: 100%;
+    border-left: 2px solid #000;
+    background-color: #229954;
+    cursor: pointer;
+}
+
+.blue {
+    background-color: #2E86C1;
+}
+
+.red {
+    background-color: #CB4335;
+}
+
+.brown {
+    background-color: #BA4A00;
+}
+
+.space-up {
+    margin-top: 6em;
+}

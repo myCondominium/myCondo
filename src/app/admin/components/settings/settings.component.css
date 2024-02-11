@@ -1,0 +1,44 @@
+.icons {
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.icon {
+    width: 2rem;
+}
+
+.icons-small {
+    width: 1.3rem;
+}
+
+.row-flex,
+.dates {
+    display: flex;
+    align-items: center;
+}
+
+input {
+    font-weight: bold;
+}
+
+.short {
+    width: 4rem;
+    text-align: right;
+}
+
+.medium {
+    width: 6rem;
+    text-align: right;
+}
+
+.dates,
+.costLabel {
+    width: 10rem;
+}
+
+.container {
+    margin-top: 4rem;
+}

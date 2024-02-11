@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+}
+
+.container p {
+    width: 100%;
+    padding: 0.5rem;
+    color: #eee;
+    background-color: #495464
+}
+
+.container p:last-child {
+    text-align: end;
+}

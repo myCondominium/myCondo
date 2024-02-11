@@ -1,0 +1,10 @@
+delete package.lock.json
+npm install
+ng add @angular/fire
+
+->yes
+->a + enter
+->szalami72@...
+->th-database
+-> https://th-database-3a365.web.app
+->th-webapp

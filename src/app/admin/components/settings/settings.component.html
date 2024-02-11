@@ -1,0 +1,127 @@
+<app-adminmenu></app-adminmenu>
+<div class="container">
+    <h2 class="mt-3">Beállítások</h2>
+    <div class="mt-5">
+      <h3 class="mb-3">Diktálási időszak</h3>
+      <p>A lakók az óraállásokat a két dátum közötti időszakban adhatják le online.</p>
+      <div class="row">
+      <div class="dates col-md-12">
+        <label for="start" class="me-2">Kezdete:</label>
+        <input class="form-control short" type="number" id="start" name="start" [(ngModel)]="metersStart">
+
+        <label for="end" class="ms-2 me-2">Vége:</label>
+        <input class="form-control short" type="number" id="end" name="end" [(ngModel)]="metersEnd">
+        <div class="icons">
+  <a (click)="saveDate()">
+    <img class="icon ms-4" src="assets/icons/save-icon.png" title="mentés">
+  </a>
+        </div>
+</div>
+</div>
+    </div>
+<hr>
+<div class="mt-1">
+  <h3 class="mb-3">Vízórák száma</h3>
+  <div class="dates flex-row">
+    <div class="form-check form-check-inline">
+    <label for="radio2" class="me-2 form-check-label">2</label>
+    <input class="form-check-input" type="radio" id="radio2" name="numOfMeter" [(ngModel)]="selectedMeterNumber" value="2">
+    </div>  
+    <div class="form-check form-check-inline">
+    <label for="radio4" class="ms-2 me-2 form-check-label">4</label>
+    <input class="form-check-input" type="radio" id="radio4" name="numOfMeter" [(ngModel)]="selectedMeterNumber" value="4">
+    </div>
+    <div class="icons">
+      <a (click)="saveMeterNumber()">
+        <img class="icon ms-4" src="assets/icons/save-icon.png" title="mentés">
+      </a>
+    </div>
+  </div>
+</div>
+<hr>
+    <div class="mt-1">
+      <h3 class="mb-3">Költségek</h3>
+      <p>Vízfelmelegítési díj, közös költség, fűtés költségek beállítása. Amelyiket nem akarod használni, hagyd üresen.</p>
+      <div class="costs">
+        <div class="row">
+          <div class="row-flex col-md-6 col-xs-12 mb-3">
+            <label for="commonCost" class="costLabel">Közös költség:</label>
+            <input class="form-control medium" type="number" id="commonCost" name="commonCost" [(ngModel)]="mCommonCost">
+            <span class="ms-2">Ft/m<sup>2</sup></span>
+        </div>
+            <div class="row-flex col-md-6 col-xs-12 mb-3">
+            <label for="waterHeating" class="costLabel">Vízfelmelegítési díj :</label>
+            <input class="form-control medium" type="number" id="waterHeating" name="waterHeating" [(ngModel)]="mWaterHeating">
+            <span class="ms-2">Ft/m<sup>3</sup></span>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="row-flex col-md-6 col-xs-12 mb-3">
+            <label for="heatingBase" class="costLabel">Fűtés alapdíj:</label>
+            <input class="form-control medium" type="number" id="heatingBase" name="heatingBase" [(ngModel)]="mHeatingBase">
+            <span class="ms-2">Ft</span>
+      </div>
+        <div class="row-flex col-md-6 col-xs-12 mb-3">
+            <label for="heatingMulti" class="costLabel">Fűtés egység szorzó:</label>
+            <input class="form-control medium" type="number" id="heatingMulti" name="heatinMulti" [(ngModel)]="mHeatingMulti">
+            <span class="ms-2">Ft/egység</span>
+            </div>
+      </div>
+      <div class="icons">
+        <a (click)="saveCost()">
+          <img class="icon ms-4" src="assets/icons/save-icon.png" title="mentés">
+        </a>
+      </div>
+      </div>  
+</div>
+    
+<hr>
+    <div class="mt-1">
+        <h3 class="mb-3">A társasház adatai</h3>
+        <p>A beviteli mezőkben tudod rögzíteni a házzal kapcsolatos adatokat. pl. így: 
+        Első oszlop: <b>Közös képviselő</b>, második oszlop: <b>Kovács Béla</b></p>
+        <p class="mb-3">Ez így fog megjelenni az oldalon: <b>Közös képviselő: Kovács Béla. </b> A sor<b> törlés</b>éhez töröld ki mind a két mezőt és nyomj a 
+            <img class="icons-small me-1" src="assets/icons/save-icon.png">gombra. </p>
+        
+        <div class="mt-3" *ngFor="let data of condoData">
+            <form #dynamicForm="ngForm">
+              <div *ngFor="let field of data.fields; let i = index" class="mb-3">
+                <div class="row row-flex" data-id="{{data.id}}">
+                  <div class="col-md-5 mb-2">
+                    
+                    <input type="text"
+                           class="form-control" 
+                           id="title" 
+                           name="title" 
+                           [(ngModel)]="field.title" 
+                           required [attr.readonly]="field.editable ? null : 'true'" 
+                           placeholder="Cimke:">
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    
+                    <input type="text"
+                           class="form-control" 
+                           id="data" 
+                           name="data" 
+                           [(ngModel)]="field.data" required
+                           placeholder="Adat:">
+                  </div>
+                  <div class="col-md-1">
+                    <div class="icons">
+                      <a (click)="saveDataRow(data.id, field.title, field.data, field.editable)">
+                        <img class="icon" src="assets/icons/save-icon.png" title="mentés">
+                      </a>
+                    </div>
+                    </div>
+                  
+                </div>
+              </div>
+            </form>
+          </div>
+
+        <hr>
+      </div>  
+</div>
+
+<app-adminfooter></app-adminfooter>
