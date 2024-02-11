@@ -7,7 +7,7 @@
             <div class="header text-center ">
                 <h3 class="text-secondary">Bejelentkezés</h3>
             </div>
-            <form (ngSubmit)="login(this.getEmail, this.getPassword)">
+            <form (ngSubmit)="login()">
             <div class="form-group m-4">
                 <input type="text" id="email" name="email" [(ngModel)]="getEmail" class="form-control mb-4 p-2 ps-3"  placeholder="email cím">
                 <input type="password" id="password" name="email" [(ngModel)]="getPassword" class="form-control mb-4 p-2 ps-3" placeholder="jelszó">

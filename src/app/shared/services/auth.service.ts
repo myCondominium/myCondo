@@ -26,7 +26,9 @@ export class AuthService {
     private authGuard: AuthguardService,
     private firestore: AngularFirestore,
     private pwreset: PasswordresetService
-  ) { }
+  ) {
+    this.authStateChange();
+  }
 
   async login(email: string, password: string) {
     try {
@@ -105,6 +107,17 @@ export class AuthService {
     this.modalRef.onClose.subscribe((submit: any) => {
       if (submit) {
         this.authGuard.logout();
+      }
+    });
+  }
+
+  authStateChange() {
+    this.auth.onAuthStateChanged(user => {
+      if (user && user.email) {
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userId', user.uid);
+      } else {
+        this.router.navigate(['/login']);
       }
     });
   }
