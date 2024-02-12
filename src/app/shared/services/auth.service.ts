@@ -18,7 +18,6 @@ export class AuthService {
   modalRef: MdbModalRef<LoginFailedComponent> | null = null;
   user: any;
 
-
   constructor(
     private modalService: MdbModalService,
     private router: Router,
@@ -31,6 +30,7 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
+
     try {
       const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
 
@@ -41,7 +41,6 @@ export class AuthService {
           const email = user.email;
           console.log(email)
           const userData = await this.getUserData(uid);
-
           if (userData?.exists) {
             const userDataObject: UserData = userData.data() as UserData;
 

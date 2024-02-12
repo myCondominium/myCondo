@@ -14,6 +14,7 @@ export class LoginComponent {
   }
 
   login() {
-    this.authService.login(this.getEmail, this.getPassword);
+    console.log(this.getEmail)
+    //this.authService.login(this.getEmail, this.getPassword);
   }
 }

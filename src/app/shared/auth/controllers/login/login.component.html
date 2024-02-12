@@ -1,22 +1,26 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-8 col-sm-12 p-0 login-container">
-            
-            <img src="/assets/icons/user_icon.png" alt="user-icon">
-            
-            <div class="header text-center ">
-                <h3 class="text-secondary">Bejelentkezés</h3>
-            </div>
+    <div class="row content-frame">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="row content h-100">
+        <div class="col-lg-6 col-sm-12 left-content">
+            <img src="/assets/images/condominium.jpg" alt="user-icon">
+        </div>
+        <div class="col-lg-6 col-sm-12 login-container">
+                <h3 class="">Bejelentkezés</h3>
             <form (ngSubmit)="login()">
-            <div class="form-group m-4">
-                <input type="text" id="email" name="email" [(ngModel)]="getEmail" class="form-control mb-4 p-2 ps-3"  placeholder="email cím">
-                <input type="password" id="password" name="email" [(ngModel)]="getPassword" class="form-control mb-4 p-2 ps-3" placeholder="jelszó">
-                <button type="submit" class="btn btn-success form-control p-2">Bejelentkezés</button>
-            </div>
+                <div class="form-group m-4">
+                    <label for="" class="">E-mail cím</label>
+                    <input type="email" id="email" name="email" [(ngModel)]="getEmail" class="form-control" placeholder="email cím">
+                    <label for="" class="">Jelszó</label>
+                    <input type="password" name="password" [(ngModel)]="getPassword" class="form-control" placeholder="jelszó">
+                    <button type="submit" class="btn btn-success form-control p-2">Bejelentkezés</button>
+                </div>
             </form>
-            <div class="footer p-3 text-center">
+            <div class="footer text-center">
                 <a href="/login/forgotpassword">Elfelejtette a jelszavát?</a>
             </div>
         </div>
     </div>
-  </div>
+    </div>
+</div>
+</div>

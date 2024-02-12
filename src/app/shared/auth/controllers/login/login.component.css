@@ -1,54 +1,78 @@
-.login-container {
-    margin-top: 5rem;
+.content-frame {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.content {
+    /* box-shadow: 0 0 20px -15px #000; */
+    color: #555;
     background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 0 40px -10px #000;
+}
+
+.inner-content {
+    display: grid;
+    place-items: center;
+}
+
+.left-content {
+    padding: 0;
+    display: grid;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    background-size: contain;
+}
+
+h3 {
+    margin: 2rem 0 3rem 1.5rem;
 }
 
 button {
+    margin-top: 1.5rem;
     font-size: 1.1rem;
     letter-spacing: 2px;
-    background-color: #000;
-    border-color: #000;
-    color: orange;
+    background-color: #555;
+    border-color: #555;
+    border-radius: 0;
+    color: #ddd;
 }
 
 button:focus {
     font-size: 1.1rem;
     letter-spacing: 2px;
-    background-color: #000;
-    border-color: #000;
-    color: orange;
+    background-color: #555;
+    border-color: #555;
+    color: #fff;
 }
 
 button:hover {
-    background-color: #000;
-    color: #FFD580;
+    background-color: #555;
+    color: #fff;
 }
 
 input {
-    background-color: #fff;
-    border-color: #000;
+    border-radius: 0;
+    margin-bottom: 1rem;
 }
 
-img {
-    width: 6.5em;
-    margin: 0px auto;
-    display: block;
-    position: relative;
-    bottom: 3rem;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 40px white inset !important;
+    border-radius: 0;
+    margin-bottom: 1rem;
 }
 
-.footer {
-    border-radius: 0 0 4px 4px;
-    background-color: #777;
+label {
+    margin: 0 0 0.5rem 0;
+    font-weight: bold;
 }
 
 a {
     text-decoration: none;
-    color: #FFD580;
-}
-
-a:hover {
-    color: #000;
+    color: #555;
 }
