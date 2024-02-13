@@ -1,11 +1,11 @@
 .content-frame {
     height: 100vh;
+    min-width: 375px;
     display: grid;
     place-items: center;
 }
 
 .content {
-    /* box-shadow: 0 0 20px -15px #000; */
     color: #555;
     background-color: #fff;
 }
@@ -17,14 +17,17 @@
 
 .left-content {
     padding: 0;
-    display: grid;
-    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
 
 img {
     width: 100%;
-    background-size: contain;
+    height: 100%;
+    object-fit: cover;
 }
+
 
 h3 {
     margin: 2rem 0 3rem 1.5rem;
