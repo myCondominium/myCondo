@@ -29,6 +29,17 @@ export class AuthService {
     this.authStateChange();
   }
 
+  authStateChange() {
+    this.auth.onAuthStateChanged(user => {
+      if (user && user.email) {
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userId', user.uid);
+      } else {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
   async login(email: string, password: string) {
 
     try {
@@ -39,7 +50,6 @@ export class AuthService {
         if (user) {
           const uid = user.uid;
           const email = user.email;
-          console.log(email)
           const userData = await this.getUserData(uid);
           if (userData?.exists) {
             const userDataObject: UserData = userData.data() as UserData;
@@ -107,15 +117,6 @@ export class AuthService {
     });
   }
 
-  authStateChange() {
-    this.auth.onAuthStateChanged(user => {
-      if (user && user.email) {
-        localStorage.setItem('userEmail', user.email);
-        localStorage.setItem('userId', user.uid);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+
 }
 
