@@ -18,4 +18,35 @@
 
 .container {
     margin-top: 4rem;
+    height: 100vh;
+    background-image: url("src\assets\images\logo.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50%;
+
+
+}
+
+button {
+    width: 10rem;
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    background-color: #555;
+    border-color: #555;
+    border-radius: 0;
+    color: #ddd;
+}
+
+button:focus {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    background-color: #555;
+    border-color: #555;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #555;
+    color: #fff;
 }

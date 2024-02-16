@@ -5,35 +5,74 @@
             <h3>{{ condoName }} admin felület</h3>
             <br>
             <h4>Menűpontok használata:</h4>
-            <br>
-            <p><i><b>Faliújság</b></i></p>
-            <p>Híreket, infomációkat oszthatsz meg a lakókkal. A szerkesztő felületen formázottan tudod létrehozni a tartalmakat. A kész tartalom szerkesztését a <i>Műveletek</i> mezőben levő ikonra kattintva tudod elindítani.</p>
-            <p><i><b>Lakók adatai</b></i></p>
-            <p>Új lakót tudsz hozzáadni/módosítani/törölni. A kereső mező megkönnyíti egy-egy lakó azonosítását.</p>
-            <p><i><b>Óraállások</b></i></p>
-            <p>Itt jelennek meg az aktuális hónapban a lakók által rögzített óraállások. Ha egy mezőben nincs bejövő adat akkor itt lehet pótolni. Ha te rögzítessz egy óraállást akkor a lakó már nem tudja azt módosítani.</p>
-            <p><i><b>Beállítások</b></i></p>
-            <pre>   Diktálási időszak    
-            Itt lehet beállítani az óraállások leadásának kezdetét és végét.
-            </pre>
-            <pre>   Vízórák száma    
-            Beállíthatod hogy a lakások 2 vagy 4 vízórával vannak felszerelve.
-            </pre>
-            <pre>   Költségek    
-            A társasház költségadatait állíthatod be. Amit nem akarsz használni azt hagyd üresen.
-            </pre>
-            <pre>   A társasház adatai    
-            A bal oldali oszlopban tudod megadni az információ jellegét, 
-            a jobb oldaliban pedig a hozzá tartozó információt.
-            A sorok a bevitel sorrendjében jelenek meg a lakók azonos menűpontja alatt.
-            Módosítás: Javítsd ki az értékeket majd nyomd meg a <i>mentés</i> ikont.
-            Törlés: Töröld ki mind a két mezőt majd nyomd meg a <i>mentés</i> ikont.
-            Vannak nem törölhető mezők, ezek az alapinformációkat tárolják.
-            </pre>
+
+            <p class="d-flex gap-1">            
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#bulletinBoard" aria-expanded="false" aria-controls="collapseExample">
+                  Faliújság
+                </button>
+              </p>
+              <div class="collapse" id="bulletinBoard">
+                <div class="card card-body">
+                    Híreket, infomációkat oszthatsz meg a lakókkal. A szerkesztő felületen formázottan tudod létrehozni a tartalmakat. A kész tartalom szerkesztését a <i>Műveletek</i> mezőben levő ikonra kattintva tudod elindítani.
+                </div>
+              </div>
+
+              <p class="d-flex gap-1">            
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="collapseExample">
+                  Lakók adatai
+                </button>
+              </p>
+              <div class="collapse" id="users">
+                <div class="card card-body">
+                    Új lakót tudsz hozzáadni/módosítani/törölni. A kereső mező megkönnyíti egy-egy lakó azonosítását.             
+              </div>
+            </div>
+        
+              <p class="d-flex gap-1">            
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#meters" aria-expanded="false" aria-controls="collapseExample">
+                  Óraállások
+                </button>
+              </p>
+              <div class="collapse" id="meters">
+                <div class="card card-body">
+                    Itt jelennek meg az aktuális hónapban a lakók által rögzített óraállások. Ha egy mezőben nincs bejövő adat akkor itt lehet pótolni. Ha te rögzítessz egy óraállást akkor a lakó már nem tudja azt módosítani.
+                </div>
+                </div>
+
+                <p class="d-flex gap-1">            
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#settings" aria-expanded="false" aria-controls="collapseExample">
+                      Beállítások
+                    </button>
+                  </p>
+                  <div class="collapse" id="settings">
+                    <div class="card card-body">
+                        <p><i><b>Diktálási időszak</b></i></p>
+                        <p>
+                            Itt lehet beállítani az óraállások leadásának kezdetét és végét.
+                        </p>
+                        <p><i><b>Vízórák száma</b></i></p>
+                        <p>
+                            Beállíthatod hogy a lakások 2 vagy 4 vízórával vannak felszerelve.
+
+                        </p>
+                        <p><i><b>Költségek</b></i></p>
+                        <p>
+                            A társasház költségadatait állíthatod be. Amit nem akarsz használni azt hagyd üresen.
+                        </p>
+                        <p><i><b>A társasház adatai</b></i></p>
+                        <p>
+                            A bal oldali oszlopban tudod megadni az információ jellegét, 
+                            a jobb oldaliban pedig a hozzá tartozó információt.
+                            A sorok a bevitel sorrendjében jelenek meg a lakók azonos menűpontja alatt.
+                            Módosítás: Javítsd ki az értékeket majd nyomd meg a <i>mentés</i> gombot.
+                            Törlés: Töröld ki mind a két mezőt majd nyomd meg a <i>mentés</i> gombot.
+                            Vannak nem törölhető mezők, ezek az alapinformációkat tárolják.
+                        </p>
+                    </div>
+                  </div>
         </div>
-    <div class="logo-container">
+    <!-- <div class="logo-container">
         <img class="logo" src="assets/images/logo.png" alt="a társasház logójának a képe">
-    </div>
-</div>
+    </div> -->
 </div>
 <app-adminfooter></app-adminfooter>

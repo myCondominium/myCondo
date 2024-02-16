@@ -5,6 +5,7 @@
 .container p {
     width: 100%;
     padding: 0.5rem;
+    margin-bottom: 0;
     color: #eee;
     background-color: #495464
 }

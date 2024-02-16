@@ -20,8 +20,6 @@ import { ChangepasswordComponent } from './auth/controllers/changepassword/chang
 
 @NgModule({
   declarations: [
-
-
     LoginComponent,
     LoginFailedComponent,
     LogoutcomfirmComponent,
@@ -39,8 +37,9 @@ import { ChangepasswordComponent } from './auth/controllers/changepassword/chang
     AngularFireAuthModule,
     NgbModule,
 
-
   ],
+
+
   providers: [MdbModalService, DatePipe, AdminGuard, UserGuard],
 })
 export class SharedModule { }

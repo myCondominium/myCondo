@@ -1,10 +1,10 @@
 .container-fluid {
     background-color: #495464;
-    text-shadow: 1px 1px 1px #000;
 }
 
 .navbar {
-    background-color: #ddd !important;
+    background-color: transparent !important;
+    padding-top: 0;
 }
 
 ul li a {
@@ -17,7 +17,6 @@ ul li a:hover {
 }
 
 ul li button {
-    text-shadow: 1px 1px 1px #000;
     color: #F4F4F2;
 }
 
