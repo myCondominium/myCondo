@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { UserdelconfirmComponent } from '../userdelconfirm/userdelconfirm.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { UpdateuserComponent } from '../updateuser/updateuser.component';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,9 @@ export class UsersComponent {
   users: any[] = [];
   filteredUsers: any[] = [];
   searchTerm: string = '';
-  modalRef: MdbModalRef<UserdelconfirmComponent> | null = null;
+  modalDeleteRef: MdbModalRef<UserdelconfirmComponent> | null = null;
+  modalRefEdit: MdbModalRef<UpdateuserComponent> | null = null;
+
 
   page: number = 1;
   pageSize: number = 10;
@@ -49,16 +52,24 @@ export class UsersComponent {
     );
   }
 
-  openModal(username: any, userid: any) {
-    this.modalRef = this.modalService.open(UserdelconfirmComponent, {
+  openDeleteModal(username: any, userid: any) {
+    this.modalDeleteRef = this.modalService.open(UserdelconfirmComponent, {
       data: { title: username, userid: userid },
     });
-    this.modalRef.onClose.subscribe((userId: any) => {
+    this.modalDeleteRef.onClose.subscribe((userId: any) => {
       console.log(userId);
       if (userId != undefined) {
         this.service.deleteUser(userId);
       }
 
+    });
+  }
+
+  openEditModal(user: any) {
+    console.log(user);
+
+    this.modalRefEdit = this.modalService.open(UpdateuserComponent, {
+      data: { user: user },
     });
   }
 
@@ -69,5 +80,6 @@ export class UsersComponent {
   toggleDetails(userId: number): void {
     this.expandedUserId = this.expandedUserId === userId ? null : userId;
   }
+
 
 }

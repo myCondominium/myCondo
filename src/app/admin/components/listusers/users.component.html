@@ -52,13 +52,13 @@
           </div>          
         </td>
         <td>
-            {{ user.building + ' / ' + user.floor + ' / ' + user.door }}
+            {{ user.building + ' lph ' + user.floor + '. em. ' + user.door + '. ajtó'}}
         </td>
         <td class="td-buttons">
-          <a (click)="openModal(user.name, user.id)" class="table-buttons red">
+          <a (click)="openDeleteModal(user.name, user.id)" class="table-buttons red">
             Töröl
           </a>
-          <a href="admin/update/{{user.id}}" class="table-buttons blue">
+          <a (click)="openEditModal(this.user)" class="table-buttons blue">
             Módosít
           </a>
           <a class="table-buttons green" 
@@ -76,7 +76,7 @@
     </tbody>
   </table>
 </div>
-
 </div>
-
 <app-adminfooter></app-adminfooter>
+
+

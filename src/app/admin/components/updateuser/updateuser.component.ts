@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+
 
 
 @Component({
@@ -12,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateuserComponent {
   userId: string = "";
-  user: any;
+  @Input() user: any;
   addForm: any;
 
   formFields = [
@@ -34,10 +36,13 @@ export class UpdateuserComponent {
   ];
 
   constructor(
-    private route: ActivatedRoute,
+    public modalRefEdit: MdbModalRef<UpdateuserComponent>,
     private service: UsersService,
     private formBuilder: FormBuilder,
     private router: Router) {
+  }
+
+  ngOnInit(): void {
     this.addForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: [''],
@@ -49,24 +54,20 @@ export class UpdateuserComponent {
       balance: [0],
       isAdmin: [0],
       squaremeter: []
-
     });
 
-
-    this.route.params.subscribe(params => {
-      this.userId = params['id'];
-      if (this.userId) {
-        this.service.getUserById(this.userId).subscribe(userData => {
-          this.addForm.patchValue(userData);
-        });
-      }
-    });
-
+    if (this.user) {
+      // Ha van user objektum, akkor kitöltjük a formot az adatokkal
+      this.addForm.patchValue(this.user);
+    }
   }
 
   onUpdate() {
-    this.service.updateUser(this.addForm.value, this.userId);
-    this.router.navigate(['admin/users']);
+    this.service.updateUser(this.addForm.value, this.user.id);
+    this.modalRefEdit.close();
   }
 
+  close() {
+    this.modalRefEdit.close();
+  }
 }
