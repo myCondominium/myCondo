@@ -1,55 +1,5 @@
-ul.nav-navbar li {
-    display: inline-block;
-
-}
-
-.add-button {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    background-color: #495464;
-    border-color: #495464;
-    color: #F4F4F2;
-}
-
-.add-button:hover {
-    background-color: #495464;
-    color: #BBBFCA;
-}
-
-.add-button:focus {
-    background-color: #495464;
-    color: #fff;
-}
-
-img {
-    width: 2em;
-}
-
 a {
     cursor: pointer;
-}
-
-
-
-tr th {
-    background-color: #495464;
-    color: #F4F4F2;
-    font-weight: normal;
-    border-right: 1px solid #F4F4F2;
-}
-
-td {
-    border-right: 1px solid #ccc;
-}
-
-td:first-child {
-    border-left: 1px solid #ccc;
-}
-
-.d-flex {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem 0 1rem;
 }
 
 .list-header,
@@ -63,7 +13,7 @@ td:first-child {
 ::ng-deep .pagination .page-item .page-link {
     color: #495464;
     border: 1px solid #495464;
-    background-color: #eee;
+    background-color: #fff;
     border-radius: 0;
 }
 
@@ -83,30 +33,38 @@ select {
     border: none;
 }
 
+option {
+    margin-left: 1rem;
+}
+
 option:checked,
 option:hover {
     background-color: #495464;
     color: #F4F4F2;
 }
 
-.search {
+.header {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
 }
 
-.search-left {
+.header-left {
     display: flex;
     flex-direction: row;
 }
 
-.search-right {
+.header-right {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 .search-input {
     padding: 0.375rem;
+    background-color: #fff;
+    border: 1px solid #495464;
+
 }
 
 ngb-pagination {
@@ -115,4 +73,62 @@ ngb-pagination {
 
 .container {
     margin-top: 4rem;
+}
+
+.table-container {
+    background-color: #fff;
+}
+
+td {
+    padding: 0.25rem 0 0.25rem 1rem;
+}
+
+.buttons,
+.table-buttons {
+    padding: 0.5rem;
+    background-color: #555;
+    border-color: #555;
+    border-radius: 0;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.buttons:focus,
+.table-buttons:focus {
+    background-color: #555;
+    border-color: #555;
+    color: #fff;
+}
+
+.buttons:hover,
+.table-buttons:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.table-buttons {
+    margin-left: 1rem;
+    padding: 0.25rem 0.5rem;
+}
+
+button {
+    border: none;
+}
+
+.td-buttons,
+.td-right {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.green {
+    color: lightgreen;
+}
+
+.red {
+    color: lightcoral;
+}
+
+.blue {
+    color: lightblue;
 }
