@@ -8,9 +8,17 @@
     ></button>
   </div>
   <div class="modal-body">Biztosan törlöd a lakó adatait?</div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="close()">
-      Mégse
-    </button>
-    <button  (click)="closeAndDelete()" type="button" class="btn btn-primary">Törlés</button>
+
+    <div class="row">
+      <div class="col-6 d-flex justify-content-start">
+          <a class="buttons blue" (click)="close()">
+              Mégsem
+          </a>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+          <a class="buttons red" (click)="closeAndDelete()">
+              Törlés
+          </a>
+      </div>
   </div>
+  

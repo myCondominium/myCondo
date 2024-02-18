@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+
+import { formFields } from '../../models/form-fields.data';
+
 
 
 @Component({
@@ -12,32 +15,15 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 })
 export class AdduserComponent {
   addForm: any;
-
-  formFields = [
-    { label: 'Név', name: 'name', type: 'text' },
-    { label: 'E-mail', name: 'email', type: 'text' },
-    { label: 'Telefon', name: 'phone', type: 'text' },
-    { label: 'Épület', name: 'building', type: 'text' },
-    { label: 'Emelet', name: 'floor', type: 'text' },
-    { label: 'Ajtó', name: 'door', type: 'text' },
-    { label: 'Négyzetméter', name: 'squaremeter', type: 'text' },
-    { label: 'Egyenleg', name: 'balance', type: 'number' },
-    {
-      label: 'Admin', name: 'isAdmin', type: 'select', options: [
-        { label: 'Nem', value: '0' },
-        { label: 'Igen', value: '1' }
-      ]
-    }
-
-  ];
-
+  formFields: any;
 
   constructor(
     public modalRefNew: MdbModalRef<AdduserComponent>,
     private formBuilder: FormBuilder,
     private service: UsersService,
-    private router: Router
   ) {
+    this.formFields = formFields;
+
     this.addForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: [''],
