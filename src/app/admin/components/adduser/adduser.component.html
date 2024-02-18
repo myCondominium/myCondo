@@ -1,14 +1,22 @@
 <div class="container">
-  <div class="addsection">
+  <div class="modal-header">
     <div class="text-center mt-2"><h2>Új lakó hozzáadása</h2></div>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close()"
+    ></button>
+  </div>
+  <div class="addsection">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-12">
         <div class="data-input">
           <form [formGroup]="addForm" novalidate class="form">
             <ng-container *ngFor="let field of formFields">
               <div class="row">
-                <div class="col-md-6">{{ field.label }}:</div>
-                <div class="col-md-6">
+                <div class="col-md-4">{{ field.label }}:</div>
+                <div class="col-md-8">
                   <input *ngIf="field.type !== 'select'; else selectField" 
                          type="{{ field.type }}" 
                          class="form-control" 
@@ -24,15 +32,17 @@
             </ng-container>
             
             <div class="row">
-              <div class="col-md-12">
-                <a href="admin/users" class="me-5">
-                  <img src="assets/icons/back-icon.png" alt="">
-                </a>
-                <a class="" (click)="onSubmit()">
-                  <img src="assets/icons/save-icon.png" alt="">
-                </a>
+              <div class="col-6 d-flex justify-content-start">
+                  <a class="buttons blue" (click)="close()">
+                      Mégsem
+                  </a>
               </div>
-            </div>
+              <div class="col-6 d-flex justify-content-end">
+                  <a class="buttons red" (click)="onSave()">
+                      Mentés
+                  </a>
+              </div>
+          </div>
           </form>
         </div>
       </div>

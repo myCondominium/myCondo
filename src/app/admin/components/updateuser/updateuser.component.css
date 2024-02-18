@@ -6,11 +6,6 @@
     margin: 1rem auto;
 }
 
-img {
-    width: 2em;
-    cursor: pointer;
-}
-
 .buttons {
     padding: 0.5rem;
     background-color: #555;

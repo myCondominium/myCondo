@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
 
@@ -38,8 +36,7 @@ export class UpdateuserComponent {
   constructor(
     public modalRefEdit: MdbModalRef<UpdateuserComponent>,
     private service: UsersService,
-    private formBuilder: FormBuilder,
-    private router: Router) {
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -57,7 +54,6 @@ export class UpdateuserComponent {
     });
 
     if (this.user) {
-      // Ha van user objektum, akkor kitöltjük a formot az adatokkal
       this.addForm.patchValue(this.user);
     }
   }

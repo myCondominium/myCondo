@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+
 
 @Component({
   selector: 'app-adduser',
@@ -31,6 +33,7 @@ export class AdduserComponent {
 
 
   constructor(
+    public modalRefNew: MdbModalRef<AdduserComponent>,
     private formBuilder: FormBuilder,
     private service: UsersService,
     private router: Router
@@ -50,10 +53,13 @@ export class AdduserComponent {
 
   }
 
-  onSubmit() {
+  onSave() {
 
     this.service.addUser(this.addForm.value);
+    this.modalRefNew.close();
+  }
 
-    this.router.navigate(['admin/users']);
+  close() {
+    this.modalRefNew.close();
   }
 }

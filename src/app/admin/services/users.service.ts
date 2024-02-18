@@ -20,7 +20,7 @@ export class UsersService {
         .ref.where('email', '==', email)
         .get();
 
-      return !querySnapshot.empty; // Ha a lekérdezés talált eredményt, akkor az név már létezik
+      return !querySnapshot.empty; // Ha a lekérdezés talált eredményt, akkor az a név már létezik
     } catch (error) {
       console.error('Hiba történt a felhasználónév ellenőrzése során:', error);
       return false;
