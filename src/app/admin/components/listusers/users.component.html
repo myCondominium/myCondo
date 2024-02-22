@@ -3,17 +3,19 @@
 <div class="container">
   <h2 class="mt-2">Lakók adatai</h2>
   
-  <div class="row header">
-    <div class="header-left col-lg-6 col-sm-12">
-      <a class="buttons" (click)="openNewModal()">
-        Lakó hozzáadása
-      </a>
-    </div>
-    <div class="paginationControl header-right col-lg-6 col-sm-12">
+<div class="row row-cols-auto header">
+  <div class="col h-100 header-items">
+    <a class="buttons" (click)="openNewModal()">
+      Lakó hozzáadása
+    </a>
+  </div>
+  <div class="col h-100 header-items pt-3">
+ 
     <ngb-pagination [collectionSize]="filteredUsers.length" [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [rotate]="false" [ellipses]="true" [boundaryLinks]="false">
     </ngb-pagination>
-    <div>
-    <div class="ms-2">
+
+  </div>
+  <div class="col h-100 header-items">
     <span>Lakó/oldal:</span>
     <select class="form-select-sm" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
         <option value="10">10</option>
@@ -22,59 +24,66 @@
         <option value="100">100</option>
     </select>
   </div>
-  </div>
+  <div class="col h-100 header-items justify-content-end">
     <input type="text" class="search-input" placeholder="keresés..." [(ngModel)]="searchTerm" (input)="filterUsers()">
+  </div>
 </div>
 
-  </div>
-  <div class="table-container">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Lakó neve</th>
-        <th>Lakás</th>
-        <th class="td-right">Műveletek</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <td>
-          {{user.name}}
-          <div class="collapse" [id]="user.id">
-            <ul>
-              <li><b>Email:</b> {{ user.email }}</li>
-              <li><b>Telefon:</b> {{ user.phone }}</li>
-              <li><b>Nm:</b> {{ user.squaremeter }}m<sup>2</sup></li>
-              <li><b>Egyenleg:</b> {{ user.balance }} Ft</li>
-              <li><b>Admin:</b> {{ user.isAdmin ? 'Igen' : 'Nem' }}</li>
-            </ul>
-          </div>          
-        </td>
-        <td>
-            {{ user.building + ' lph ' + user.floor + '. em. ' + user.door + '. ajtó'}}
-        </td>
-        <td class="td-buttons">
-          <a (click)="openDeleteModal(user.name, user.id)" class="table-buttons red">
-            Töröl
-          </a>
-          <a (click)="openEditModal(this.user)" class="table-buttons blue">
-            Módosít
-          </a>
-          <a class="table-buttons green" 
+<div class="user-list">
+  <div class="user-list-header row">
+    <div class="col">
+      Lakó neve:
+    </div>
+    <div class="col">
+      Lakás:
+    </div>
+    <div class="col text-end">
+      Műveletek
+    </div>
+</div>
+<div class="user-list-body row" *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+  <div class="col-lg-4 col-md-4 col-sm-6 user-name">
+    <a class="username" 
             data-bs-toggle="collapse" 
             href="#{{user.id}}" 
             role="button" 
             aria-expanded="false" 
             aria-controls="collapseExample">
-              Több
+              {{user.name}}
             </a>
-          
-        </td>
-        </tr>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6  user-flat">
+    {{ user.building + '/' + user.floor + '/' + user.door}}
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-12 user-actions">
+    <a (click)="openDeleteModal(user.name, user.id)" class="table-buttons red">
+      Töröl
+    </a>
+    <a (click)="openEditModal(this.user)" class="table-buttons blue">
+      Módosít
+    </a>
+  </div>
+  <div class="collapse" [id]="user.id">
+    <div class="user-name">
+      Email: {{user.email}}
+    </div>
+    <div class="user-name">
+      Telefon: {{user.phone}}
+    </div>
+    <div class="user-name">
+      Méret: {{user.squaremeter}}m<sup>2</sup>
+    </div>
+    <div class="user-name">
+      Egyenleg: {{user.balance}}Ft
+    </div>
+    <div class="user-name">
+      Admin: {{ user.isAdmin ? 'Igen' : 'Nem' }}
+    </div>
+  </div>
 
-    </tbody>
-  </table>
 </div>
+</div>
+
 </div>
 <app-adminfooter></app-adminfooter>
 
