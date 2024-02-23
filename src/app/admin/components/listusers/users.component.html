@@ -5,7 +5,7 @@
   
 <div class="row row-cols-auto header">
   <div class="col h-100 header-items">
-    <a class="buttons" (click)="openNewModal()">
+    <a class="buttons green" (click)="openNewModal()">
       Lakó hozzáadása
     </a>
   </div>
@@ -38,7 +38,7 @@
       Lakás:
     </div>
     <div class="col text-end">
-      Műveletek
+      Műveletek:
     </div>
 </div>
 <div class="user-list-body row" *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
@@ -49,35 +49,35 @@
             role="button" 
             aria-expanded="false" 
             aria-controls="collapseExample">
-              {{user.name}}
+              <b>{{user.name}}</b>
             </a>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-6  user-flat">
     {{ user.building + '/' + user.floor + '/' + user.door}}
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12 user-actions">
-    <a (click)="openDeleteModal(user.name, user.id)" class="table-buttons red">
+    <a (click)="openDeleteModal(user.name, user.id)" class="buttons red">
       Töröl
     </a>
-    <a (click)="openEditModal(this.user)" class="table-buttons blue">
+    <a (click)="openEditModal(this.user)" class="buttons blue">
       Módosít
     </a>
   </div>
   <div class="collapse" [id]="user.id">
     <div class="user-name">
-      Email: {{user.email}}
+      <b>Email:</b> {{user.email}}
     </div>
     <div class="user-name">
-      Telefon: {{user.phone}}
+      <b>Telefon:</b> {{user.phone}}
     </div>
     <div class="user-name">
-      Méret: {{user.squaremeter}}m<sup>2</sup>
+      <b>Méret:</b> {{user.squaremeter}}m<sup>2</sup>
     </div>
     <div class="user-name">
-      Egyenleg: {{user.balance}}Ft
+      <b>Egyenleg:</b> {{user.balance}}Ft
     </div>
     <div class="user-name">
-      Admin: {{ user.isAdmin ? 'Igen' : 'Nem' }}
+      <b>Admin:</b> {{ user.isAdmin ? 'Igen' : 'Nem' }}
     </div>
   </div>
 

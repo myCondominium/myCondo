@@ -72,6 +72,7 @@ option:hover {
 }
 
 .user-actions {
+    padding: 0.25rem 0;
     display: flex;
     flex-direction: row-reverse;
 }
@@ -81,22 +82,13 @@ option:hover {
     padding: 0.5rem 0 0.25rem 0.5rem;
 }
 
-
-.user-actions {
-    padding: 0.25rem 0;
-}
-
-.table-container {
+/* .table-container {
     background-color: #fff;
-}
+} */
 
-td {
-    padding: 0.25rem 0 0.25rem 1rem;
-}
-
-.buttons,
-.table-buttons {
+.buttons {
     padding: 0.5rem;
+    margin-left: 0.25rem;
     background-color: #555;
     border-color: #555;
     border-radius: 0;
@@ -104,32 +96,19 @@ td {
     text-decoration: none;
 }
 
-.buttons:focus,
-.table-buttons:focus {
+.buttons:focus {
     background-color: #555;
     border-color: #555;
     color: #fff;
 }
 
-.buttons:hover,
-.table-buttons:hover {
+.buttons:hover {
     background-color: #555;
     color: #fff;
 }
 
-.table-buttons {
-    margin-left: 1rem;
-    padding: 0.25rem 0.5rem;
-}
-
 button {
     border: none;
-}
-
-.td-buttons,
-.td-right {
-    display: flex;
-    flex-direction: row-reverse;
 }
 
 .green {
@@ -142,11 +121,6 @@ button {
 
 .blue {
     color: lightblue;
-}
-
-th,
-td {
-    border: 0;
 }
 
 select {
