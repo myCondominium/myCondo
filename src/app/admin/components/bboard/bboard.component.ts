@@ -11,9 +11,21 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./bboard.component.css']
 })
 export class BboardComponent {
+  error: any;
   bulletinBoardData: any[] | undefined;
   editorContent: string = '';
+
   editorConfig: AngularEditorConfig = {
+    toolbarHiddenButtons: [
+      [
+      ],
+      [
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'toggleEditorMode'
+      ]
+    ],
     editable: true,
     spellcheck: true,
     height: 'auto',
@@ -38,12 +50,12 @@ export class BboardComponent {
   getBbData() {
     this.bboardService.getAllBulletinBoardData().subscribe((data) => {
       this.bulletinBoardData = data;
+      this.error = data;
     });
   }
 
   sanitizeHTML(html: string): SafeHtml {
-    const sanitizedHtml = html.replace(/<img[^>]*>/g, ' *kép-helye* ');
-    return this.sanitizer.bypassSecurityTrustHtml(sanitizedHtml);
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   formatTimestamp(timestamp: any): string {

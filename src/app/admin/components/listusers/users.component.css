@@ -1,3 +1,7 @@
+.container {
+    margin-top: 4rem;
+}
+
 a {
     cursor: pointer;
 }
@@ -28,6 +32,7 @@ ngb-pagination::ng-deep .page-link:focus {
 select {
     background-color: #F4F4F2;
     border: none;
+    cursor: pointer;
 }
 
 option {
@@ -50,10 +55,6 @@ option:hover {
 .header-items {
     display: flex;
     align-items: center;
-}
-
-.container {
-    margin-top: 4rem;
 }
 
 .user-list {
@@ -84,10 +85,6 @@ option:hover {
 .collapse {
     background-color: #fff;
 }
-
-/* .table-container {
-    background-color: #fff;
-} */
 
 .buttons {
     padding: 0.5rem;
@@ -124,10 +121,6 @@ button {
 
 .blue {
     color: lightblue;
-}
-
-select {
-    cursor: pointer;
 }
 
 .username {

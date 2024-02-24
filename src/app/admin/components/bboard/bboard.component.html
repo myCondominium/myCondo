@@ -3,16 +3,43 @@
   <h2 class="mt-3">Faliújság</h2>
   <p>A létrehozott tartalmakat a lakók a kezdőoldalon látják majd.</p>
   <angular-editor [(ngModel)]="editorContent" [config]="editorConfig"></angular-editor>
-  <div class="editor-icons">
-    <a *ngIf="isEditing" (click)="cancelModification()">
-      <img class="icons me-4" src="assets/icons/back-icon.png" title="mégse">
+  <div class="editor-buttons">
+    <a *ngIf="isEditing" (click)="cancelModification()" class="buttons blue me-2">
+      Mégse
     </a>
-    <a (click)="saveToDatabase(this.selectedBulletin, this.editorContent)">
-      <img class="icons" src="assets/icons/save-icon.png" alt="">
+    <a (click)="saveToDatabase(this.selectedBulletin, this.editorContent)" class="buttons green">
+      Mentés
     </a>
   </div>
 
-  <table class="table mt-3">
+  <ng-container *ngIf="error; else waiting"></ng-container>
+
+  <div class="content">
+
+    <div class="content-header">
+      Előző tartalmak
+    </div>
+
+    <div class="content-body">
+      <div *ngFor="let bulletin of bulletinBoardData; let i = index">
+        <br>
+        <div><u>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</u> </div>
+        <br>
+        <div [innerHTML]="sanitizeHTML(bulletin.content)"></div>
+        <div class="editor-buttons">
+        <a (click)="modifyBulletin(bulletin)" class="buttons blue me-2">
+          Módosítás
+        </a>
+        <a (click)="openModal(bulletin.id, bulletinModal)" class="buttons red"> 
+          Törlés
+        </a>
+      </div>
+        <hr>
+      </div>
+    </div>
+
+  </div>
+  <!-- <table class="table mt-3">
     <thead>
       <tr>
         <th>#</th>
@@ -40,7 +67,9 @@
 
       </tr>
     </tbody>
-  </table>
+  </table> -->
+
+  
 </div>
 <app-adminfooter></app-adminfooter>
 
@@ -58,4 +87,10 @@
     <button type="button" class="btn btn-primary" (click)="closeAndDelete()">Törlés</button>
   </div>
 </ng-template>
+
+<ng-template #waiting>
+  <div class="alert alert-warning" role="alert">
+      Várakozás a szerverre!
+    </div>
+</ng-template> 
 

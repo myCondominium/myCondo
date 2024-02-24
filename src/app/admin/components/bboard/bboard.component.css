@@ -1,4 +1,4 @@
-.editor-icons {
+.editor-buttons {
     width: 100%;
     margin: 1rem 1rem 0 0;
     display: flex;
@@ -6,32 +6,56 @@
     justify-content: flex-end;
 }
 
-tr th {
-    background-color: #495464;
-    color: #F4F4F2;
-    font-weight: normal;
-    border-right: 1px solid #F4F4F2;
+.container {
+    margin-top: 4rem;
 }
 
-td {
-    border-right: 1px solid #ccc;
+.content {
+    margin-top: 1rem;
 }
 
-td:first-child {
-    border-left: 1px solid #ccc;
+.content-header {
+    padding: 0.5rem;
+    background-color: #555;
+    color: #ddd;
 }
 
-.icons {
-    width: 2rem;
+.alert {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.buttons {
+    padding: 0.5rem;
+    background-color: #555;
+    border-color: #555;
+    border-radius: 0;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.buttons:focus {
+    background-color: #555;
+    border-color: #555;
+    color: #fff;
+}
+
+.buttons:hover {
+    background-color: #555;
+    color: #fff;
     cursor: pointer;
 }
 
-.d-flex {
-    display: flex;
-    justify-content: space-between;
-
+.red {
+    color: lightcoral;
 }
 
-.container {
-    margin-top: 4rem;
+.blue {
+    color: lightblue;
+}
+
+.green {
+    color: lightgreen;
 }

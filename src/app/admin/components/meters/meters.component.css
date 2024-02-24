@@ -79,29 +79,6 @@ a {
     cursor: pointer;
 }
 
-
-
-tr th {
-    background-color: #495464;
-    color: #F4F4F2;
-    font-weight: normal;
-    border-right: 1px solid #F4F4F2;
-}
-
-td {
-    border-right: 1px solid #ccc;
-}
-
-td:first-child {
-    border-left: 1px solid #ccc;
-}
-
-.d-flex {
-    display: flex;
-    justify-content: space-around;
-}
-
-
 ::ng-deep .pagination .page-item .page-link {
     color: #495464;
     border: 1px solid #495464;
@@ -123,6 +100,7 @@ ngb-pagination::ng-deep .page-link:focus {
 select {
     background-color: #F4F4F2;
     border: none;
+    cursor: pointer;
 }
 
 option:checked,
@@ -165,30 +143,6 @@ option:hover {
     text-align: right;
 }
 
-.buttons {
-    padding: 0.5rem;
-    margin-left: 0.25rem;
-    background-color: #555;
-    border-color: #555;
-    border-radius: 0;
-    color: #ddd;
-    text-decoration: none;
-}
-
-.buttons:focus {
-    background-color: #555;
-    border-color: #555;
-    color: #fff;
-}
-
-.buttons:hover {
-    background-color: #555;
-    color: #fff;
-}
-
-button {
-    border: none;
-}
 
 .green {
     color: lightgreen;
@@ -200,10 +154,6 @@ button {
 
 .blue {
     color: lightblue;
-}
-
-select {
-    cursor: pointer;
 }
 
 .btn-close,
