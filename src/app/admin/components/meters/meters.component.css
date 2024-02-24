@@ -29,15 +29,17 @@
     border-bottom: 1px solid #777;
 }
 
-.user-name {
+.user-frame {
     padding: 0.5rem 0 0.25rem 0.5rem;
 }
 
 input[type=number] {
     height: 2rem;
     border-radius: 0;
-    background-color: #ddd;
+    padding-right: 0;
+    background-color: #fff;
     text-align: end;
+    font-weight: bold;
 }
 
 .meters-actions {
@@ -103,7 +105,7 @@ td:first-child {
 ::ng-deep .pagination .page-item .page-link {
     color: #495464;
     border: 1px solid #495464;
-    background-color: #eee;
+    background-color: #fff;
     border-radius: 0;
 }
 
@@ -208,4 +210,9 @@ select {
 .modal-body,
 .modal-content {
     border-radius: 0;
+}
+
+.alert {
+    text-align: center;
+    font-weight: bold;
 }

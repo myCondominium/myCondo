@@ -25,6 +25,7 @@
         </div>
       </div>
         
+      <ng-container *ngIf="error; else waiting"></ng-container>
 
       <div class="meters-list">
         <div class="meters-list-header row">
@@ -32,7 +33,7 @@
             Lakó neve/lakás:
           </div>
           <div class="col">
-            Vízórák:
+            Mérőórák:
           </div>
           <div class="col text-end">
             Műveletek:
@@ -40,30 +41,31 @@
         </div>
 
         <div class="meters-list-body row"  *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-          <div class="col user-name">
+          
+          <div class="col user-frame">
               <b>{{user.name}}</b><br> - {{ user.building + '/' + user.floor + '/' + user.door}}
             </div>
             <div class="col row">
-            <div class="col user-name">
-            <span class="cold">Hideg I.:</span> <input [(ngModel)]="user.meterColdOne" class="form-control cold" type="number">
+            <div class="col user-frame">
+            <span>Hideg I.:</span> <input [(ngModel)]="user.meterColdOne" class="form-control cold" type="number">
           </div>
-            <div class="col user-name" *ngIf="meterNumber === '4'">
-           <span class="cold"> Hideg II.:</span> <input [(ngModel)]="user.meterColdTwo" class="form-control cold" type="number">
+            <div class="col user-frame" *ngIf="meterNumber === '4'">
+           <span> Hideg II.:</span> <input [(ngModel)]="user.meterColdTwo" class="form-control cold" type="number">
           </div>
         </div>
 
         <div class="col row">
-            <div class="col user-name">
-            <span class="hot">Meleg I.:</span> <input [(ngModel)]="user.meterHotdOne" class="form-control hot" type="number">
+            <div class="col user-frame">
+            <span>Meleg I.:</span> <input [(ngModel)]="user.meterHotdOne" class="form-control hot" type="number">
           </div>
-            <div class="col user-name" *ngIf="meterNumber === '4'">
-           <span class="hot">Meleg II.:</span> <input [(ngModel)]="user.meterHotTwo" class="form-control hot" type="number">
+            <div class="col user-frame" *ngIf="meterNumber === '4'">
+           <span>Meleg II.:</span> <input [(ngModel)]="user.meterHotTwo" class="form-control hot" type="number">
           </div>
         </div>
 
-        <div class="col">
-            <div class="user-name">
-           <span class="warm">Hőmennyiség:</span> <input [(ngModel)]="user.amountOfHeat" class="form-control warm" type="number">
+        <div class="col row">
+            <div class="col user-frame">
+           <span>Hőmennyiség:</span> <input [(ngModel)]="user.amountOfHeat" class="form-control warm" type="number">
           </div>
         </div>
 
@@ -86,7 +88,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{ userName }} óraállásai</h4>
+        <h4 class="modal-title">{{ userName }} korábbi óraállásai</h4>
         <button type="buttons" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
@@ -121,3 +123,9 @@
 </ng-template>
 
 <app-adminfooter></app-adminfooter>
+
+<ng-template #waiting>
+  <div class="alert alert-warning" role="alert">
+      Várakozás a szerverre!
+    </div>
+</ng-template> 

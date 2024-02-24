@@ -20,7 +20,7 @@ ngb-pagination {
 ngb-pagination::ng-deep .page-link:focus {
     box-shadow: none;
     background-color: #495464;
-    color: #eee;
+    color: #fff;
     border-radius: 0;
 
 }
@@ -77,9 +77,12 @@ option:hover {
     flex-direction: row-reverse;
 }
 
-.user-name,
-.user-flat {
+.user-frame {
     padding: 0.5rem 0 0.25rem 0.5rem;
+}
+
+.collapse {
+    background-color: #fff;
 }
 
 /* .table-container {
@@ -130,4 +133,9 @@ select {
 .username {
     text-decoration: none;
     color: #333;
+}
+
+.alert {
+    text-align: center;
+    font-weight: bold;
 }

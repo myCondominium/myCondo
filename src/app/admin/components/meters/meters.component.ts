@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MetersService } from '../../services/meters.service';
 
 interface User {
-  id: string;
-}
-
-interface Meter {
   id: string;
 }
 
@@ -27,6 +22,8 @@ interface MeterData {
   styleUrls: ['./meters.component.css']
 })
 export class MetersComponent {
+  error: any;
+
   meterusers: any[] = [];
   filteredUsers: any[] = [];
   searchTerm: string = '';
@@ -43,12 +40,14 @@ export class MetersComponent {
     private modalService: NgbModal,
     private meterService: MetersService) {
     this.initializeData();
+
   }
 
   initializeData() {
     this.meterService.checkMetersCollection();
     this.meterService.getCombinedData().subscribe((data) => {
       this.meterusers = data;
+      this.error = data;
       this.sortUsersByName();
       this.filterUsers();
     });

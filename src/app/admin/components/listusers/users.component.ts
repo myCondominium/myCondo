@@ -11,6 +11,7 @@ import { AdduserComponent } from '../adduser/adduser.component';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent {
+  error: any;
   users: any[] = [];
   filteredUsers: any[] = [];
   searchTerm: string = '';
@@ -25,7 +26,7 @@ export class UsersComponent {
   expandedUserId: number | null = null;
 
   constructor(private service: UsersService, private modalService: MdbModalService) {
-    this.getUsers();
+    this.error = this.getUsers();
   }
 
   getUsers() {

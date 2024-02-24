@@ -29,6 +29,8 @@
   </div>
 </div>
 
+<ng-container *ngIf="!error; else waiting"></ng-container>
+
 <div class="user-list">
   <div class="user-list-header row">
     <div class="col">
@@ -42,18 +44,21 @@
     </div>
 </div>
 <div class="user-list-body row" *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-  <div class="col-lg-4 col-md-4 col-sm-6 user-name">
-    <a class="username" 
+  <a class="username col-lg-4 col-md-4 col-sm-6 user-frame"
             data-bs-toggle="collapse" 
             href="#{{user.id}}" 
             role="button" 
             aria-expanded="false" 
             aria-controls="collapseExample">
-              <b>{{user.name}}</b>
-            </a>
-  </div>
-  <div class="col-lg-4 col-md-4 col-sm-6  user-flat">
-    {{ user.building + '/' + user.floor + '/' + user.door}}
+      <div>
+    
+              <b>{{user.name }}  </b>
+              <i class="fa-solid fa-caret-down"></i>
+             
+      </div>
+</a>
+  <div class="col-lg-4 col-md-4 col-sm-6  user-frame">
+    <b>{{ user.building + '/' + user.floor + '/' + user.door}}</b>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12 user-actions">
     <a (click)="openDeleteModal(user.name, user.id)" class="buttons red">
@@ -64,21 +69,26 @@
     </a>
   </div>
   <div class="collapse" [id]="user.id">
-    <div class="user-name">
+    <div class="row">
+    <div class="col user-frame">
       <b>Email:</b> {{user.email}}
     </div>
-    <div class="user-name">
+    <div class="col user-frame">
       <b>Telefon:</b> {{user.phone}}
     </div>
-    <div class="user-name">
+    <div class="col"></div>
+  </div>
+  <div class="row">
+    <div class="col user-frame">
       <b>Méret:</b> {{user.squaremeter}}m<sup>2</sup>
     </div>
-    <div class="user-name">
+    <div class="col user-frame">
       <b>Egyenleg:</b> {{user.balance}}Ft
     </div>
-    <div class="user-name">
+    <div class="col user-frame">
       <b>Admin:</b> {{ user.isAdmin ? 'Igen' : 'Nem' }}
     </div>
+  </div>
   </div>
 
 </div>
@@ -87,4 +97,9 @@
 </div>
 <app-adminfooter></app-adminfooter>
 
+<ng-template #waiting>
+  <div class="alert alert-warning" role="alert">
+      Várakozás a szerverre!
+    </div>
+</ng-template> 
 
