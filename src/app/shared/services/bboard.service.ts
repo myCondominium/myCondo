@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { HttpClientModule } from '@angular/common/http';
-
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +10,6 @@ export class BBoardService {
   constructor(private firestore: AngularFirestore) { }
 
   getAllBulletinBoardData(): Observable<any[]> {
-    //return this.firestore.collection('bulletinboard').valueChanges({ idField: 'id' });
     return this.firestore.collection('bulletinboard', ref => ref.orderBy('timestamp', 'desc')).valueChanges({ idField: 'id' });
 
   }
@@ -24,14 +20,13 @@ export class BBoardService {
       if (editorContent !== '') {
         this.firestore.doc(`bulletinboard/${selectedBulletin.id}`).update({
           content: editorContent,
-          timestamp: new Date(),
+          timestamp: selectedBulletin.timestamp,
         }).then(() => {
           selectedBulletin = null;
           editorContent = '';
           this.getAllBulletinBoardData();
         });
       } else {
-        // Ne mentsen üres tartalmat
         alert('A tartalom nem lehet üres.');
       }
     } else {
@@ -45,7 +40,6 @@ export class BBoardService {
           this.getAllBulletinBoardData();
         });
       } else {
-        // Ne mentsen üres tartalmat
         alert('A tartalom nem lehet üres.');
       }
     }

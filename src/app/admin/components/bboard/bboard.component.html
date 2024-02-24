@@ -26,6 +26,7 @@
         <div><u>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</u> </div>
         <br>
         <div [innerHTML]="sanitizeHTML(bulletin.content)"></div>
+        <hr>
         <div class="editor-buttons">
         <a (click)="modifyBulletin(bulletin)" class="buttons blue me-2">
           Módosítás
@@ -39,36 +40,6 @@
     </div>
 
   </div>
-  <!-- <table class="table mt-3">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Előző tartalmak</th>
-        <th>Létrehozva</th>
-        <th>Műveletek</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let bulletin of bulletinBoardData; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td [innerHTML]="sanitizeHTML(bulletin.content)"></td>
-        <td>{{ formatTimestamp(bulletin.timestamp) }}</td>
-  
-    <td>
-      <div class="d-flex">
-        <a (click)="modifyBulletin(bulletin)">
-          <img class="icons" src="assets/icons/modify-icon.png" title="módosítás">
-        </a>
-        <a (click)="openModal(bulletin.id, bulletinModal)"> 
-          <img class="icons" src="assets/icons/delete-icon.png" title="törlés">
-        </a>
-      </div>
-    </td>
-
-      </tr>
-    </tbody>
-  </table> -->
-
   
 </div>
 <app-adminfooter></app-adminfooter>
@@ -82,9 +53,9 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
   </div>
   <div class="modal-body">Biztosan törlöd a faliújságot?</div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="close()">Mégse</button>
-    <button type="button" class="btn btn-primary" (click)="closeAndDelete()">Törlés</button>
+  <div class="modal-footer editor-buttons">
+    <a class="buttons blue" (click)="close()">Mégse</a>
+    <a class="buttons red" (click)="closeAndDelete()">Törlés</a>
   </div>
 </ng-template>
 
