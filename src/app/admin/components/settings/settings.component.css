@@ -1,5 +1,11 @@
 input {
     font-weight: bold;
+    display: inline;
+    margin-left: 1rem;
+}
+
+label {
+    width: 10rem;
 }
 
 .short {

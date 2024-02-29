@@ -24,6 +24,7 @@ export class HomeComponent {
   enableDictate: any;
   startDictate: any;
   endDictate: any;
+  condoName: any;
 
 
 
@@ -34,11 +35,11 @@ export class HomeComponent {
     private homeservice: Homeservice
 
   ) {
+    this.getCondoName();
     this.getBbData();
     this.getMetersData();
     this.getDateValues();
     this.checkEnableDictate();
-
   }
 
   async checkEnableDictate() {
@@ -81,8 +82,7 @@ export class HomeComponent {
   }
 
   sanitizeHTML(html: string): SafeHtml {
-    const formattedHtml = html.replace(/<img/g, '<img style="max-width: 100%; height: auto;"');
-    const sanitizedHtml = this.sanitizer.bypassSecurityTrustHtml(formattedHtml);
+    const sanitizedHtml = this.sanitizer.bypassSecurityTrustHtml(html);
     return sanitizedHtml;
   }
 
@@ -104,6 +104,14 @@ export class HomeComponent {
       return true;
     } else {
       return false;
+    }
+  }
+
+  async getCondoName() {
+    try {
+      this.condoName = await this.homeservice.getCondoName();
+    } catch (error) {
+      console.error('Hiba a név lekérdezésekor:', error);
     }
   }
 }

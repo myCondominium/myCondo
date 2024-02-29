@@ -1,4 +1,84 @@
-<app-header></app-header>
+<div class="container">
+    <div class="header">
+        <div class="header-title">{{condoName}} társasház</div>
+
+    </div>
+
+    <div class="menu-container">
+        
+        <div class="menu-items">
+            <div class="menu-image">
+                <i class="fa fa-newspaper fa-3x"></i>
+            </div>
+            <div class="menu-info">
+                5 új
+            </div>
+            <div class="menu-title">
+                <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#bulletinBoard" aria-expanded="false" aria-controls="collapseExample">
+                    Hírek
+                </a>
+            </div>
+        </div>
+        <div class="menu-content">
+        <div class="collapse" id="bulletinBoard" *ngFor="let bulletin of bulletinBoardData;">
+            <div>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</div>
+                <br>
+                <div [innerHTML]="sanitizeHTML(bulletin.content)"></div>
+                <hr>
+        </div>
+    </div>
+
+        <div class="menu-items">
+            <div class="menu-image">
+                <i class="fa fa-magnifying-glass-chart fa-3x"></i>
+            </div>
+            <div class="menu-info">
+                
+            </div>
+            <div class="menu-title">
+                Adatok
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <div class="menu-image">
+                <i class="fa fa-circle-dollar-to-slot fa-3x"></i>
+            </div>
+            <div class="menu-info">
+                
+            </div>
+            <div class="menu-title">
+                Költségek
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <div class="menu-image">
+                <i class="fa fa-gauge fa-3x"></i>
+            </div>
+            <div class="menu-info">
+                
+            </div>
+            <div class="menu-title">
+                Diktálás
+            </div>
+            
+        </div>
+        <div class="menu-items">
+            <div class="menu-image">
+                <i class="fa fa-id-card fa-3x"></i>
+            </div>
+            <div class="menu-info">
+                
+            </div>
+            <div class="menu-title">
+                Profilom
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- <app-header></app-header>
         
 <div class="row d-flex justify-content-center space-up">
     <div class="col-lg-6 col-md-8 col-sm-12">
@@ -23,4 +103,4 @@
 </div>
 
 <app-userfooter></app-userfooter>
-
+ -->
