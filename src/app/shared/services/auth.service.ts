@@ -17,6 +17,7 @@ import { PasswordresetService } from 'src/app/shared/services/passwordreset.serv
 export class AuthService {
   modalRef: MdbModalRef<LoginFailedComponent> | null = null;
   user: any;
+  userId: any;
 
   constructor(
     private modalService: MdbModalService,
@@ -49,6 +50,7 @@ export class AuthService {
         const user = await this.auth.currentUser;
         if (user) {
           const uid = user.uid;
+          this.userId = uid;
           const email = user.email;
           const userData = await this.getUserData(uid);
           if (userData?.exists) {
@@ -97,7 +99,20 @@ export class AuthService {
   }
 
   private redirectToUserPage(): void {
+    this.saveLoginDate(this.userId);
     this.router.navigate(['/lako/fooldal']);
+  }
+
+  private async saveLoginDate(userId: any) {
+    const timestamp = new Date();
+
+    try {
+      const userRef = this.firestore.collection('users').doc(userId);
+      await userRef.update({ lastLogin: timestamp });
+    } catch (error) {
+      console.error('Hiba a bejelentkezés időpontjának mentésekor:', error);
+    }
+
   }
 
   private redirectToLoginPage(): void {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs';
 
 
 
@@ -52,6 +53,24 @@ export class Homeservice {
       throw error;
     }
   }
+
+  async getLastLogin(userId: string): Promise<any> {
+    try {
+      const userDoc = await this.firestore.collection('users').doc(userId).get().toPromise();
+
+      if (userDoc?.exists) {
+        const lastLogin = userDoc.get('lastLogin');
+        return lastLogin;
+      } else {
+        console.log('A felhasználó dokumentum nem létezik.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Hiba az utolsó bejelentkezés lekérésekor:', error);
+      return null;
+    }
+  }
+
 
 
 }

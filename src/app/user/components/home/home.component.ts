@@ -5,9 +5,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Homeservice } from '../../services/home.service';
 
 
-
-
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,6 +22,8 @@ export class HomeComponent {
   startDictate: any;
   endDictate: any;
   condoName: any;
+  lastLogin: any;
+  newBulletin = 0;
 
 
 
@@ -35,11 +34,13 @@ export class HomeComponent {
     private homeservice: Homeservice
 
   ) {
+    this.getLastLogin();
     this.getCondoName();
     this.getBbData();
     this.getMetersData();
     this.getDateValues();
     this.checkEnableDictate();
+
   }
 
   async checkEnableDictate() {
@@ -53,9 +54,26 @@ export class HomeComponent {
   }
 
   getBbData() {
-    this.bboardService.getAllBulletinBoardData().subscribe((data) => {
+    this.bboardService.getAllBulletinBoardData().subscribe((data: any[]) => {
       this.bulletinBoardData = data;
+
+      this.bulletinBoardData.forEach((item: any) => {
+
+        const timestamp = item.timestamp;
+        if (this.isEntryNew(timestamp)) {
+          this.newBulletin++;
+        }
+
+      });
     });
+  }
+
+  isEntryNew(creationTimestamp: any) {
+    const create = new Date(creationTimestamp * 1000);
+    const lastLogin = new Date(this.lastLogin * 1000);
+    const timeDifference = Math.abs(lastLogin.getTime() - create.getTime());
+    const minutesDifference = timeDifference / (60 * 1000);
+    return minutesDifference <= 15;
   }
 
   getMetersData() {
@@ -88,6 +106,7 @@ export class HomeComponent {
 
 
   formatTimestamp(timestamp: any): string {
+
     return this.datePipe.transform(timestamp.toDate(), 'yyyy MM-dd HH:mm') || '';
   }
 
@@ -114,4 +133,15 @@ export class HomeComponent {
       console.error('Hiba a név lekérdezésekor:', error);
     }
   }
+
+  async getLastLogin() {
+    try {
+      this.lastLogin = await this.homeservice.getLastLogin(this.userId);
+      console.log("last login: " + this.formatTimestamp(this.lastLogin));
+    } catch (error) {
+      console.error('Hiba az utolsó bejelentkezés lekérésekor:', error);
+    }
+  }
+
+
 }

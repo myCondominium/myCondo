@@ -64,6 +64,9 @@ i {
 
 .header-title {}
 
+.red {
+    color: red;
+}
 
 /* .container {
     box-shadow: 0 0 40px -10px #000;
