@@ -44,8 +44,8 @@ i {
 .menu-info {
     width: 35%;
     padding: 0.2rem;
-    color: red;
-    text-align: end;
+    color: #C68484;
+    text-align: center;
 }
 
 .menu-content {
@@ -57,7 +57,6 @@ i {
 }
 
 .header {
-    height: 3rem;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #C68484;
@@ -65,39 +64,43 @@ i {
     font-size: 1.25rem;
 }
 
-.reminder {
+.header-title {
+    white-space: nowrap;
+}
+
+.header-email {
+    font-size: 1rem;
+    color: #C68484;
+}
+
+.header-logout {
+    text-align: end;
+}
+
+.header-logout a {
+    padding: 0 0.5rem;
+    font-size: 1rem;
+    background-color: #C68484;
+    color: #fff;
+    cursor: pointer;
+}
+
+.reminder,
+.reminder-info {
     margin-top: 0.6rem;
     padding: 0.25rem 1rem;
     background-color: #A3C9AA;
 }
 
+.reminder-info {
+    background-color: #C68484;
+    color: #fff;
+}
+
 .red {
-    color: red;
+    color: #9B4444;
 }
 
-/* .container {
-    box-shadow: 0 0 40px -10px #000;
-    background-color: #fff;
-    border-radius: 4px;
-    padding-top: 1rem;
-    margin-top: 1.5em;
-    border-bottom: 8px solid orange;
-
+.start-end {
+    padding-left: 1rem;
 }
-
-.reminder {
-    background-color: #000;
-    border-radius: 4px;
-    box-shadow: 0 0 40px -10px #000;
-
-}
-
-.reminder p {
-    text-align: center;
-    padding: 0.5rem 0;
-    color: orange;
-}
-
-.space-up {
-    margin-top: 6em;
-} */

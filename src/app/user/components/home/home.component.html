@@ -1,7 +1,16 @@
 <div class="container">
-    <div class="header">
-        <div class="header-title">{{condoName}} társasház</div>
-    </div>
+
+        <div class="row header">
+          <div class="col header-title">
+            {{condoName}} társasház
+          </div>
+          <div class="col header-email">
+            {{userEmail}}
+          </div>
+          <div class="col header-logout">
+            <a (click)="logout();">Kilépés</a>
+          </div>
+        </div>
 
     <div *ngIf="enableDictate" class="reminder">
         Az óraállások leadhatóak!
@@ -15,6 +24,7 @@
             </div>
             <div class="menu-info">
                 <span  *ngIf="newBulletin">{{newBulletin}} új</span>
+                <span  *ngIf="!newBulletin">Nincs új</span>
             </div>
             <div class="menu-title">
                 <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#bulletinBoard" aria-expanded="false" aria-controls="collapseExample">
@@ -24,7 +34,7 @@
         </div>
         <div class="menu-content">
         <div class="collapse" id="bulletinBoard" *ngFor="let bulletin of bulletinBoardData;">
-            <div>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</div>
+            <div class="reminder-info">Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</div>
             <div *ngIf="isEntryNew(bulletin.timestamp)">
                 <span class="red">Új bejegyzés!</span>
               </div>
@@ -83,13 +93,22 @@
                 <i class="fa fa-gauge fa-3x"></i>
             </div>
             <div class="menu-info">
-                
+                <span class="start-end">{{startDictate}}.-tól {{endDictate}}.-ig</span>
             </div>
             <div class="menu-title">
+
+            <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#dictate" aria-expanded="false" aria-controls="collapseExample">
                 Diktálás
+            </a>
             </div>
-            
         </div>
+        <div class="menu-content">
+            <div class="collapse" id="dictate">
+                <app-savemeters></app-savemeters>
+                    <hr>
+            </div>
+        </div>
+
         <div class="menu-items">
             <div class="menu-image">
                 <i class="fa fa-id-card fa-3x"></i>
@@ -111,6 +130,7 @@
                 </div>
             </div>
     </div>
+
 
 
 

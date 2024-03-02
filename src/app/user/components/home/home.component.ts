@@ -3,6 +3,7 @@ import { BBoardService } from '../../../shared/services/bboard.service';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Homeservice } from '../../services/home.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class HomeComponent {
   currentYearAndMonth: any;
   fieldNames: any[] | undefined;
   userId = localStorage.getItem('userId') || '';
+  userEmail = localStorage.getItem('userEmail') || '';
   isDictate = false;
   enableDictate: any;
   startDictate: any;
@@ -31,7 +33,8 @@ export class HomeComponent {
     private bboardService: BBoardService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer,
-    private homeservice: Homeservice
+    private homeservice: Homeservice,
+    private auth: AuthService
 
   ) {
     this.getLoginDates();
@@ -138,5 +141,7 @@ export class HomeComponent {
     }
   }
 
-
+  logout() {
+    this.auth.logout();
+  }
 }
