@@ -1,6 +1,8 @@
 .data {
     width: 100%;
     margin-top: 1rem;
+
+
 }
 
 .title-container,
@@ -9,71 +11,35 @@
     flex-direction: row;
 }
 
-.data-container {
-    flex-direction: row-reverse;
-}
-
 .title-row {
     width: 80%;
     height: 2rem;
-    padding-left: 0.7rem;
-    background-color: #fff;
-    border-top: 2px solid #000;
-    border-radius: 4px 0 0 4px;
+    font-weight: bold;
     display: grid;
     align-items: start;
+    color: #444;
 }
 
 .data-row {
     width: 80%;
     height: 2rem;
-    margin-left: -1rem;
-    padding: 0 0.7rem 0 0;
-    background-color: orange;
-    border-bottom: 2px solid #000;
-    border-radius: 0 4px 4px 0;
-    text-align: right;
-}
-
-
-.title-row-end {
-    width: 3rem;
-    height: 2rem;
-    margin-left: -2.1rem;
-    transform: skewX(20deg);
-    background-color: #fff;
-    border-top: 2px solid #000;
-    border-right: 2px solid #000;
-    border-radius: 0 4px 0 0;
-}
-
-.data-row-start {
-    width: 3rem;
-    height: 2rem;
-    margin-left: 2.1rem;
-    transform: skewX(20deg);
-    background-color: orange;
-    border-bottom: 2px solid #000;
-    border-left: 2px solid #000;
-    border-radius: 0 0 0 4px;
-}
-
-
-.space-up {
-    margin-top: 6em;
+    margin-top: -0.5rem;
+    padding: 0 0.2rem 0.7rem 0;
 }
 
 .resetpassword {
-    background-color: #000;
-    color: orange;
+    background-color: #C68484;
+    color: #eee;
     cursor: pointer;
     border-radius: 4px;
+    padding: 0.25rem;
 }
 
 .message {
-    background-color: orange;
-    color: #000;
-    padding: 0.5rem 0rem 0 0;
+    background-color: #A3C9AA;
+    color: #444;
+    cursor: pointer;
     border-radius: 4px;
+    padding: 0.25rem;
 
 }

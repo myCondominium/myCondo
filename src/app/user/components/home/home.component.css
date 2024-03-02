@@ -51,6 +51,9 @@ i {
 .menu-content {
     max-height: 60vh;
     overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #EEEEEE;
+    padding: 0 0.5rem;
 }
 
 .header {
@@ -62,7 +65,11 @@ i {
     font-size: 1.25rem;
 }
 
-.header-title {}
+.reminder {
+    margin-top: 0.6rem;
+    padding: 0.25rem 1rem;
+    background-color: #A3C9AA;
+}
 
 .red {
     color: red;

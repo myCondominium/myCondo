@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentData, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs';
 
 
@@ -54,22 +54,23 @@ export class Homeservice {
     }
   }
 
-  async getLastLogin(userId: string): Promise<any> {
-    try {
-      const userDoc = await this.firestore.collection('users').doc(userId).get().toPromise();
 
-      if (userDoc?.exists) {
-        const lastLogin = userDoc.get('lastLogin');
-        return lastLogin;
-      } else {
-        console.log('A felhasználó dokumentum nem létezik.');
-        return null;
-      }
-    } catch (error) {
-      console.error('Hiba az utolsó bejelentkezés lekérésekor:', error);
-      return null;
+  async getLoginDates(userId: any) {
+    const userRef = this.firestore.collection('users').doc(userId).collection('loginHistory');
+    const querySnapshot: QuerySnapshot<DocumentData> | undefined = await userRef.get().toPromise();
+
+    if (querySnapshot) {
+      const loginDates = querySnapshot.docs
+        .map((doc) => doc.data()['loginTime'])
+        .sort((a, b) => b - a);
+      return loginDates[1] !== undefined ? loginDates[1] : 0;
+    } else {
+      console.error("Hiba a bejelentkezési adatok lekérésekor!");
+      return [];
     }
   }
+
+
 
 
 

@@ -1,6 +1,6 @@
-<app-header></app-header>
 
-<div class="row d-flex justify-content-center space-up">
+
+<div class="row d-flex justify-content-center">
     <div class="col-lg-6 col-md-8 col-sm-12">
 
       <div *ngFor="let data of datas" class="data">
@@ -8,20 +8,26 @@
             <div class="title-row">
               <div class="data-title">{{data.title}}</div>
             </div>
-            <div class="title-row-end"></div>
           </div>
         
             <div class="data-container">
             <div class="data-row">
               <div class="data-data" [innerHTML]="data.value"></div>
             </div>
-            <div class="data-row-start"></div>
           </div>
         </div>
+
+<div class="resetpassword" *ngIf="!message">
+  <a (click)="resetPassword()">Jelszó módosítása</a>
+</div>
+
+<div class="message" *ngIf="message">
+  Kövesd az emailben kapott utasításokat!
+</div>
 
 
     </div>
 
     </div>
  
-<app-userfooter></app-userfooter>
+

@@ -103,17 +103,33 @@ export class AuthService {
     this.router.navigate(['/lako/fooldal']);
   }
 
+  // private async saveLoginDate(userId: any) {
+  //   const timestamp = new Date();
+
+  //   try {
+  //     const userRef = this.firestore.collection('users').doc(userId);
+  //     await userRef.update({ lastLogin: timestamp });
+  //   } catch (error) {
+  //     console.error('Hiba a bejelentkezés időpontjának mentésekor:', error);
+  //   }
+
+  // }
+
   private async saveLoginDate(userId: any) {
     const timestamp = new Date();
 
     try {
-      const userRef = this.firestore.collection('users').doc(userId);
-      await userRef.update({ lastLogin: timestamp });
+      const userRef = this.firestore.collection('users').doc(userId).collection('loginHistory');
+      await userRef.add({
+        loginTime: timestamp,
+      });
+
+      console.log('Bejelentkezési időpont sikeresen mentve.');
     } catch (error) {
       console.error('Hiba a bejelentkezés időpontjának mentésekor:', error);
     }
-
   }
+
 
   private redirectToLoginPage(): void {
     this.router.navigate(['/login']);

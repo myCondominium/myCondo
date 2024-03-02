@@ -1,7 +1,10 @@
 <div class="container">
     <div class="header">
         <div class="header-title">{{condoName}} társasház</div>
+    </div>
 
+    <div *ngIf="enableDictate" class="reminder">
+        Az óraállások leadhatóak!
     </div>
 
     <div class="menu-container">
@@ -39,10 +42,20 @@
                 
             </div>
             <div class="menu-title">
+
+            <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#datas" aria-expanded="false" aria-controls="collapseExample">
                 Adatok
+            </a>
             </div>
-            
         </div>
+            <div class="menu-content">
+                <div class="collapse" id="datas">
+                    <app-condodatas></app-condodatas>
+                        <hr>
+                </div>
+            </div>
+       
+
         <div class="menu-items">
             <div class="menu-image">
                 <i class="fa fa-circle-dollar-to-slot fa-3x"></i>
@@ -51,10 +64,20 @@
                 
             </div>
             <div class="menu-title">
+
+            <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#costs" aria-expanded="false" aria-controls="collapseExample">
                 Költségek
+            </a>
             </div>
-            
         </div>
+            <div class="menu-content">
+                <div class="collapse" id="costs">
+                    <app-costs></app-costs>
+                        <hr>
+                </div>
+            </div>
+     
+    
         <div class="menu-items">
             <div class="menu-image">
                 <i class="fa fa-gauge fa-3x"></i>
@@ -75,35 +98,19 @@
                 
             </div>
             <div class="menu-title">
+
+            <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#myprofile" aria-expanded="false" aria-controls="collapseExample">
                 Profilom
-            </div>
-            
-        </div>
-    </div>
-</div>
-<!-- <app-header></app-header>
-        
-<div class="row d-flex justify-content-center space-up">
-    <div class="col-lg-6 col-md-8 col-sm-12">
-        <div *ngIf="enableDictate" class="reminder">
-            <p>Az óraállások leadhatóak!</p>
-        </div>
-<div class="container">
-    <div class="row">
-        <div class="">
-            <div class="bulletin-container mb-4" *ngFor="let bulletin of bulletinBoardData;">
-                <div>Létrehozva: {{ formatTimestamp(bulletin.timestamp) }}</div>
-                <br>
-                <div [innerHTML]="sanitizeHTML(bulletin.content)"></div>
-                <hr>
+            </a>
             </div>
         </div>
+            <div class="menu-content">
+                <div class="collapse" id="myprofile">
+                    <app-myprofile></app-myprofile>
+                        <hr>
+                </div>
+            </div>
     </div>
-</div>
 
 
-    </div>
-</div>
 
-<app-userfooter></app-userfooter>
- -->

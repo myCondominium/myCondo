@@ -34,7 +34,7 @@ export class HomeComponent {
     private homeservice: Homeservice
 
   ) {
-    this.getLastLogin();
+    this.getLoginDates();
     this.getCondoName();
     this.getBbData();
     this.getMetersData();
@@ -69,11 +69,7 @@ export class HomeComponent {
   }
 
   isEntryNew(creationTimestamp: any) {
-    const create = new Date(creationTimestamp * 1000);
-    const lastLogin = new Date(this.lastLogin * 1000);
-    const timeDifference = Math.abs(lastLogin.getTime() - create.getTime());
-    const minutesDifference = timeDifference / (60 * 1000);
-    return minutesDifference <= 15;
+    return this.lastLogin <= creationTimestamp;
   }
 
   getMetersData() {
@@ -134,10 +130,9 @@ export class HomeComponent {
     }
   }
 
-  async getLastLogin() {
+  async getLoginDates() {
     try {
-      this.lastLogin = await this.homeservice.getLastLogin(this.userId);
-      console.log("last login: " + this.formatTimestamp(this.lastLogin));
+      this.lastLogin = await this.homeservice.getLoginDates(this.userId);
     } catch (error) {
       console.error('Hiba az utolsó bejelentkezés lekérésekor:', error);
     }
