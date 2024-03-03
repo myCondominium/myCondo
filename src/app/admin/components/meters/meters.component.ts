@@ -31,7 +31,7 @@ export class MetersComponent {
   pageSize: number = 10;
   meterNumber: any;
   yearAndMonth: any;
-  data: any; //modal
+  data: any;
   userName: any;
   expandedUserId: number | null = null;
 
@@ -63,17 +63,24 @@ export class MetersComponent {
     }
   }
 
-  openModal(content: any, userId: string, userName: string) {
-    this.meterService.myMeterVal(userId).then((result) => {
-      this.data = Object.entries(result)
-        .map(([yearAndMonth, values]) => ({ yearAndMonth, ...values as MeterData }))
-        .sort((a, b) => {
-          return b.yearAndMonth.localeCompare(a.yearAndMonth, undefined, { numeric: true });
-        });
+  async openModal(content: any, userId: string, userName: string) {
+    await this.meterService.myMeterVal(userId).then((result) => {
+      console.log(result)
+      if (result) {
+        this.data = Object.entries(result)
+          .map(([yearAndMonth, values]) => ({ yearAndMonth, ...values as MeterData }))
+          .sort((a, b) => {
+            return b.yearAndMonth.localeCompare(a.yearAndMonth, undefined, { numeric: true });
+          });
 
-      this.userName = userName;
-      this.meterNumber = this.meterNumber;
-      this.modalService.open(content, { centered: true });
+        this.userName = userName;
+        this.meterNumber = this.meterNumber;
+        this.modalService.open(content, { centered: true });
+      } else {
+        console.log('Nincsenek adatok a felhasználó számára');
+        this.modalService.open("-Nincs még mentett óraállás!", { centered: true });
+
+      }
     });
   }
 

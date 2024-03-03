@@ -1,7 +1,7 @@
 <app-adminmenu></app-adminmenu>
 
     <div class="container">
-        <h2 class="mt-2">Óraállások</h2>
+        <h2 class="mt-2">Óraállások<span>{{getYearAndMonth()}}</span></h2>
         
       <div class="row row-cols-auto header">
  
@@ -56,7 +56,7 @@
 
         <div class="col row">
             <div class="col user-frame">
-            <span>Meleg I.:</span> <input [(ngModel)]="user.meterHotdOne" class="form-control hot" type="number">
+            <span>Meleg I.:</span> <input [(ngModel)]="user.meterHotOne" class="form-control hot" type="number">
           </div>
             <div class="col user-frame" *ngIf="meterNumber === '4'">
            <span>Meleg II.:</span> <input [(ngModel)]="user.meterHotTwo" class="form-control hot" type="number">
@@ -85,7 +85,7 @@
        
     </div>
 <ng-template #modalContent let-modal>
-  <div class="modal-dialog modal-xl">
+  <!-- <div class="modal-dialog modal-lg" > -->
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ userName }} korábbi óraállásai</h4>
@@ -119,7 +119,7 @@
         <button type="button" class="buttons" (click)="modal.close('Close click')">Bezár</button>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </ng-template>
 
 <app-adminfooter></app-adminfooter>

@@ -31,15 +31,13 @@
     background-color: #C68484;
     color: #eee;
     cursor: pointer;
-    border-radius: 4px;
-    padding: 0.25rem;
+    padding: 0 0 0 0.5rem;
 }
 
 .message {
     background-color: #A3C9AA;
     color: #444;
     cursor: pointer;
-    border-radius: 4px;
     padding: 0.25rem;
 
 }
