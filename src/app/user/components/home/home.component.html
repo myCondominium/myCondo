@@ -93,7 +93,8 @@
                 <i class="fa fa-gauge fa-3x"></i>
             </div>
             <div class="menu-info">
-                <span class="start-end">{{startDictate}}.-tól {{endDictate}}.-ig</span>
+                <span class="start-end" *ngIf="!isDictate">{{startDictate}}.-tól {{endDictate}}.-ig</span>
+                <span class="start-end" *ngIf="isDictate">Leadva</span>
             </div>
             <div class="menu-title">
 
@@ -130,6 +131,8 @@
                 </div>
             </div>
     </div>
+    <app-userfooter></app-userfooter>
+
 
 
 

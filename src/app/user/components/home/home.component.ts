@@ -49,6 +49,7 @@ export class HomeComponent {
   async checkEnableDictate() {
     await this.getMeterDate(this.userId);
     this.isDictate = this.isDictateThisMonth();
+    console.log(this.isDictate)
     if (!this.isDictate && (this.startDictate <= this.currentDay && this.endDictate >= this.currentDay)) {
       this.enableDictate = true;
     } else {
@@ -72,6 +73,8 @@ export class HomeComponent {
   }
 
   isEntryNew(creationTimestamp: any) {
+    console.log("ll:" + this.lastLogin)
+    console.log("ct:" + creationTimestamp)
     return this.lastLogin <= creationTimestamp;
   }
 
