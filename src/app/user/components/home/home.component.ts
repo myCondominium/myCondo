@@ -73,8 +73,7 @@ export class HomeComponent {
   }
 
   isEntryNew(creationTimestamp: any) {
-    console.log("ll:" + this.lastLogin)
-    console.log("ct:" + creationTimestamp)
+
     return this.lastLogin <= creationTimestamp;
   }
 

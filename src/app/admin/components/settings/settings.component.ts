@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 
-interface MeterData {
-  meterData: {
-    start: number;
-    end: number;
-    commonCost: number;
-    waterHeating: number;
-    heatingBase: number;
-    heatingMulti: number;
-    meterNumber: number;
-  };
-}
+// interface MeterData {
+//   meterData: {
+//     start: number;
+//     end: number;
+//     commonCost: number;
+//     waterHeating: number;
+//     heatingBase: number;
+//     heatingMulti: number;
+//     meterNumber: number;
+//   };
+// }
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',

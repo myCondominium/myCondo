@@ -30,6 +30,7 @@ export class AuthService {
     this.authStateChange();
   }
 
+
   authStateChange() {
     this.auth.onAuthStateChanged(user => {
       if (user && user.email) {

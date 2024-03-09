@@ -45,3 +45,8 @@ input {
 input:focus {
     border-radius: 0;
 }
+
+.modal-header {
+    background-color: #555;
+    color: #eee;
+}

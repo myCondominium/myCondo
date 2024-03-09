@@ -63,3 +63,8 @@
 .green {
     color: lightgreen;
 }
+
+.modal-header {
+    background-color: #555;
+    color: #eee;
+}

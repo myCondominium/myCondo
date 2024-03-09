@@ -1,27 +1,20 @@
-button {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    background-color: #000;
-    border-color: #000;
-    color: orange;
-}
-
 .modal-header {
-    background-color: #000;
-    color: orange;
-    border: 1px solid orange;
-    border-bottom: 4px solid orange;
+    background-color: #9B4444;
+    color: #fff;
+    border: 1px solid 9B4444;
+    border-bottom: 4px solid 9B4444;
 }
 
-button:focus {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    background-color: #000;
-    border-color: #000;
-    color: orange;
+.btn-primary {
+    background-color: #9B4444;
+    color: #fff;
+    border: none;
+    border-radius: 0;
 }
 
-button:hover {
-    background-color: #000;
-    color: #FFD580;
+.btn-secondary {
+    background-color: #A3C9AA;
+    color: #444;
+    border: none;
+    border-radius: 0;
 }
