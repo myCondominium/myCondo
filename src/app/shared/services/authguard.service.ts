@@ -26,7 +26,7 @@ export class AuthguardService implements CanActivate {
 
       if (user) {
         const uid = user.uid;
-        const userData = await this.firestore.collection('users').doc(uid).get().pipe(first()).toPromise();
+        const userData = await this.firestore.collection('users').doc(uid).collection('personaldatas').doc('datas').get().toPromise();
         return userData?.exists ?? false;
       } else {
         await this.router.navigate(['/login']);

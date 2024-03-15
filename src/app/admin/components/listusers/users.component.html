@@ -52,16 +52,16 @@
             aria-controls="collapseExample">
       <div>
     
-              <b>{{user.name }}  </b>
+              <b>{{user.personalData.name }}  </b>
               <i class="fa-solid fa-caret-down"></i>
              
       </div>
 </a>
   <div class="col-lg-4 col-md-4 col-sm-6  user-frame">
-    <b>{{ user.building + '/' + user.floor + '/' + user.door}}</b>
+    <b>{{ user.personalData.building + '/' + user.personalData.floor + '/' + user.personalData.door}}</b>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12 user-actions">
-    <a (click)="openDeleteModal(user.name, user.id)" class="buttons red">
+    <a (click)="openDeleteModal(user.personalData.name, user.id)" class="buttons red">
       Töröl
     </a>
     <a (click)="openEditModal(this.user)" class="buttons blue">
@@ -71,22 +71,22 @@
   <div class="collapse" [id]="user.id">
     <div class="row">
     <div class="col user-frame">
-      <b>Email:</b> {{user.email}}
+      <b>Email:</b> {{user.personalData.email}}
     </div>
     <div class="col user-frame">
-      <b>Telefon:</b> {{user.phone}}
+      <b>Telefon:</b> {{user.personalData.phone}}
     </div>
     <div class="col"></div>
   </div>
   <div class="row">
     <div class="col user-frame">
-      <b>Méret:</b> {{user.squaremeter}}m<sup>2</sup>
+      <b>Méret:</b> {{user.personalData.squaremeter}}m<sup>2</sup>
     </div>
     <div class="col user-frame">
-      <b>Egyenleg:</b> {{user.balance}}Ft
+      <b>Egyenleg:</b> {{user.personalData.balance}}Ft
     </div>
     <div class="col user-frame">
-      <b>Admin:</b> {{ user.isAdmin ? 'Igen' : 'Nem' }}
+      <b>Admin:</b> {{ user.personalData.isAdmin ? 'Igen' : 'Nem' }}
     </div>
   </div>
   </div>

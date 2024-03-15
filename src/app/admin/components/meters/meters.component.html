@@ -43,29 +43,29 @@
         <div class="meters-list-body row"  *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           
           <div class="col user-frame">
-              <b>{{user.name}}</b><br> - {{ user.building + '/' + user.floor + '/' + user.door}}
+              <b>{{user.personalData.name}}</b><br> - {{ user.personalData.building + '/' + user.personalData.floor + '/' + user.personalData.door}}
             </div>
             <div class="col row">
             <div class="col user-frame">
-            <span>Hideg I.:</span> <input [(ngModel)]="user.meterColdOne" class="form-control cold" type="number">
+            <span>Hideg I.:</span> <input [(ngModel)]="user.meterData.meterColdOne" class="form-control cold" type="number">
           </div>
             <div class="col user-frame" *ngIf="meterNumber === '4'">
-           <span> Hideg II.:</span> <input [(ngModel)]="user.meterColdTwo" class="form-control cold" type="number">
+           <span> Hideg II.:</span> <input [(ngModel)]="user.meterData.meterColdTwo" class="form-control cold" type="number">
           </div>
         </div>
 
         <div class="col row">
             <div class="col user-frame">
-            <span>Meleg I.:</span> <input [(ngModel)]="user.meterHotOne" class="form-control hot" type="number">
+            <span>Meleg I.:</span> <input [(ngModel)]="user.meterData.meterHotOne" class="form-control hot" type="number">
           </div>
             <div class="col user-frame" *ngIf="meterNumber === '4'">
-           <span>Meleg II.:</span> <input [(ngModel)]="user.meterHotTwo" class="form-control hot" type="number">
+           <span>Meleg II.:</span> <input [(ngModel)]="user.meterData.meterHotTwo" class="form-control hot" type="number">
           </div>
         </div>
 
         <div class="col row">
             <div class="col user-frame">
-           <span>Hőmennyiség:</span> <input [(ngModel)]="user.amountOfHeat" class="form-control warm" type="number">
+           <span>Hőmennyiség:</span> <input [(ngModel)]="user.meterData.amountOfHeat" class="form-control warm" type="number">
           </div>
         </div>
 
@@ -74,7 +74,7 @@
             <a (click)="saveMeter(user.id)" class="buttons green">
               Mentés
             </a>
-            <a (click)="openModal(modalContent, user.id, user.name)" class="buttons blue">
+            <a (click)="openModal(modalContent, user.id, user.personalData.name)" class="buttons blue">
               Előző
             </a>
           </div>
@@ -104,13 +104,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let entry of data.slice(0, 6)">
-              <td><b>{{ entry.yearAndMonth }}</b></td>
-              <td>{{ entry.meterColdOne }}</td>
-              <td *ngIf="meterNumber === '4'">{{ entry.meterColdTwo }}</td>
-              <td>{{ entry.meterHotOne }}</td>
-              <td *ngIf="meterNumber === '4'">{{ entry.meterHotTwo }}</td>
-              <td>{{ entry.amountOfHeat }}</td>
+            <tr *ngFor="let entry of data">
+              <td><b>{{ entry.key }}</b></td>
+              <td>{{ entry.value.meterColdOne }}</td>
+             <td *ngIf="meterNumber === '4'">{{ entry.value.meterColdTwo }}</td>
+              <td>{{ entry.value.meterHotOne }}</td>
+              <td *ngIf="meterNumber === '4'">{{ entry.value.meterHotTwo }}</td>
+              <td>{{ entry.value.amountOfHeat }}</td>
             </tr>
           </tbody>
         </table>

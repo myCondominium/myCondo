@@ -47,7 +47,7 @@ h2 span {
 input[type=number] {
     height: 2rem;
     border-radius: 0;
-    padding-right: 0;
+    padding-right: 0.5rem;
     background-color: #fff;
     text-align: end;
     font-weight: bold;

@@ -25,33 +25,51 @@ export class UsersComponent {
 
   expandedUserId: number | null = null;
 
+  documentIds: string[] = [];
+
+
+
   constructor(private service: UsersService, private modalService: MdbModalService) {
     this.error = this.getUsers();
   }
 
-  getUsers() {
-    this.service.getUsers().subscribe((data) => {
-      this.users = data;
-      this.sortUsersByName();
-      this.filterUsers();
-    })
-  }
 
-  sortUsersByName() {
-    this.users.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
+  getUsers() {
+
+    this.service.getAllData().subscribe({
+      next: (data: any[]) => {
+        this.users = data;
+        console.log('kapott adatok:', this.users);
+        this.sortUsersByName();
+        this.filterUsers();
+      },
+      error: (error) => {
+        console.error('Hiba az adatok lekérésekor:', error);
       }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
     });
   }
 
+
+  sortUsersByName() {
+    if (this.users.length > 1) {
+      this.users.sort((a, b) => {
+        const nameA = a.personalData.name.toUpperCase();
+        const nameB = b.personalData.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  }
+
+
   filterUsers() {
     this.filteredUsers = this.users.filter((user) =>
-      user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      user.personalData.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 

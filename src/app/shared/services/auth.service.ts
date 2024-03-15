@@ -5,10 +5,9 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthguardService } from './authguard.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { first } from 'rxjs/operators';
 import { LogoutcomfirmComponent } from '../auth/controllers/logoutcomfirm/logoutcomfirm.component';
-import { UserData } from '../auth/models/UserData';
 import { PasswordresetService } from 'src/app/shared/services/passwordreset.service';
+
 
 
 @Injectable({
@@ -42,42 +41,58 @@ export class AuthService {
     });
   }
 
+  // async login(email: string, password: string) {
+  //   try {
+  //     const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
+
+  //     if (userCredential.user) {
+  //       const user = await this.auth.currentUser;
+  //       if (user) {
+  //         const uid = user.uid;
+  //         this.userId = uid;
+  //         const email = user.email;
+
+  //         const userData = await this.getUserData(uid);
+  //         if (userData?.exists) {
+  //           const userDataObject: UserData = userData.data() as UserData;
+
+  //           if (userDataObject.passwordChanged) {
+  //             this.redirectByRole(userDataObject.isAdmin);
+  //           } else {
+  //             if (email) {
+  //               await this.resetPassword(email);
+  //               await this.firestore.collection('users').doc(uid).collection('data').doc('0').update({
+  //                 passwordChanged: true
+  //               });
+  //             }
+  //             this.router.navigate(["login/changepassword"]);
+  //           }
+  //         }
+  //       } else {
+  //         this.redirectToLoginPage();
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Hibás bejelentkezési adatok!");
+  //     this.openLoginFailedModal();
+  //   }
+  // }
+
   async login(email: string, password: string) {
 
-    try {
-      const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
-
-      if (userCredential.user) {
-        const user = await this.auth.currentUser;
-        if (user) {
-          const uid = user.uid;
-          this.userId = uid;
-          const email = user.email;
-          const userData = await this.getUserData(uid);
-          if (userData?.exists) {
-            const userDataObject: UserData = userData.data() as UserData;
-
-            if (userDataObject.passwordChanged) {
-              this.redirectByRole(userDataObject.isAdmin);
-            } else {
-              if (email) {
-                await this.resetPassword(email);
-                await this.firestore.collection('users').doc(uid).update({
-                  passwordChanged: true
-                });
-              }
-              this.router.navigate(["login/changepassword"]);
-            }
-          }
-        } else {
-          this.redirectToLoginPage();
-        }
-      }
-    } catch (error) {
-      console.log("Hibás bejelentkezési adatok!");
-      this.openLoginFailedModal();
-    }
+    await this.auth.signInWithEmailAndPassword(email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        this.userId = user?.uid;
+        //const email = user.email;
+        const userData = await this.getUserData(this.userId);
+        this.redirectByRole(userData.isAdmin);
+      })
+      .catch((error) => {
+        this.openLoginFailedModal();
+      });
   }
+
 
   openLoginFailedModal() {
     this.modalRef = this.modalService.open(LoginFailedComponent);
@@ -91,9 +106,16 @@ export class AuthService {
     }
   }
 
-  private async getUserData(uid: string): Promise<any> {
-    return this.firestore.collection('users').doc(uid).get().pipe(first()).toPromise();
+  async getUserData(uid: string): Promise<any> {
+    try {
+      const datas = await this.firestore.collection('users').doc(uid).collection('personaldatas').doc('datas').get().toPromise();
+      return datas?.data() || {};
+    } catch (error) {
+      console.error("Hiba az adatok lekérésekor:", error);
+    }
   }
+
+
 
   private redirectByRole(isAdmin: any) {
     isAdmin ? this.redirectToAdminPage() : this.redirectToUserPage();
@@ -108,9 +130,10 @@ export class AuthService {
     const timestamp = new Date();
 
     try {
-      const userRef = this.firestore.collection('users').doc(userId).collection('loginHistory');
-      await userRef.add({
-        loginTime: timestamp,
+      const userRef = this.firestore.collection('users').doc(userId).collection('loginHistory').doc('datas');
+
+      await userRef.update({
+        [timestamp.getTime().toString()]: timestamp,
       });
 
       console.log('Bejelentkezési időpont sikeresen mentve.');
@@ -119,12 +142,12 @@ export class AuthService {
     }
   }
 
-
   private redirectToLoginPage(): void {
     this.router.navigate(['/login']);
   }
 
   private redirectToAdminPage(): void {
+    this.saveLoginDate(this.userId);
     this.router.navigate(['/admin/home']);
   }
 

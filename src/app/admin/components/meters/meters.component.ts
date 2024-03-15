@@ -3,18 +3,6 @@ import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MetersService } from '../../services/meters.service';
 
-interface User {
-  id: string;
-}
-
-interface MeterData {
-  amountOfHeat: number;
-  meterHotOne: number;
-  meterHotTwo: number;
-  meterColdOne: number;
-  meterColdTwo: number;
-}
-
 
 @Component({
   selector: 'app-meters',
@@ -34,56 +22,71 @@ export class MetersComponent {
   data: any;
   userName: any;
   expandedUserId: number | null = null;
+  meters: any;
+  users: any;
+  allData: any[] = [];
+  meterDate: any;
 
   constructor(
     private datePipe: DatePipe,
     private modalService: NgbModal,
     private meterService: MetersService) {
     this.initializeData();
-
   }
 
   initializeData() {
-    this.meterService.checkMetersCollection();
-    this.meterService.getCombinedData().subscribe((data) => {
-      this.meterusers = data;
-      this.error = data;
-      this.sortUsersByName();
-      this.filterUsers();
-    });
-    this.meterNumber = this.getMeterNum();
-    this.yearAndMonth = this.getYearAndMonth();
-  }
-
-  async getMeterNum() {
-    try {
-      this.meterNumber = await this.meterService.getMeterNumber();
-    } catch (error) {
-      console.error('Hiba:', error);
-    }
-  }
-
-  async openModal(content: any, userId: string, userName: string) {
-    await this.meterService.myMeterVal(userId).then((result) => {
-      console.log(result)
-      if (result) {
-        this.data = Object.entries(result)
-          .map(([yearAndMonth, values]) => ({ yearAndMonth, ...values as MeterData }))
-          .sort((a, b) => {
-            return b.yearAndMonth.localeCompare(a.yearAndMonth, undefined, { numeric: true });
-          });
-
-        this.userName = userName;
-        this.meterNumber = this.meterNumber;
-        this.modalService.open(content, { centered: true });
-      } else {
-        console.log('Nincsenek adatok a felhasználó számára');
-        this.modalService.open("-Nincs még mentett óraállás!", { centered: true });
-
+    const meterDate = this.getMeterDate();
+    this.meterService.getAllData(meterDate).subscribe({
+      next: (data: any[]) => {
+        this.meterNumber = this.getMeterNum();
+        this.meterusers = data;
+        this.error = data;
+        this.sortUsersByName();
+        this.filterUsers();
+        this.yearAndMonth = this.getYearAndMonth();
+        this.meterDate = this.getMeterDate();
+        console.log('kapott adatok:', this.meterusers);
+      },
+      error: (error) => {
+        console.error('Hiba az adatok lekérésekor:', error);
       }
     });
   }
 
+  async getMeterNum() {
+    try {
+      const meterNum = await this.meterService.getMeterNumber();
+      this.meterNumber = meterNum.mnum;
+    } catch (error) {
+      console.error('Hiba történt a mérőszám lekérésekor:', error);
+    }
+  }
+
+  async openModal(content: any, userId: string, userName: string) {
+    try {
+      const meterData = await this.meterService.getMeterData(userId).toPromise();
+
+      if (meterData) {
+        const sortedMeterData = this.sortMeterData(meterData);
+        this.data = sortedMeterData;
+        this.userName = userName;
+        this.modalService.open(content, { centered: true });
+      } else {
+        console.error('A lekért adatok üresek vagy undefined.');
+      }
+    } catch (error) {
+      console.error('Hiba történt az adatok lekérése közben:', error);
+    }
+  }
+
+  sortMeterData(data: any[]): any[] {
+    data.sort((a, b) => a.key.localeCompare(b.key)).reverse();
+    return data;
+  }
+
+  getMeterDate() {
+    return this.datePipe.transform(new Date(), 'yyyy-MM')!;
+  }
 
   getYearAndMonth() {
     const currentDate = new Date();
@@ -101,19 +104,22 @@ export class MetersComponent {
 
   sortUsersByName() {
     this.meterusers.sort((a, b) => {
-      if (a.name < b.name) {
+      const nameA = a.personalData.name.toUpperCase();
+      const nameB = b.personalData.name.toUpperCase();
+      if (nameA < nameB) {
         return -1;
       }
-      if (a.name > b.name) {
+      if (nameA > nameB) {
         return 1;
       }
       return 0;
     });
   }
 
+
   filterUsers() {
     this.filteredUsers = this.meterusers.filter((user) =>
-      user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      user.personalData.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
@@ -121,21 +127,16 @@ export class MetersComponent {
     this.page = 1;
   }
 
-  toggleDetails(userId: number): void {
-    this.expandedUserId = this.expandedUserId === userId ? null : userId;
-  }
-
   saveMeter(userId: string) {
-    // Itt kinyerjük a megfelelő felhasználót a filteredUsers tömbből
     const user = this.filteredUsers.find(u => u.id === userId);
-    const meterKey = `${new Date().getFullYear()}_${new Date().getMonth() + 1}`;
+    const meterKey = this.getMeterDate();
     const meterData = {
       [meterKey]: {
-        meterColdOne: user.meterColdOne !== undefined ? user.meterColdOne : 0,
-        meterColdTwo: user.meterColdTwo !== undefined ? user.meterColdTwo : 0,
-        meterHotOne: user.meterHotOne !== undefined ? user.meterHotOne : 0,
-        meterHotTwo: user.meterHotTwo !== undefined ? user.meterHotTwo : 0,
-        amountOfHeat: user.amountOfHeat !== undefined ? user.amountOfHeat : 0,
+        meterColdOne: user.meterData.meterColdOne !== undefined ? user.meterData.meterColdOne : 0,
+        meterColdTwo: user.meterData.meterColdTwo !== undefined ? user.meterData.meterColdTwo : 0,
+        meterHotOne: user.meterData.meterHotOne !== undefined ? user.meterData.meterHotOne : 0,
+        meterHotTwo: user.meterData.meterHotTwo !== undefined ? user.meterData.meterHotTwo : 0,
+        amountOfHeat: user.meterData.amountOfHeat !== undefined ? user.meterData.amountOfHeat : 0,
       }
     };
     this.meterService.saveMeter(userId, meterData);

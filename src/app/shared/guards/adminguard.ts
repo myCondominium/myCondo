@@ -57,7 +57,7 @@ export class AdminGuard implements CanActivate {
 
     private async getUserData(uid: string): Promise<any> {
         try {
-            return await this.firestore.collection('users').doc(uid).get().pipe(first()).toPromise();
+            return await this.firestore.collection('users').doc(uid).collection('personaldatas').doc('datas').get().toPromise();
         } catch (error) {
             console.error('Hiba az adatok lekérdezésekor: ', error);
             throw error;

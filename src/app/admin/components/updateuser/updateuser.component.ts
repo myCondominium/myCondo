@@ -23,7 +23,6 @@ export class UpdateuserComponent {
     private service: UsersService,
     private formBuilder: FormBuilder) {
     this.formFields = formFields;
-
   }
 
   ngOnInit(): void {
@@ -41,7 +40,7 @@ export class UpdateuserComponent {
     });
 
     if (this.user) {
-      this.addForm.patchValue(this.user);
+      this.addForm.patchValue(this.user.personalData);
     }
   }
 
@@ -50,7 +49,7 @@ export class UpdateuserComponent {
     this.modalRefEdit.close();
   }
 
-  close() {
+  modalClose() {
     this.modalRefEdit.close();
   }
 }

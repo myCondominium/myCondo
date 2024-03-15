@@ -38,11 +38,11 @@ export class UserGuard implements CanActivate {
     }
 
     private async getUserData(uid: string): Promise<any> {
-        return this.firestore.collection('users').doc(uid).get().pipe(first()).toPromise();
+        return await this.firestore.collection('users').doc(uid).collection('personaldatas').doc('datas').get().toPromise();
     }
 
     private redirectToUserPage(): void {
-        this.router.navigate(['/lako']); // Nem adminokat átirányítjuk az /user oldalra
+        this.router.navigate(['/lako']);
     }
 
     private redirectToLoginPage(): void {

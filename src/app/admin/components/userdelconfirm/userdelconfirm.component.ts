@@ -12,7 +12,7 @@ export class UserdelconfirmComponent {
 
   constructor(public modalRef: MdbModalRef<UserdelconfirmComponent>) { }
 
-  close(): void {
+  modalClose(): void {
     this.modalRef.close();
   }
 

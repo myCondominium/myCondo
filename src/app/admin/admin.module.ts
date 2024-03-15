@@ -19,6 +19,7 @@ import { MetersComponent } from './components/meters/meters.component';
 import { AdduserComponent } from './components/adduser/adduser.component';
 import { UpdateuserComponent } from './components/updateuser/updateuser.component';
 import { UserdelconfirmComponent } from './components/userdelconfirm/userdelconfirm.component';
+import { UsersService } from './services/users.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { UserdelconfirmComponent } from './components/userdelconfirm/userdelconf
     AdminhomeService,
     DatePipe,
     MdbModalService,
+    UsersService
   ],
 })
 export class AdminModule { }

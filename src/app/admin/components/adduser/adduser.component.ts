@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
