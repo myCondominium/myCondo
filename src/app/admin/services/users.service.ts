@@ -4,9 +4,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, combineLatest, map, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,30 +13,14 @@ export class UsersService {
   userId: string | null = null;
   yearAndMonth: string = '';
 
-
   constructor(private auth: AngularFireAuth, private firestore: AngularFirestore, private date: DatePipe) { }
 
-  isUsernameExists(email: any): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this.getAllData().subscribe({
-        next: (userData: any[]) => {
-          const user = userData.find((user: { personalData: { email: any; }; }) => user.personalData.email === email);
-          resolve(user !== undefined);
-        },
-        error: (error: any) => {
-          console.error('Hiba történt a felhasználónév ellenőrzése során:', error);
-          reject(false);
-        }
-      });
-    });
-  }
 
-
-
+  // lakó hozzáadása
   async addUser(userData: any) {
     const email = userData.email;
 
-    const isUserExists = await this.isUsernameExists(email);
+    const isUserExists = await this.isUserExists(email);
     console.log(isUserExists)
 
     if (isUserExists) {
@@ -80,6 +61,23 @@ export class UsersService {
     }
   }
 
+  //ellenőrzés hogy létezik-e már a lakó
+  isUserExists(email: any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.getAllData().subscribe({
+        next: (userData: any[]) => {
+          const user = userData.find((user: { personalData: { email: any; }; }) => user.personalData.email === email);
+          resolve(user !== undefined);
+        },
+        error: (error: any) => {
+          console.error('Hiba történt a felhasználónév ellenőrzése során:', error);
+          reject(false);
+        }
+      });
+    });
+  }
+
+  // lakó és a mérőórák lekérdezése és egyesítése
   getAllData(): Observable<any[]> {
     return this.firestore.collection('users').snapshotChanges().pipe(
       switchMap(usersSnapshot => {
@@ -96,39 +94,37 @@ export class UsersService {
     );
   }
 
+  // lakó adatainak módosítása
   async updateUser(userData: any, userId: string) {
-    const email = userData.email;
-    const password = userData.password || '123456';
-    const isAdmin = parseInt(userData.isAdmin);
-    const { phone, name, building, floor, door, squaremeter, balance } = userData;
+    const { email, password = '123456', isAdmin, phone, name, building, floor, door, squaremeter, balance } = userData;
+
     try {
       const userDocRef = this.firestore.collection('users').doc(userId).collection('personaldatas').doc('datas');
       const uData = await userDocRef.get().toPromise();
-      if (uData && uData.exists) {
-        const userDataObject: { email: string } | undefined = uData.data() as { email: string } | undefined;
-        if (userDataObject) {
-          const oldEmail = userDataObject.email;
 
-          if (oldEmail !== email) {
-            console.log('Felhasználó email címe megváltozott. Régi cím: ' + oldEmail + ', új cím: ' + email);
-            this.deleteUser(userId);
-            this.addUser(userData);
-          } else {
-            await userDocRef.update({ name, email, phone, building, floor, door, squaremeter, balance, isAdmin });
-            console.log('Adatok sikeresen frissítve');
-          }
-        } else {
-          console.log('Nem találtam felhasználót ezen az azonosítón.');
-        }
-      } else {
+      if (!uData?.exists) {
         console.log('Nem találtam felhasználót ezen az azonosítón.');
+        return;
       }
+
+      const oldEmail = uData.get('email');
+
+      if (oldEmail !== email) {
+        console.log(`Felhasználó email címe megváltozott. Régi cím: ${oldEmail}, új cím: ${email}`);
+        await this.deleteUser(userId);
+        await this.addUser(userData);
+        return;
+      }
+
+      await userDocRef.update({ name, email, phone, building, floor, door, squaremeter, balance, isAdmin });
+      console.log('Adatok sikeresen frissítve');
     } catch (error) {
       console.error('Hiba történt a frissítés során:', error);
     }
   }
 
 
+  // lakó törlése
   async deleteUser(userId: string) {
     try {
       const userDocRef = this.firestore.collection('users').doc(userId);
@@ -142,8 +138,6 @@ export class UsersService {
         const querySnapshot = await collectionRef.get().toPromise();
         await this.deleteCollection(querySnapshot);
       }
-
-
     } catch (error) {
       console.error('Hiba történt a personaldatas alkollekció törlésekor:', error);
     }

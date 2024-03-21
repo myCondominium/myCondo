@@ -1,147 +1,178 @@
 import { Component } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 
-// interface MeterData {
-//   meterData: {
-//     start: number;
-//     end: number;
-//     commonCost: number;
-//     waterHeating: number;
-//     heatingBase: number;
-//     heatingMulti: number;
-//     meterNumber: number;
-//   };
-// }
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  condoData: any;
-  field: any;
-  selectedMeterNumber: number = 2;
-  metersStart: any;
-  metersEnd: any;
-  meterData: any;
-  mCommonCost: any;
-  mWaterHeating: any;
-  mHeatingBase: any;
-  mHeatingMulti: any;
+
+  measureRecStart: any;
+  measureRecEnd: any;
+  meterNumber: number = 2;
+  commonCost: any;
+  heatingBase: any;
+  heatingMulti: any;
+  waterHeating: any;
+  subdeposit: any;
+
+  condoDatas: any[] = [];
+  title: any;
+  data: any;
 
   constructor(private settingService: SettingsService) {
-    this.condoData = this.getCondoDataAndAddField();
-    this.getMetersData();
+    this.checkIsCollectionExists();
+    this.initBaseDatas();
+    this.initCondoDatas();
   }
 
-  // információs mezők metódusai
-  getCondoDataAndAddField() {
-    this.settingService.getCondoDatasAndAddField().subscribe(
-      (condoData: any) => {
-        this.condoData = condoData;
-        this.addField();
-        this.getMetersData();
-      },
-      (error: any) => {
-        console.error("Error fetching condo data:", error);
-      }
-    );
-    return this.condoData;
+  //alapadatok lekérése
+  async initBaseDatas() {
+    const settingPromises = [
+      this.settingService.getSettingDatas('start'),
+      this.settingService.getSettingDatas('end'),
+      this.settingService.getSettingDatas('meternumber'),
+      this.settingService.getSettingDatas('commoncost'),
+      this.settingService.getSettingDatas('heatingbase'),
+      this.settingService.getSettingDatas('heatingmulti'),
+      this.settingService.getSettingDatas('waterheating'),
+      this.settingService.getSettingDatas('subdeposit')
+    ];
+
+    const [
+      measureRecStart,
+      measuseRecEnd,
+      meterNumber,
+      commonCost,
+      heatingBase,
+      heatingMulti,
+      waterHeating,
+      subdeposit
+    ] = await Promise.all(settingPromises);
+
+    this.measureRecStart = measureRecStart;
+    this.measureRecEnd = measuseRecEnd;
+    this.meterNumber = meterNumber;
+    this.commonCost = commonCost;
+    this.heatingBase = heatingBase;
+    this.heatingMulti = heatingMulti;
+    this.waterHeating = waterHeating;
+    this.subdeposit = subdeposit
   }
 
-  createCollectionWithField() {
-    this.settingService.createCollectionWithField();
-    this.addField();
-  }
+  // diktálási dátumok mentése
+  async saveRecDate() {
+    const isValidValues = this.measureRecStart > this.measureRecEnd ||
+      this.measureRecStart === '' ||
+      this.measureRecEnd === '' ||
+      this.measureRecStart < 1 ||
+      this.measureRecEnd < 2;
 
-  saveDataRow(userId: any, title: any, data: any, editable: any) {
-    this.settingService.saveDataRow(userId, title, data, editable);
-    this.getCondoDataAndAddField();
-    this.addField();
-  }
-
-  addField() {
-    const lastRow = this.condoData[this.condoData.length - 1];
-
-    if (lastRow && lastRow.fields.every((field: { title: string; data: string; }) => field.title.trim() === '' && field.data.trim() === '')) {
-      console.log('Az utolsó sor üres, nem adunk hozzá új sort.');
-    } else {
-      const newField1 = { title: '', data: '', editable: true }; // Létrehozzuk az editable tulajdonságot
-      this.condoData.push({ fields: [newField1] });
-    }
-  }
-
-  async updateFirestoreDocument(dataId: string, title: string, data: string, editable: boolean) {
-    await this.settingService.updateFirestoreDocument(dataId, title, data, editable);
-    this.getCondoDataAndAddField();
-  }
-
-  // diktálási időszak metódusai
-  saveDate() {
-    if (this.metersStart > this.metersEnd || this.metersStart === ''
-      || this.metersEnd === '' || this.metersStart < 1 || this.metersEnd < 2) {
+    if (isValidValues) {
       alert("Hibás adatok!");
     } else {
-      const data = {
-        meterData: {
-          start: this.metersStart,
-          end: this.metersEnd,
-        },
-      };
-      this.settingService.saveDate(data);
-      this.getMetersData();
+      try {
+        await this.settingService.saveSettingData('start', this.measureRecStart);
+        await this.settingService.saveSettingData('end', this.measureRecEnd);
+        console.log("Diktálási dátumok sikeresen mentve.");
+      } catch (error) {
+        console.error("Hiba történt a diktálási dátumok mentése során:", error);
+        alert("Hiba történt a mentés során. Próbáld újra később!");
+      }
     }
   }
 
-  getMetersData() {   //service
-    this.settingService.getMetersData().subscribe((data) => {
-      this.meterData = data;
-      if (data) {
-        this.metersStart = data.meterData.start;
-        this.metersEnd = data.meterData.end;
-        this.mCommonCost = data.meterData.commonCost;
-        this.mWaterHeating = data.meterData.waterHeating;
-        this.mHeatingBase = data.meterData.heatingBase;
-        this.mHeatingMulti = data.meterData.heatingMulti;
-        this.selectedMeterNumber = data.meterData.meterNumber;
-      } else {
-        console.error('Nincs adat');
-      }
-    });
+  // vízórák számának mentése mentése
+  async saveMeterNumber() {
+    try {
+      await this.settingService.saveSettingData('meternumber', this.meterNumber);
+    } catch (error) {
+      console.error("Hiba történt az órák számának mentése során:", error);
+      alert("Hiba történt a mentés során. Próbáld újra később!");
+    }
   }
 
   // költségadatok mentése
-  saveCost() {
-    if (this.mCommonCost < 0 ||
-      this.mWaterHeating < 0 ||
-      this.mHeatingBase < 0 ||
-      this.mHeatingMulti < 0) {
+  async saveCostDatas() {
+    const isValidValues = this.commonCost >= 0 &&
+      this.heatingBase >= 0 &&
+      this.heatingMulti >= 0 &&
+      this.waterHeating >= 0;
+
+    if (!isValidValues) {
       alert("Hibás adatok!");
-      this.settingService.getMetersData();
     } else {
-      const data = {
-        meterData: {
-          commonCost: this.mCommonCost !== undefined ? this.mCommonCost : 0,
-          waterHeating: this.mWaterHeating !== undefined ? this.mWaterHeating : 0,
-          heatingBase: this.mHeatingBase !== undefined ? this.mHeatingBase : 0,
-          heatingMulti: this.mHeatingMulti !== undefined ? this.mHeatingMulti : 0
-        }
-      };
-      this.settingService.saveCost(data);
-      this.settingService.getMetersData();
+      try {
+        await this.settingService.saveSettingData('commoncost', this.commonCost);
+        await this.settingService.saveSettingData('heatingbase', this.heatingBase);
+        await this.settingService.saveSettingData('heatingmulti', this.heatingMulti);
+        await this.settingService.saveSettingData('waterheating', this.waterHeating);
+        await this.settingService.saveSettingData('subdeposit', this.subdeposit);
+        console.log("Diktálási dátumok sikeresen mentve.");
+      } catch (error) {
+        console.error("Hiba történt a diktálási dátumok mentése során:", error);
+        alert("Hiba történt a mentés során. Próbáld újra később!");
+      }
     }
-    this.settingService.getMetersData();
   }
 
-  // vízórák számának mentése
-  saveMeterNumber() {
-    const data = {
-      meterData: {
-        meterNumber: this.selectedMeterNumber
-      },
-    };
-    this.settingService.saveMeterNumber(data);
-    this.settingService.getMetersData();
+  // társasház adatainak kezelése
+  async initCondoDatas() {
+    await this.getCondoDatas();
+    this.addNewRow();
   }
+
+  // ellenőrizzük hogy létezik-e a társasház adatait tartalmazó kollekció, ha nem akkor létrehozzuk
+  async checkIsCollectionExists() {
+    const exists = await this.settingService.checkIsCollectionExists('condodatas');
+    if (!exists) {
+      console.log('A kollekció létezik.');
+    } else {
+      await this.settingService.createCollection();
+    }
+  }
+
+  // lekérjük a társasház adatait
+  async getCondoDatas(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.settingService.getCondoDatas().subscribe(data => {
+        this.condoDatas = data;
+        console.log('condoDatas:', this.condoDatas);
+        resolve();
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+
+  // új sor hozzáadása ha az utolsó elem nem üres
+  addNewRow() {
+    const lastItem = this.condoDatas[this.condoDatas.length - 1];
+    if (lastItem.title.trim() !== '' || lastItem.data.trim() !== '') {
+      const newId = '';
+      this.condoDatas.push({ id: newId, title: '', data: '', editable: true });
+    }
+  }
+
+  // új sor mentése vagy törlése ha nincs title érték
+  async saveDataRow(id: any, title: any, data: any) {
+    if (!title && id) {
+      await this.settingService.deleteRow(id);
+      await this.initCondoDatas();
+      return;
+    }
+    if (id) {
+      await this.settingService.updateRowData(id, title, data);
+      await this.initCondoDatas();
+    }
+    if (!id && title) {
+      await this.settingService.saveNewRow(title, data);
+      await this.initCondoDatas();
+    }
+
+  }
+
 }
 

@@ -182,3 +182,7 @@ option:hover {
     width: 800px;
     height: 600px;
 }
+
+td {
+    padding-right: 1.5rem;
+}

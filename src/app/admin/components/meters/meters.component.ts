@@ -20,10 +20,7 @@ export class MetersComponent {
   meterNumber: any;
   yearAndMonth: any;
   data: any;
-  userName: any;
-  expandedUserId: number | null = null;
-  meters: any;
-  users: any;
+  userName: any;;
   allData: any[] = [];
   meterDate: any;
 
@@ -34,6 +31,7 @@ export class MetersComponent {
     this.initializeData();
   }
 
+  // lakók és mérőórák adatainak lekérdezése formázása
   initializeData() {
     const meterDate = this.getMeterDate();
     this.meterService.getAllData(meterDate).subscribe({
@@ -53,16 +51,18 @@ export class MetersComponent {
     });
   }
 
+  // mérőórák számának lekérdezése
   async getMeterNum() {
     try {
       const meterNum = await this.meterService.getMeterNumber();
-      this.meterNumber = meterNum.mnum;
+      this.meterNumber = meterNum.value;
     } catch (error) {
       console.error('Hiba történt a mérőszám lekérésekor:', error);
     }
   }
 
-  async openModal(content: any, userId: string, userName: string) {
+  // régebbi óraállások lekérése
+  async openPreviousData(content: any, userId: string, userName: string) {
     try {
       const meterData = await this.meterService.getMeterData(userId).toPromise();
 
@@ -79,21 +79,25 @@ export class MetersComponent {
     }
   }
 
+  // a régi állásokat dátum szerint rendezzük
   sortMeterData(data: any[]): any[] {
     data.sort((a, b) => a.key.localeCompare(b.key)).reverse();
     return data;
   }
 
+  // az év és hónap formázása /pl.: 2024-03/
   getMeterDate() {
     return this.datePipe.transform(new Date(), 'yyyy-MM')!;
   }
 
+  // az év és hónap létrehozása
   getYearAndMonth() {
     const currentDate = new Date();
     const formattedDate = `${this.datePipe.transform(currentDate, 'yyyy', 'hu')} ${this.getHungarianMonthName(currentDate.getMonth() + 1)}`;
     return formattedDate;
   }
 
+  // a hónap neveinek magyarítása
   getHungarianMonthName(month: number): string {
     const monthNames = [
       'január', 'február', 'március', 'április', 'május', 'június',
@@ -102,6 +106,7 @@ export class MetersComponent {
     return monthNames[month - 1];
   }
 
+  // lakók névsorba rendezése
   sortUsersByName() {
     this.meterusers.sort((a, b) => {
       const nameA = a.personalData.name.toUpperCase();
@@ -116,17 +121,19 @@ export class MetersComponent {
     });
   }
 
-
+  // keresés szerint szűrés
   filterUsers() {
     this.filteredUsers = this.meterusers.filter((user) =>
       user.personalData.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
+  // oldal/lakó változtatásánál vissza az első lapra
   onPageSizeChange() {
     this.page = 1;
   }
 
+  // óraállások mentése
   saveMeter(userId: string) {
     const user = this.filteredUsers.find(u => u.id === userId);
     const meterKey = this.getMeterDate();

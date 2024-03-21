@@ -8,22 +8,23 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./condodatas.component.css']
 })
 export class CondodatasComponent {
-  tempDatas: any[] | undefined;
-  condoDatas: Observable<any[]> | undefined;
+  condoDatas: any[] = [];
 
   constructor(
     private service: CondodatasService) {
-    this.getCondoData();
+    this.getCondoDatas();
   }
 
-  getCondoData(): void {
-    this.service.getCondoData().subscribe(data => {
-      this.tempDatas = data.map(item => item.fields);
-      const arr: any[] = [];
-      this.tempDatas.forEach((element: any) => {
-        arr.push(element[0]);
+  // lekérjük a társasház adatait
+  async getCondoDatas(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.service.getCondoDatas().subscribe(data => {
+        this.condoDatas = data;
+        console.log('condoDatas:', this.condoDatas);
+        resolve();
+      }, error => {
+        reject(error);
       });
-      this.condoDatas = of(arr);
     });
   }
 

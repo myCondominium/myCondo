@@ -16,7 +16,7 @@ export class HomeComponent {
   metersData: any;
   currentDay: any;
   currentYearAndMonth: any;
-  fieldNames: any[] | undefined;
+  meterDates: any[] | undefined;
   userId = localStorage.getItem('userId') || '';
   userEmail = localStorage.getItem('userEmail') || '';
   isDictate = false;
@@ -26,8 +26,6 @@ export class HomeComponent {
   condoName: any;
   lastLogin: any;
   newBulletin = 0;
-
-
 
   constructor(
     private bboardService: BBoardService,
@@ -40,16 +38,15 @@ export class HomeComponent {
     this.getLoginDates();
     this.getCondoName();
     this.getBbData();
-    this.getMetersData();
+    this.initMetersData();
     this.getDateValues();
-    this.checkEnableDictate();
 
   }
 
+  // megvizsgáljuk hogy lehet-e diktálni
   async checkEnableDictate() {
-    await this.getMeterDate(this.userId);
-    this.isDictate = this.isDictateThisMonth();
-    console.log(this.isDictate)
+    const isD = await this.isDictateThisMonth();
+    this.isDictate = isD;
     if (!this.isDictate && (this.startDictate <= this.currentDay && this.endDictate >= this.currentDay)) {
       this.enableDictate = true;
     } else {
@@ -57,47 +54,58 @@ export class HomeComponent {
     }
   }
 
-  getBbData() {
+  // összehasonlítjuk a jelenlegi évet-hónapot, ha nincs a listában akkor lehet diktálni
+  async isDictateThisMonth() {
+    const meterDates = await this.homeservice.getMeterDates(this.userId).toPromise();
+    this.meterDates = meterDates?.map(item => item.key);
+    if (this.meterDates && this.meterDates.includes(this.currentYearAndMonth)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  // utolsó bejelentkezés lekérése
+  async getLoginDates() {
+    try {
+      this.lastLogin = await this.homeservice.getLoginDates(this.userId);
+      console.log('Utolsó bejelentkezés:', this.lastLogin);
+    } catch (error) {
+      console.error('Hiba a bejelentkezési adatok lekérésekor:', error);
+    }
+  }
+
+  // faliújság lekérése
+  async getBbData() {
     this.bboardService.getAllBulletinBoardData().subscribe((data: any[]) => {
       this.bulletinBoardData = data;
+      console.log(this.bulletinBoardData)
 
       this.bulletinBoardData.forEach((item: any) => {
-
         const timestamp = item.timestamp;
         if (this.isEntryNew(timestamp)) {
           this.newBulletin++;
         }
-
       });
     });
   }
 
+  // megvizsgáljuk hogy a faliújság létrehozása később volt-e mint az utolsó bejelentkezés
   isEntryNew(creationTimestamp: any) {
-
-    return this.lastLogin <= creationTimestamp;
+    const seconds = creationTimestamp.seconds;
+    const nanoSeconds = creationTimestamp.nanoseconds;
+    const created = (seconds * 1000) + Math.floor(nanoSeconds / 1000000);
+    return this.lastLogin <= created;
   }
 
-  getMetersData() {
-    this.homeservice.getMetersData().subscribe({
-      next: (data) => {
-        this.metersData = data;
-        this.startDictate = this.metersData.meterData.start;
-        this.endDictate = this.metersData.meterData.end;
-        console.log('Sikeres adatlekérés:', this.metersData.meterData);
-      },
-      error: (error) => {
-        console.error('Hiba történt a metersData lekérdezésekor:', error);
-      }
-    });
-  }
-
-  async getMeterDate(userId: string) {
-    try {
-      this.fieldNames = await this.homeservice.getMeterDate(userId);
-      console.log('Field nevek:', this.fieldNames);
-    } catch (error) {
-      console.error('Hiba:', error);
-    }
+  // diktálási időpont kezdete és vége
+  async initMetersData() {
+    const sd = await this.homeservice.getMetersData('start');
+    this.startDictate = sd.value;
+    const ed = await this.homeservice.getMetersData('end');
+    this.endDictate = ed.value;
+    this.checkEnableDictate();
   }
 
   sanitizeHTML(html: string): SafeHtml {
@@ -107,39 +115,23 @@ export class HomeComponent {
 
 
   formatTimestamp(timestamp: any): string {
-
     return this.datePipe.transform(timestamp.toDate(), 'yyyy MM-dd HH:mm') || '';
   }
 
-
+  // az aktuális dátum yyyy-m és d formátumra bontása
   getDateValues() {
-    const date = this.datePipe.transform(new Date(), 'yyyy_M-d') || '';
-    const parts = date.split("-");
+    const date = this.datePipe.transform(new Date(), 'yyyy-MM_d') || '';
+    const parts = date.split("_");
     this.currentYearAndMonth = parts[0];
     this.currentDay = parts[1];
   }
 
-  isDictateThisMonth() {
-    if (this.fieldNames?.includes(this.currentYearAndMonth)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+  // társasház nevének lekérése
   async getCondoName() {
     try {
       this.condoName = await this.homeservice.getCondoName();
     } catch (error) {
       console.error('Hiba a név lekérdezésekor:', error);
-    }
-  }
-
-  async getLoginDates() {
-    try {
-      this.lastLogin = await this.homeservice.getLoginDates(this.userId);
-    } catch (error) {
-      console.error('Hiba az utolsó bejelentkezés lekérésekor:', error);
     }
   }
 

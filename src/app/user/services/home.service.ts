@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentData, QuerySnapshot } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable, map } from 'rxjs';
 
 
 
@@ -15,64 +15,73 @@ export class Homeservice {
 
   }
 
-  getMetersData() {
-    return this.firestore.collection('meterSettings').doc('metersAndCosts').valueChanges();
+  // a beállítások értékét adja vissza 
+  async getMetersData(doc: string): Promise<any> {
+    const snapshot = await this.firestore.collection('metersettings').doc(doc).get().toPromise();
+    return snapshot?.data();
   }
 
 
+  // a leadott diktálási időpontok lekérése
 
-  async getMeterDate(userId: string): Promise<any> {
-    try {
-      const document = await this.firestore.collection("meters").doc(userId).get().toPromise();
-      const fieldNames = Object.keys(document?.data() || {});
-      return fieldNames;
-    } catch (error) {
-      console.error('Error getting field names:', error);
-      throw error;
-    }
+  getMeterDates(userId: string): Observable<any[]> {
+    return this.firestore.collection('users').doc(userId).collection('meterdatas').doc('datas').get().pipe(
+      map(userDataSnapshot => {
+        const data = userDataSnapshot.data();
+        const dataArray = [];
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            dataArray.push({ key, value: data[key] });
+          }
+        }
+        return dataArray;
+      })
+    );
   }
 
+
+  // a társasház nevének lekérése
   async getCondoName() {
     try {
-      const collectionRef = this.firestore.collection('condoDatas');
-      const querySnapshot = await collectionRef.get().toPromise();
-
-      if (querySnapshot && !querySnapshot.empty) {
-        const firstDocument: any = querySnapshot.docs[0].data();
-
-        if (firstDocument.fields && firstDocument.fields.length > 0) {
-          return firstDocument.fields[0].data;
+      const snapshot = await this.firestore.collection('condodatas').get().toPromise();
+      if (!snapshot?.empty) {
+        const doc = snapshot?.docs[1];
+        const data = doc?.data();
+        if (data && typeof data === 'object' && 'data' in data) {
+          return data.data;
         } else {
-          return "Még nincs beállítva a th. neve";
+          console.log('A dokumentum elem nem tartalmazza a szükséges adatot.');
+          return null;
         }
       } else {
-        return "Még nincs beállítva a th. neve";
+        console.log('A kollekcióban nincsenek dokumentumok.');
+        return null;
       }
     } catch (error) {
-      console.error('Hiba a lekérdezés során:', error);
-      throw error;
+      console.error('Hiba történt a beállítási adatok lekérésekor:', error);
+      return null;
     }
   }
 
+  // az user utolsó előtti bejelentkezésének lekérése
+  async getLoginDates(userId: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const loginHistoryRef = this.firestore.collection(`users/${userId}/loginHistory`).doc('datas');
+        const snapshot = await loginHistoryRef.get().toPromise();
+        const loginData: any = snapshot?.data() || {};
 
-  async getLoginDates(userId: any) {
-    const userRef = this.firestore.collection('users').doc(userId).collection('loginHistory');
-    const querySnapshot: QuerySnapshot<DocumentData> | undefined = await userRef.get().toPromise();
+        const sortedTimestamps = Object.keys(loginData).sort((a, b) => +b - +a);
+        console.log('sorted:', sortedTimestamps)
 
-    if (querySnapshot) {
-      const loginDates = querySnapshot.docs
-        .map((doc) => doc.data()['loginTime'])
-        .sort((a, b) => b - a);
-      return loginDates[1] !== undefined ? loginDates[1] : 0;
-    } else {
-      console.error("Hiba a bejelentkezési adatok lekérésekor!");
-      return [];
-    }
+        const secondToLastDate = sortedTimestamps[1];
+
+        resolve(secondToLastDate);
+      } catch (error) {
+        console.error('Hiba a bejelentkezési adatok lekérésekor:', error);
+        reject(error);
+      }
+    });
   }
-
-
-
-
 
 }
-

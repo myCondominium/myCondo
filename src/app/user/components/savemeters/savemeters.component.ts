@@ -20,6 +20,8 @@ export class SavemetersComponent {
   fieldNames: any[] | undefined;
   isDictate = false;
   enableDictate: any;
+  meterDates: any[] | undefined;
+
 
   cold1: any;
   hot1: any;
@@ -34,66 +36,57 @@ export class SavemetersComponent {
 
   constructor(
     private service: SavemetersService,
-    private datePipe: DatePipe,
-    private meterService: MetersService
+    private datePipe: DatePipe
   ) {
-    this.getMetersData();
     this.getDateValues();
+    this.initMetersData();
+  }
+
+  // diktálási időpont kezdete és vége
+  async initMetersData() {
+    const sd = await this.service.getMetersData('start');
+    this.startDictate = sd.value;
+    const ed = await this.service.getMetersData('end');
+    this.endDictate = ed.value;
+    const mnum = await this.service.getMetersData('meternumber')
+    this.meterNum = mnum.value;
     this.checkEnableDictate();
   }
 
-  getMetersData() {
-    this.service.getMetersData().subscribe({
-      next: (data) => {
-        this.metersData = data;
-        this.startDictate = this.metersData.meterData.start;
-        this.endDictate = this.metersData.meterData.end;
-        this.meterNum = this.metersData.meterData.meterNumber;
-        console.log('Sikeres adatlekérés:', this.metersData.meterData);
-      },
-      error: (error) => {
-        console.error('Hiba történt a metersData lekérdezésekor:', error);
-      }
-    });
-  }
-
+  // az aktuális dátum yyyy-m és d formátumra bontása
   getDateValues() {
-    const date = this.datePipe.transform(new Date(), 'yyyy_M-d') || '';
-    const parts = date.split("-");
+    const date = this.datePipe.transform(new Date(), 'yyyy-MM_d') || '';
+    const parts = date.split("_");
     this.currentYearAndMonth = parts[0];
     this.currentDay = parts[1];
   }
 
-  async getMeterDate(userId: string) {
-    try {
-      this.fieldNames = await this.service.getMeterDate(userId);
-      console.log('Field nevek:', this.fieldNames);
-    } catch (error) {
-      console.error('Hiba:', error);
-    }
-  }
 
+  // megvizsgáljuk hogy lehet-e diktálni
   async checkEnableDictate() {
-    await this.getMeterDate(this.userId);
-    this.isDictate = this.isDictateThisMonth();
-    if (this.isDictate && (this.startDictate <= this.currentDay && this.endDictate >= this.currentDay)) {
+    const isD = await this.isDictateThisMonth();
+    this.isDictate = isD;
+    if (!this.isDictate && (this.startDictate <= this.currentDay && this.endDictate >= this.currentDay)) {
       this.enableDictate = true;
     } else {
       this.enableDictate = false;
     }
   }
 
-  isDictateThisMonth() {
-    if (this.fieldNames?.includes(this.currentYearAndMonth)) {
-      return false;
-    } else {
+  // összehasonlítjuk a jelenlegi évet-hónapot, ha nincs a listában akkor lehet diktálni
+  async isDictateThisMonth() {
+    const meterDates = await this.service.getMeterDates(this.userId).toPromise();
+    this.meterDates = meterDates?.map(item => item.key);
+    if (this.meterDates?.includes(this.currentYearAndMonth)) {
       return true;
+    } else {
+      return false;
     }
   }
 
-  save() {
+  async save() {
     if (this.checkInputValues()) {
-      const meterKey = `${new Date().getFullYear()}_${new Date().getMonth() + 1}`;
+      const meterKey = this.getMeterDate();
       const meterData = {
         [meterKey]: {
           meterColdOne: this.cold1,
@@ -104,8 +97,8 @@ export class SavemetersComponent {
         }
       }
       console.log(meterData);
-      this.meterService.saveMeter(this.userId, meterData);
-      if (this.isDictateThisMonth()) {
+      this.service.saveMeter(this.userId, meterData);
+      if (await this.isDictateThisMonth()) {
         this.message = "Az óraállások mentése sikeres.";
         this.enableDictate = false;
       } else {
@@ -114,6 +107,11 @@ export class SavemetersComponent {
     } else {
       this.errorMessage = true;
     }
+  }
+
+  // az év és hónap formázása /pl.: 2024-03/
+  getMeterDate() {
+    return this.datePipe.transform(new Date(), 'yyyy-MM')!;
   }
 
   checkInputValues() {

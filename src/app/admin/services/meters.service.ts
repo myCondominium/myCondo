@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { combineLatest, first, map, Observable, pluck, switchMap } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { MeterData } from '../models/meterdata';
 
 interface User {
@@ -32,15 +31,8 @@ export class MetersService {
   data: { [year: string]: MeterData } = {};
 
   constructor(
-    private firestore: AngularFirestore,
-    private datePipe: DatePipe
+    private firestore: AngularFirestore
   ) {
-  }
-
-  getUserData(userId: string): Observable<any> {
-    return this.firestore.collection('users').doc(userId).collection('personaldatas').doc('datas').get().pipe(
-      map(userDataSnapshot => userDataSnapshot.data())
-    );
   }
 
   getMeterData(userId: string): Observable<any[]> {

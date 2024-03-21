@@ -7,15 +7,15 @@
       <div class="row">
       <div class="col">
         <label for="start">Kezdete:</label>
-        <input class="form-control short" type="number" id="start" name="start" [(ngModel)]="metersStart">
+        <input class="form-control short" type="number" id="start" name="start" [(ngModel)]="measureRecStart">
         </div>
         <div class="col">
         <label for="end">Vége:</label>
-        <input class="form-control short" type="number" id="end" name="end" [(ngModel)]="metersEnd">
+        <input class="form-control short" type="number" id="end" name="end" [(ngModel)]="measureRecEnd">
       </div>
       <div class="col">
         <div class="col editor-buttons mt-4">
-          <a (click)="saveDate()" class="buttons green">
+          <a (click)="saveRecDate()" class="buttons green">
             Mentés
           </a>
         </div>
@@ -29,11 +29,11 @@
   <div class="dates row">
     <div class="col form-check form-check-inline ms-3">
     <label for="radio2" class="form-check-label">2</label>
-    <input class="form-check-input" type="radio" id="radio2" name="numOfMeter" [(ngModel)]="selectedMeterNumber" value="2">
+    <input class="form-check-input" type="radio" id="radio2" name="numOfMeter" [(ngModel)]="meterNumber" value="2">
     </div>  
     <div class="col form-check form-check-inline ms-2">
     <label for="radio4" class="ms-2 form-check-label">4</label>
-    <input class="form-check-input" type="radio" id="radio4" name="numOfMeter" [(ngModel)]="selectedMeterNumber" value="4">
+    <input class="form-check-input" type="radio" id="radio4" name="numOfMeter" [(ngModel)]="meterNumber" value="4">
     </div>
   
     <div class="col editor-buttons">
@@ -52,12 +52,12 @@
         <div class="row">
           <div class="row-flex col-md-6 col-xs-12 mb-3">
             <label for="commonCost" class="costLabel">Közös költség:</label>
-            <input class="form-control medium" type="number" id="commonCost" name="commonCost" [(ngModel)]="mCommonCost">
+            <input class="form-control medium" type="number" id="commonCost" name="commonCost" [(ngModel)]="commonCost">
             <span class="ms-2">Ft/m<sup>2</sup></span>
         </div>
             <div class="row-flex col-md-6 col-xs-12 mb-3">
             <label for="waterHeating" class="costLabel">Vízfelmelegítési díj :</label>
-            <input class="form-control medium" type="number" id="waterHeating" name="waterHeating" [(ngModel)]="mWaterHeating">
+            <input class="form-control medium" type="number" id="waterHeating" name="waterHeating" [(ngModel)]="waterHeating">
             <span class="ms-2">Ft/m<sup>3</sup></span>
         </div>
       </div>
@@ -65,17 +65,27 @@
       <div class="row">
         <div class="col">
             <label for="heatingBase">Fűtés alapdíj:</label>
-            <input class="form-control medium" type="number" id="heatingBase" name="heatingBase" [(ngModel)]="mHeatingBase">
+            <input class="form-control medium" type="number" id="heatingBase" name="heatingBase" [(ngModel)]="heatingBase">
             <span class="ms-2">Ft</span>
             </div>
         <div class="col">
             <label for="heatingMulti">Fűtés egység szorzó:</label>
-            <input class="form-control medium" type="number" id="heatingMulti" name="heatinMulti" [(ngModel)]="mHeatingMulti">
+            <input class="form-control medium" type="number" id="heatingMulti" name="heatinMulti" [(ngModel)]="heatingMulti">
             <span class="ms-2">Ft/egység</span>
             </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <label for="subdeposit">Albetéti díj (vízóra nélküli lakásnak):</label>
+          <input class="form-control medium" type="number" id="subdeposit" name="subdeposit" [(ngModel)]="subdeposit">
+          <span class="ms-2">Ft</span>
+        </div>
+        <div class="col">
+
+        </div>
+      </div>
       <div class="editor-buttons">
-        <a (click)="saveCost()" class="buttons green">
+        <a (click)="saveCostDatas()" class="buttons green">
           Mentés
         </a>
       </div>
@@ -90,9 +100,8 @@
         <p class="mb-3">Ez így fog megjelenni az oldalon: <b>Közös képviselő: Kovács Béla. </b> A sor<b> törlés</b>éhez töröld ki mind a két mezőt és nyomj a 
             <i>Mentés</i> gombra. </p>
         
-        <div class="mt-3" *ngFor="let data of condoData">
+        <div class="mt-3" *ngFor="let data of condoDatas">
             <form #dynamicForm="ngForm">
-              <div *ngFor="let field of data.fields; let i = index" class="mb-3">
                 <div class="row row-flex" data-id="{{data.id}}">
                   <div class="col-md-5 mb-2">
                     
@@ -100,29 +109,28 @@
                            class="form-control" 
                            id="title" 
                            name="title" 
-                           [(ngModel)]="field.title" 
-                           required [attr.readonly]="field.editable ? null : 'true'" 
+                           [(ngModel)]="data.title"
+                           required [attr.readonly]="data.editable ? null : 'true'" 
                            placeholder="Cimke:">
                   </div>
-                  <div class="col-md-6 mb-2">
+                  <div class="col-md-5 mb-2">
                     
                     <input type="text"
                            class="form-control" 
                            id="data" 
                            name="data" 
-                           [(ngModel)]="field.data" required
+                           [(ngModel)]="data.data" required
                            placeholder="Adat:">
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <div class="editor-buttons">
-                      <a (click)="saveDataRow(data.id, field.title, field.data, field.editable)" class="buttons green">
+                      <a (click)="saveDataRow(data.id, data.title, data.data)" class="buttons green">
                         Mentés
                       </a>
                     </div>
                     </div>
                   
                 </div>
-              </div>
             </form>
           </div>
 

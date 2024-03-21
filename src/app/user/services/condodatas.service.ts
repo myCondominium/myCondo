@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 
 @Injectable({
@@ -11,7 +11,14 @@ export class CondodatasService {
   constructor(private firestore: AngularFirestore) { }
 
 
-  getCondoData(): Observable<any[]> {
-    return this.firestore.collection('condoDatas').valueChanges({ idField: 'id' });
+  // a társasház adatainak lekérése
+  getCondoDatas(): Observable<any[]> {
+    return this.firestore.collection('condodatas').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as object;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 }

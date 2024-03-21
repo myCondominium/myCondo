@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CostsService } from '../../services/costs.service';
 
+
 @Component({
   selector: 'app-costs',
   templateUrl: './costs.component.html',
@@ -10,32 +11,30 @@ export class CostsComponent {
   meterDatas: any = {};
   datas: any = [];
 
-  constructor(
-    private service: CostsService) {
-    this.getMeterData();
+  constructor(private service: CostsService) {
+    this.initMetersDatas();
   }
 
-  getMeterData() {
-    this.service.getMeterData().subscribe({
-      next: (data) => {
-        this.meterDatas = data;
-        this.createArray(this.meterDatas);
-        console.log('Sikeres adatlekérés:', this.meterDatas);
-      },
-      error: (error) => {
-        console.error('Hiba történt a userData lekérdezésekor:', error);
-      }
-    });
+  async initMetersDatas(): Promise<void> {
+    this.meterDatas = {
+      start: await this.service.getMetersData('start'),
+      end: await this.service.getMetersData('end'),
+      commoncost: await this.service.getMetersData('commoncost'),
+      heatingbase: await this.service.getMetersData('heatingbase'),
+      heatingmulti: await this.service.getMetersData('heatingmulti'),
+      waterheating: await this.service.getMetersData('waterheating')
+    };
+    this.createArray();
   }
 
-  createArray(meterDatas: any) {
+  createArray() {
     this.datas = [
-      { title: "Diktálás kezdete", value: "Minden hónap " + meterDatas.meterData.start + ". napja" },
-      { title: "Diktálás vége", value: "Minden hónap " + meterDatas.meterData.end + ". napja" },
-      { title: "Közös költség", value: meterDatas.meterData.commonCost + " Ft/m<sup>2</sup>" },
-      { title: "Fűtés alapdíj", value: meterDatas.meterData.heatingBase + " Ft" },
-      { title: "Fűtés egység szorzó", value: meterDatas.meterData.heatingMulti + " Ft" },
-      { title: "Vízfelmelegítési díj", value: meterDatas.meterData.waterHeating + " Ft/m<sup>3</sup>" }
-    ]
+      { title: "Diktálás kezdete", value: "Minden hónap " + this.meterDatas.start.value + ". napja" },
+      { title: "Diktálás vége", value: "Minden hónap " + this.meterDatas.end.value + ". napja" },
+      { title: "Közös költség", value: this.meterDatas.commoncost.value + " Ft/m<sup>2</sup>" },
+      { title: "Fűtés alapdíj", value: this.meterDatas.heatingbase.value + " Ft" },
+      { title: "Fűtés egység szorzó", value: this.meterDatas.heatingmulti.value + " Ft" },
+      { title: "Vízfelmelegítési díj", value: this.meterDatas.waterheating.value + " Ft/m<sup>3</sup>" }
+    ];
   }
 }

@@ -10,7 +10,6 @@ export class AdminmenuComponent {
   userEmail = localStorage.getItem('userEmail');
   constructor(private auth: AuthService) { }
 
-
   logout() {
     this.auth.logout();
   }

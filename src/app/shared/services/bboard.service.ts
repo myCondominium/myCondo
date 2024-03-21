@@ -11,39 +11,34 @@ export class BBoardService {
 
   getAllBulletinBoardData(): Observable<any[]> {
     return this.firestore.collection('bulletinboard', ref => ref.orderBy('timestamp', 'desc')).valueChanges({ idField: 'id' });
-
   }
 
-  saveToDatabase(selectedBulletin: any, editorContent: any) {
-    if (selectedBulletin) {
-      // Módosítás esetén
-      if (editorContent !== '') {
-        this.firestore.doc(`bulletinboard/${selectedBulletin.id}`).update({
-          content: editorContent,
-          timestamp: selectedBulletin.timestamp,
-        }).then(() => {
-          selectedBulletin = null;
-          editorContent = '';
-          this.getAllBulletinBoardData();
-        });
+  async saveToDatabase(selectedBulletin: any, editorContent: any) {
+    if (!editorContent) {
+      alert('A tartalom nem lehet üres.');
+      return;
+    }
+
+    const data = {
+      content: editorContent,
+      timestamp: selectedBulletin ? selectedBulletin.timestamp : new Date(),
+    };
+
+    try {
+      if (selectedBulletin) {
+        await this.firestore.doc(`bulletinboard/${selectedBulletin.id}`).update(data);
+        selectedBulletin = null;
       } else {
-        alert('A tartalom nem lehet üres.');
+        await this.firestore.collection('bulletinboard').add(data);
       }
-    } else {
-      // Új hozzáadása esetén
-      if (editorContent !== '') {
-        this.firestore.collection('bulletinboard').add({
-          content: editorContent,
-          timestamp: new Date(),
-        }).then(() => {
-          editorContent = '';
-          this.getAllBulletinBoardData();
-        });
-      } else {
-        alert('A tartalom nem lehet üres.');
-      }
+
+      editorContent = '';
+      this.getAllBulletinBoardData();
+    } catch (error) {
+      console.error('Hiba történt a mentés során:', error);
     }
   }
+
 
   deleteBulletin(bulletinId: any) {
     this.firestore.doc(`bulletinboard/${bulletinId}`).delete();

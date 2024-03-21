@@ -19,11 +19,8 @@ export class UsersComponent {
   modalRefEdit: MdbModalRef<UpdateuserComponent> | null = null;
   modalRefNew: MdbModalRef<AdduserComponent> | null = null;
 
-
   page: number = 1;
   pageSize: number = 10;
-
-  expandedUserId: number | null = null;
 
   documentIds: string[] = [];
 
@@ -33,9 +30,8 @@ export class UsersComponent {
     this.error = this.getUsers();
   }
 
-
+  // lakók adatainak lekérése
   getUsers() {
-
     this.service.getAllData().subscribe({
       next: (data: any[]) => {
         this.users = data;
@@ -49,7 +45,12 @@ export class UsersComponent {
     });
   }
 
+  // ha változtatjuk az egy oldalon megjelenő lakók számát akkor vissza az első lapra
+  onPageSizeChange() {
+    this.page = 1;
+  }
 
+  // név szerint sorbarendezzük
   sortUsersByName() {
     if (this.users.length > 1) {
       this.users.sort((a, b) => {
@@ -66,13 +67,14 @@ export class UsersComponent {
     }
   }
 
-
+  // a kereső mező alapján szűrjük
   filterUsers() {
     this.filteredUsers = this.users.filter((user) =>
       user.personalData.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
+  // a törlés megerősítése
   openDeleteModal(username: any, userid: any) {
     this.modalRefDelete = this.modalService.open(UserdelconfirmComponent, {
       data: { title: username, userid: userid },
@@ -86,6 +88,7 @@ export class UsersComponent {
     });
   }
 
+  // a szerkesztés modal megnyitása
   openEditModal(user: any) {
     console.log(user);
     this.modalRefEdit = this.modalService.open(UpdateuserComponent, {
@@ -93,12 +96,9 @@ export class UsersComponent {
     });
   }
 
+  // új lakó hozzáadása
   openNewModal() {
     this.modalRefNew = this.modalService.open(AdduserComponent, {
     })
-  }
-
-  onPageSizeChange() {
-    this.page = 1;
   }
 }

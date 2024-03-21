@@ -10,23 +10,24 @@ export class AdminhomeService {
 
   async getCondoName() {
     try {
-      const collectionRef = this.firestore.collection('condoDatas');
-      const querySnapshot = await collectionRef.get().toPromise();
-
-      if (querySnapshot && !querySnapshot.empty) {
-        const firstDocument: any = querySnapshot.docs[0].data();
-
-        if (firstDocument.fields && firstDocument.fields.length > 0) {
-          return firstDocument.fields[0].data;
+      const snapshot = await this.firestore.collection('condodatas').get().toPromise();
+      if (!snapshot?.empty) {
+        const doc = snapshot?.docs[1];
+        const data = doc?.data();
+        if (data && typeof data === 'object' && 'data' in data) {
+          return data.data;
         } else {
-          return "Még nincs beállítva a th. neve";
+          console.log('A dokumentum elem nem tartalmazza a szükséges adatot.');
+          return null;
         }
       } else {
-        return "Még nincs beállítva a th. neve";
+        console.log('A kollekcióban nincsenek dokumentumok.');
+        return null;
       }
     } catch (error) {
-      console.error('Hiba a lekérdezés során:', error);
-      throw error;
+      console.error('Hiba történt a beállítási adatok lekérésekor:', error);
+      return null;
     }
   }
 }
+

@@ -12,6 +12,6 @@ export class MyprofileService {
 
 
   getUserData(userId: string) {
-    return this.firestore.collection('users').doc(userId).valueChanges();
+    return this.firestore.collection('users').doc(userId).collection('personaldatas').doc('datas').valueChanges();
   }
 }
