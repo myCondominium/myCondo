@@ -40,12 +40,15 @@
           </div>
         </div>
 
+        
         <div class="meters-list-body row"  *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-          
+         
           <div class="col user-frame">
               <b>{{user.personalData.name}}</b><br> - {{ user.personalData.building + '/' + user.personalData.floor + '/' + user.personalData.door}}
             </div>
-            <div class="col row">
+            
+            <div class="col row" *ngIf="user.personalData.hasMeter === 1">
+              
             <div class="col user-frame">
             <span>Hideg I.:</span> <input [(ngModel)]="user.meterData.meterColdOne" class="form-control cold" type="number">
           </div>
@@ -54,7 +57,7 @@
           </div>
         </div>
 
-        <div class="col row">
+        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
             <div class="col user-frame">
             <span>Meleg I.:</span> <input [(ngModel)]="user.meterData.meterHotOne" class="form-control hot" type="number">
           </div>
@@ -63,13 +66,17 @@
           </div>
         </div>
 
-        <div class="col row">
+        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
             <div class="col user-frame">
            <span>Hőmennyiség:</span> <input [(ngModel)]="user.meterData.amountOfHeat" class="form-control warm" type="number">
           </div>
         </div>
 
-        <div class="col row">
+        <div class="col meter-actions mt-3" *ngIf="user.personalData.hasMeter != 1">
+          Nincs vízóra!
+        </div>
+
+        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
           <div class="col meters-actions">
             <a (click)="saveMeter(user.id)" class="buttons green">
               Mentés
@@ -82,8 +89,9 @@
 
         </div>
       </div>
+      </div>
        
-    </div>
+   
 <ng-template #modalContent let-modal>
   <!-- <div class="modal-dialog modal-lg" > -->
     <div class="modal-content">

@@ -36,6 +36,7 @@ export class UpdateuserComponent {
       door: [''],
       balance: [0],
       isAdmin: [0],
+      hasMeter: [1],
       squaremeter: []
     });
 

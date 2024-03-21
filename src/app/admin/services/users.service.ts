@@ -30,6 +30,7 @@ export class UsersService {
     }
     const password = userData.password || '123456';
     const isAdmin = parseInt(userData.isAdmin);
+    const hasMeter = parseInt(userData.hasMeter);
 
     const { name, phone, building, floor, door, squaremeter, balance } = userData;
 
@@ -41,7 +42,7 @@ export class UsersService {
       const currentDateAndTime = this.date.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
       const userDocRef = this.firestore.collection('users').doc(uid).collection('personaldatas').doc('datas');
-      await userDocRef.set({ name, email, phone, building, floor, door, squaremeter, balance, isAdmin });
+      await userDocRef.set({ name, email, phone, building, floor, door, squaremeter, balance, hasMeter, isAdmin });
 
       const loginDocRef = this.firestore.collection('users').doc(uid).collection('loginHistory').doc('datas');
       await loginDocRef.set({});
@@ -96,7 +97,9 @@ export class UsersService {
 
   // lakó adatainak módosítása
   async updateUser(userData: any, userId: string) {
-    const { email, password = '123456', isAdmin, phone, name, building, floor, door, squaremeter, balance } = userData;
+    const isAdmin = parseInt(userData.isAdmin);
+    const hasMeter = parseInt(userData.hasMeter);
+    const { email, password = '123456', phone, name, building, floor, door, squaremeter, balance } = userData;
 
     try {
       const userDocRef = this.firestore.collection('users').doc(userId).collection('personaldatas').doc('datas');
@@ -116,7 +119,7 @@ export class UsersService {
         return;
       }
 
-      await userDocRef.update({ name, email, phone, building, floor, door, squaremeter, balance, isAdmin });
+      await userDocRef.update({ name, email, phone, building, floor, door, squaremeter, balance, isAdmin, hasMeter });
       console.log('Adatok sikeresen frissítve');
     } catch (error) {
       console.error('Hiba történt a frissítés során:', error);

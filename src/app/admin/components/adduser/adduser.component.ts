@@ -33,7 +33,8 @@ export class AdduserComponent {
       password: ['123456'],
       balance: [0],
       isAdmin: [0],
-      squaremeter: []
+      squaremeter: [],
+      hasMeter: [1]
     });
 
   }

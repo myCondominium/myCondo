@@ -8,9 +8,16 @@ export const formFields = [
     { label: 'Négyzetméter', name: 'squaremeter', type: 'text' },
     { label: 'Egyenleg', name: 'balance', type: 'number' },
     {
+        label: 'Vízóra', name: 'hasMeter', type: 'select', options: [
+            { label: 'Igen', value: 1 },
+            { label: 'Nem', value: 0 }
+
+        ]
+    },
+    {
         label: 'Admin', name: 'isAdmin', type: 'select', options: [
-            { label: 'Nem', value: '0' },
-            { label: 'Igen', value: '1' }
+            { label: 'Nem', value: 0 },
+            { label: 'Igen', value: 1 }
         ]
     }
 ];

@@ -86,6 +86,9 @@
       <b>Egyenleg:</b> {{user.personalData.balance}}Ft
     </div>
     <div class="col user-frame">
+      <b>Vízóra:</b> {{ user.personalData.hasMeter ? 'Igen' : 'Nem' }}
+    </div>
+    <div class="col user-frame">
       <b>Admin:</b> {{ user.personalData.isAdmin ? 'Igen' : 'Nem' }}
     </div>
   </div>
