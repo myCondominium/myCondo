@@ -10,6 +10,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { UpdateuserComponent } from './components/updateuser/updateuser.component';
 import { AdduserComponent } from './components/adduser/adduser.component';
 import { NotfoundComponent } from '../shared/auth/controllers/notfound/notfound.component';
+import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
 
 const adminRoutes: Routes = [
     {
@@ -21,6 +22,7 @@ const adminRoutes: Routes = [
             { path: 'users', component: UsersComponent },
             { path: 'meters', component: MetersComponent },
             { path: 'settings', component: SettingsComponent },
+            { path: 'uploadfiles', component: UploadfileComponent },
             { path: 'update/:id', component: UpdateuserComponent },
             { path: 'add', component: AdduserComponent },
             { path: '**', component: NotfoundComponent },

@@ -20,6 +20,7 @@ import { AdduserComponent } from './components/adduser/adduser.component';
 import { UpdateuserComponent } from './components/updateuser/updateuser.component';
 import { UserdelconfirmComponent } from './components/userdelconfirm/userdelconfirm.component';
 import { UsersService } from './services/users.service';
+import { UploadfileComponent } from './components/uploadfile/uploadfile.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UsersService } from './services/users.service';
     AdduserComponent,
     UpdateuserComponent,
     UserdelconfirmComponent,
+    UploadfileComponent,
   ],
   imports: [
     CommonModule,

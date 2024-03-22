@@ -1,0 +1,36 @@
+.buttons {
+    padding: 0.5rem;
+    background-color: #555;
+    border: none;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.buttons:focus {
+    background-color: #555;
+    border-color: #555;
+    color: #fff;
+}
+
+.buttons:hover {
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+}
+
+.green {
+    color: lightgreen;
+}
+
+.blue {
+    color: lightblue;
+}
+
+.red {
+    color: lightcoral;
+}
+
+.row {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #555;
+}

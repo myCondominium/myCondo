@@ -1,0 +1,51 @@
+<app-adminmenu></app-adminmenu>
+
+<div class="container">
+    <div class="header">
+        <div class="text">
+            <h3>Fájlfeltöltés</h3>
+            <p>A lakók a saját felületükön tudják letölteni a fájlokat.</p>
+        </div>
+        </div>
+        <hr>
+        <div class="upload-form">
+          <div class="mb-3">
+            <input class="form-control" type="file" id="file-input" (change)="onFileSelected($event)">
+            <input class="form-control" type="text" placeholder="leírás" [(ngModel)]="description">
+            <button class="buttons green mt-4 me-4" (click)="uploadFile()">Feltöltés</button>
+            <button class="buttons blue mt-4" (click)="cancel()" *ngIf="selectedFile != null">Mégse</button>
+          </div>
+        </div>
+        
+        
+<hr>
+<div class="file-list">
+  <p><b>Feltöltött fájlok:</b></p>
+  <div class="row" *ngFor="let file of uploadedFiles">
+    <div class="col-sm-12">
+      <div><i>Fájlnév:</i> {{ file.fileName }}</div>
+      <div *ngIf="file.description != ''"><i>Leírás:</i> {{ file.description }}</div>
+    </div>
+
+    <div class="col-sm-12 text-end">
+      <a [href]="file.downloadURL" download><button class="buttons green me-4">Letöltés</button></a>
+      <button class="buttons red mt-2" (click)="deleteFile(file.id, file.filePath)">Törlés</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <app-adminfooter></app-adminfooter>
+  
+  <!-- <ul>
+    <li *ngFor="let file of uploadedFiles">
+      <div><i>Fájlnév:</i> {{ file.fileName }}</div>
+      <div *ngIf="file.description != null"><i>Leírás:</i> {{ file.description }}</div>
+      <div>
+        <a [href]="file.downloadURL" download><button class="buttons green me-4">Letöltés</button></a>
+        <button class="buttons blue" (click)="deleteFile(file.id, file.filePath)">Törlés</button>
+      </div>
+    </li>
+  </ul> -->
