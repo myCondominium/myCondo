@@ -112,6 +112,28 @@
 
         <div class="menu-items">
             <div class="menu-image">
+                <i class="fa-solid fa-file-lines fa-3x"></i>
+            </div>
+                <div class="menu-info">
+                    <span  *ngIf="newFiles">{{newFiles}} új</span>
+                    <span  *ngIf="!newFiles">Nincs új</span>
+                </div>
+            <div class="menu-title">
+
+            <a class="menu-title-a" data-bs-toggle="collapse" data-bs-target="#files" aria-expanded="false" aria-controls="collapseExample">
+                Fájlok
+            </a>
+            </div>
+        </div>
+            <div class="menu-content">
+                <div class="collapse" id="files">
+                    <app-files></app-files>
+                        <hr>
+                </div>
+            </div>
+
+        <div class="menu-items">
+            <div class="menu-image">
                 <i class="fa fa-id-card fa-3x"></i>
             </div>
             <div class="menu-info">

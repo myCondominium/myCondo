@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -15,11 +15,10 @@ export class UploadfileService {
   constructor(private storage: AngularFireStorage, private firestore: AngularFirestore) { }
 
 
-  uploadFile(selectedFile: File, description: string) {
+  uploadFile(selectedFile: File, description: string): AngularFireUploadTask {
     const filePath = `uploads/${Date.now()}^${selectedFile.name}`;
     const fileRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, selectedFile);
-
 
     uploadTask.snapshotChanges().pipe(
       finalize(() => {
@@ -29,7 +28,8 @@ export class UploadfileService {
         });
       })
     ).subscribe();
-    return true;
+
+    return uploadTask;
   }
 
   saveFileData(downloadURL: string, filePath: string, description: string) {

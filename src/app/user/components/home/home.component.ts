@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Homeservice } from '../../services/home.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UploadfileService } from 'src/app/admin/services/uploadfile.service';
 
 
 @Component({
@@ -26,13 +27,17 @@ export class HomeComponent {
   condoName: any;
   lastLogin: any;
   newBulletin = 0;
+  uploadedFiles: any;
+  newFiles = 0;
+
 
   constructor(
     private bboardService: BBoardService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer,
     private homeservice: Homeservice,
-    private auth: AuthService
+    private auth: AuthService,
+    private file: UploadfileService
 
   ) {
     this.getLoginDates();
@@ -40,6 +45,7 @@ export class HomeComponent {
     this.getBbData();
     this.initMetersData();
     this.getDateValues();
+    this.getFiles();
 
   }
 
@@ -70,7 +76,6 @@ export class HomeComponent {
   async getLoginDates() {
     try {
       this.lastLogin = await this.homeservice.getLoginDates(this.userId);
-      console.log('Utolsó bejelentkezés:', this.lastLogin);
     } catch (error) {
       console.error('Hiba a bejelentkezési adatok lekérésekor:', error);
     }
@@ -80,7 +85,6 @@ export class HomeComponent {
   async getBbData() {
     this.bboardService.getAllBulletinBoardData().subscribe((data: any[]) => {
       this.bulletinBoardData = data;
-      console.log(this.bulletinBoardData)
 
       this.bulletinBoardData.forEach((item: any) => {
         const timestamp = item.timestamp;
@@ -89,6 +93,24 @@ export class HomeComponent {
         }
       });
     });
+  }
+
+  // fájlok lekérése
+  getFiles() {
+    this.file.getUploadedFiles().subscribe((uFiles: any) => {
+      this.uploadedFiles = uFiles;
+
+      this.uploadedFiles.forEach((item: any) => {
+        const timestamp = item.timestamp;
+        if (this.isFileNewer(timestamp)) {
+          this.newFiles++;
+        }
+      })
+    });
+  }
+
+  isFileNewer(timestamp: any) {
+    return this.lastLogin <= timestamp;
   }
 
   // megvizsgáljuk hogy a faliújság létrehozása később volt-e mint az utolsó bejelentkezés

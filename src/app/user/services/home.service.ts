@@ -23,7 +23,6 @@ export class Homeservice {
 
 
   // a leadott diktálási időpontok lekérése
-
   getMeterDates(userId: string): Observable<any[]> {
     return this.firestore.collection('users').doc(userId).collection('meterdatas').doc('datas').get().pipe(
       map(userDataSnapshot => {
@@ -72,8 +71,6 @@ export class Homeservice {
         const loginData: any = snapshot?.data() || {};
 
         const sortedTimestamps = Object.keys(loginData).sort((a, b) => +b - +a);
-        console.log('sorted:', sortedTimestamps)
-
         const secondToLastDate = sortedTimestamps[1];
 
         resolve(secondToLastDate);

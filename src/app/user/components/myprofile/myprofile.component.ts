@@ -24,7 +24,6 @@ export class MyprofileComponent {
     this.profileservice.getUserData(this.userId).subscribe({
       next: (data) => {
         this.userData = data;
-        console.log('Sikeres adatlekérés:', this.userData);
         this.createArray(this.userData);
       },
       error: (error) => {

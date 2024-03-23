@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { UploadfileService } from '../../services/uploadfile.service';
 
 @Component({
@@ -12,6 +12,8 @@ export class UploadfileComponent {
   description: string = '';
   uploadedFiles: any;
   downloadURL: Observable<string> | null = null;
+  uploadProgress: number = 0;
+
 
   constructor(private service: UploadfileService) {
     this.service.getUploadedFiles().subscribe(uFiles => {
@@ -28,10 +30,20 @@ export class UploadfileComponent {
       return;
     }
 
-    if (this.selectedFile) {
-      if (this.service.uploadFile(this.selectedFile, this.description)) {
-        this.cancel();
-      };
+    const uploadTask = this.service.uploadFile(this.selectedFile, this.description);
+
+    if (uploadTask) {
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          this.cancel();
+        })
+      ).subscribe();
+
+      uploadTask.percentageChanges().subscribe(progress => {
+        if (progress !== undefined) {
+          this.uploadProgress = progress;
+        }
+      });
     }
   }
 

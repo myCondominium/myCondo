@@ -10,6 +10,7 @@ import { CondodatasComponent } from './components/condodatas/condodatas.componen
 import { MyprofileComponent } from './components/myprofile/myprofile.component';
 import { CostsComponent } from './components/costs/costs.component';
 import { FormsModule } from '@angular/forms';
+import { FilesComponent } from './components/files/files.component';
 
 
 
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     CondodatasComponent,
     MyprofileComponent,
     CostsComponent,
+    FilesComponent,
 
   ],
   imports: [

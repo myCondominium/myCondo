@@ -15,6 +15,14 @@
             <button class="buttons green mt-4 me-4" (click)="uploadFile()">Feltöltés</button>
             <button class="buttons blue mt-4" (click)="cancel()" *ngIf="selectedFile != null">Mégse</button>
           </div>
+          <div class="progress" *ngIf="uploadProgress != 100">
+            <div class="progress-bar" role="progressbar" [style.width]="uploadProgress + '%'" aria-valuemin="0" aria-valuemax="100">{{ uploadProgress }}%</div>
+          </div>
+          <div class="sucess-msg green" *ngIf="uploadProgress == 100">
+            <p>A fájl feltöltése sikerült!</p>
+          </div>
+          
+          
         </div>
         
         

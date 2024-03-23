@@ -1,0 +1,13 @@
+<div class="file-list pt-3">
+    <p><b>Feltöltött fájlok:</b></p>
+    <div class="row" *ngFor="let file of uploadedFiles">
+      <div class="col-sm-12">
+        <div><i>Fájlnév:</i> {{ file.fileName }}</div>
+        <div *ngIf="file.description != ''"><i>Leírás:</i> {{ file.description }}</div>
+      </div>
+  
+      <div class="col-sm-12 text-end">
+        <a [href]="file.downloadURL" download><button class="buttons green me-4">Letöltés</button></a>
+      </div>
+    </div>
+  </div>
