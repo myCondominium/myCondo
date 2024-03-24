@@ -5,7 +5,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Homeservice } from '../../services/home.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UploadfileService } from 'src/app/admin/services/uploadfile.service';
-
+import { sharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +37,8 @@ export class HomeComponent {
     private sanitizer: DomSanitizer,
     private homeservice: Homeservice,
     private auth: AuthService,
-    private file: UploadfileService
+    private file: UploadfileService,
+    private SharedService: sharedService
 
   ) {
     this.getLoginDates();
@@ -62,7 +63,7 @@ export class HomeComponent {
 
   // összehasonlítjuk a jelenlegi évet-hónapot, ha nincs a listában akkor lehet diktálni
   async isDictateThisMonth() {
-    const meterDates = await this.homeservice.getMeterDates(this.userId).toPromise();
+    const meterDates = await this.SharedService.getMeterDates(this.userId).toPromise();
     this.meterDates = meterDates?.map(item => item.key);
     if (this.meterDates && this.meterDates.includes(this.currentYearAndMonth)) {
       return true;
@@ -123,9 +124,9 @@ export class HomeComponent {
 
   // diktálási időpont kezdete és vége
   async initMetersData() {
-    const sd = await this.homeservice.getMetersData('start');
+    const sd = await this.SharedService.getMetersData('start');
     this.startDictate = sd.value;
-    const ed = await this.homeservice.getMetersData('end');
+    const ed = await this.SharedService.getMetersData('end');
     this.endDictate = ed.value;
     this.checkEnableDictate();
   }
@@ -151,7 +152,7 @@ export class HomeComponent {
   // társasház nevének lekérése
   async getCondoName() {
     try {
-      this.condoName = await this.homeservice.getCondoName();
+      this.condoName = await this.SharedService.getCondoName();
     } catch (error) {
       console.error('Hiba a név lekérdezésekor:', error);
     }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MetersService } from '../../services/meters.service';
+import { sharedService } from 'src/app/shared/services/shared.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class MetersComponent {
   constructor(
     private datePipe: DatePipe,
     private modalService: NgbModal,
-    private meterService: MetersService) {
+    private meterService: MetersService,
+    private sharedService: sharedService) {
     this.initializeData();
   }
 
@@ -64,7 +66,7 @@ export class MetersComponent {
   // régebbi óraállások lekérése
   async openPreviousData(content: any, userId: string, userName: string) {
     try {
-      const meterData = await this.meterService.getMeterData(userId).toPromise();
+      const meterData = await this.sharedService.getMeterDates(userId).toPromise();
 
       if (meterData) {
         const sortedMeterData = this.sortMeterData(meterData);
@@ -146,6 +148,6 @@ export class MetersComponent {
         amountOfHeat: user.meterData.amountOfHeat !== undefined ? user.meterData.amountOfHeat : 0,
       }
     };
-    this.meterService.saveMeter(userId, meterData);
+    this.sharedService.saveMeter(userId, meterData);
   }
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CostsService } from '../../services/costs.service';
-
+import { sharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-costs',
@@ -11,7 +10,7 @@ export class CostsComponent {
   meterDatas: any = {};
   datas: any = [];
 
-  constructor(private service: CostsService) {
+  constructor(private service: sharedService) {
     this.initMetersDatas();
   }
 

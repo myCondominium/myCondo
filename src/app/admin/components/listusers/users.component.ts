@@ -35,7 +35,6 @@ export class UsersComponent {
     this.service.getAllData().subscribe({
       next: (data: any[]) => {
         this.users = data;
-        console.log('kapott adatok:', this.users);
         this.sortUsersByName();
         this.filterUsers();
       },

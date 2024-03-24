@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { CondodatasService } from '../../services/condodatas.service';
-import { Observable, of } from 'rxjs';
-
+import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-condodatas',
   templateUrl: './condodatas.component.html',
@@ -11,7 +9,7 @@ export class CondodatasComponent {
   condoDatas: any[] = [];
 
   constructor(
-    private service: CondodatasService) {
+    private service: sharedService) {
     this.getCondoDatas();
   }
 

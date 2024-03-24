@@ -41,55 +41,18 @@ export class AuthService {
     });
   }
 
-  // async login(email: string, password: string) {
-  //   try {
-  //     const userCredential = await this.auth.signInWithEmailAndPassword(email, password);
-
-  //     if (userCredential.user) {
-  //       const user = await this.auth.currentUser;
-  //       if (user) {
-  //         const uid = user.uid;
-  //         this.userId = uid;
-  //         const email = user.email;
-
-  //         const userData = await this.getUserData(uid);
-  //         if (userData?.exists) {
-  //           const userDataObject: UserData = userData.data() as UserData;
-
-  //           if (userDataObject.passwordChanged) {
-  //             this.redirectByRole(userDataObject.isAdmin);
-  //           } else {
-  //             if (email) {
-  //               await this.resetPassword(email);
-  //               await this.firestore.collection('users').doc(uid).collection('data').doc('0').update({
-  //                 passwordChanged: true
-  //               });
-  //             }
-  //             this.router.navigate(["login/changepassword"]);
-  //           }
-  //         }
-  //       } else {
-  //         this.redirectToLoginPage();
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log("Hibás bejelentkezési adatok!");
-  //     this.openLoginFailedModal();
-  //   }
-  // }
-
   async login(email: string, password: string) {
 
     await this.auth.signInWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         this.userId = user?.uid;
-        //const email = user.email;
         const userData = await this.getUserData(this.userId);
         this.redirectByRole(userData.isAdmin);
       })
       .catch((error) => {
         this.openLoginFailedModal();
+        this.redirectToLoginPage();
       });
   }
 
@@ -114,8 +77,6 @@ export class AuthService {
       console.error("Hiba az adatok lekérésekor:", error);
     }
   }
-
-
 
   private redirectByRole(isAdmin: any) {
     isAdmin ? this.redirectToAdminPage() : this.redirectToUserPage();

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { SavemetersService } from '../../services/savemeters.service';
 import { DatePipe } from '@angular/common';
-import { MetersService } from 'src/app/admin/services/meters.service';
-
+import { sharedService } from 'src/app/shared/services/shared.service';
 
 @Component({
   selector: 'app-savemeters',
@@ -35,7 +33,7 @@ export class SavemetersComponent {
 
 
   constructor(
-    private service: SavemetersService,
+    private sharedService: sharedService,
     private datePipe: DatePipe
   ) {
     this.getDateValues();
@@ -44,11 +42,11 @@ export class SavemetersComponent {
 
   // diktálási időpont kezdete és vége
   async initMetersData() {
-    const sd = await this.service.getMetersData('start');
+    const sd = await this.sharedService.getMetersData('start');
     this.startDictate = sd.value;
-    const ed = await this.service.getMetersData('end');
+    const ed = await this.sharedService.getMetersData('end');
     this.endDictate = ed.value;
-    const mnum = await this.service.getMetersData('meternumber')
+    const mnum = await this.sharedService.getMetersData('meternumber')
     this.meterNum = mnum.value;
     this.checkEnableDictate();
   }
@@ -75,7 +73,7 @@ export class SavemetersComponent {
 
   // összehasonlítjuk a jelenlegi évet-hónapot, ha nincs a listában akkor lehet diktálni
   async isDictateThisMonth() {
-    const meterDates = await this.service.getMeterDates(this.userId).toPromise();
+    const meterDates = await this.sharedService.getMeterDates(this.userId).toPromise();
     this.meterDates = meterDates?.map(item => item.key);
     if (this.meterDates?.includes(this.currentYearAndMonth)) {
       return true;
@@ -97,7 +95,7 @@ export class SavemetersComponent {
         }
       }
       console.log(meterData);
-      this.service.saveMeter(this.userId, meterData);
+      this.sharedService.saveMeter(this.userId, meterData);
       if (await this.isDictateThisMonth()) {
         this.message = "Az óraállások mentése sikeres.";
         this.enableDictate = false;

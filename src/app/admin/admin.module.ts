@@ -7,7 +7,6 @@ import { AdminmenuComponent } from './components/adminmenu/adminmenu.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminGuard } from '../shared/guards/adminguard';
 import { AuthService } from '../shared/services/auth.service';
-import { AdminhomeService } from './services/adminhome.service';
 import { AdminfooterComponent } from './components/adminfooter/adminfooter.component';
 import { BboardComponent } from './components/bboard/bboard.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
@@ -49,7 +48,6 @@ import { UploadfileComponent } from './components/uploadfile/uploadfile.componen
   providers: [
     AdminGuard,
     AuthService,
-    AdminhomeService,
     DatePipe,
     MdbModalService,
     UsersService

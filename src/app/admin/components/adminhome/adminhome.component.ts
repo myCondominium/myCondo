@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminhomeService } from '../../services/adminhome.service';
+import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-adminhome',
   templateUrl: './adminhome.component.html',
@@ -8,13 +8,13 @@ import { AdminhomeService } from '../../services/adminhome.service';
 export class AdminhomeComponent {
   condoName: any;
 
-  constructor(private homeService: AdminhomeService) {
+  constructor(private sharedService: sharedService) {
     this.condoName = this.getCondoName();
   }
 
   async getCondoName() {
     try {
-      this.condoName = await this.homeService.getCondoName();
+      this.condoName = await this.sharedService.getCondoName();
     } catch (error) {
       console.error('Hiba a név lekérdezésekor:', error);
     }

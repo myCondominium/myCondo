@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/controllers/login/login.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { AngularFireModule } from "@angular/fire/compat";

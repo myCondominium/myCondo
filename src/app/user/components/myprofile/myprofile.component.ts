@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MyprofileService } from '../../services/myprofile.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { sharedService } from 'src/app/shared/services/shared.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class MyprofileComponent {
   datas: any = [];
   message = false;
   constructor(
-    private profileservice: MyprofileService,
+    private profileservice: sharedService,
     private auth: AngularFireAuth
   ) {
     this.getUserData();
