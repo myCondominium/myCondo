@@ -35,39 +35,36 @@
           <div class="col">
             Mérőórák:
           </div>
-          <div class="col text-end">
-            Műveletek:
-          </div>
         </div>
 
         
         <div class="meters-list-body row"  *ngFor="let user of filteredUsers | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
          
-          <div class="col user-frame">
+          <div class="col-sm-12 col-lg-3 user-frame">
               <b>{{user.personalData.name}}</b><br> - {{ user.personalData.building + '/' + user.personalData.floor + '/' + user.personalData.door}}
             </div>
             
             <div class="col row" *ngIf="user.personalData.hasMeter === 1">
               
-            <div class="col user-frame">
-            <span>Hideg I.:</span> <input [(ngModel)]="user.meterData.meterColdOne" class="form-control cold" type="number">
+            <div class="col-sm-12 col-lg-6 user-frame">
+            <span>Hideg-1:</span> <input [(ngModel)]="user.meterData.meterColdOne" class="form-control cold" type="number">
           </div>
-            <div class="col user-frame" *ngIf="meterNumber === '4'">
-           <span> Hideg II.:</span> <input [(ngModel)]="user.meterData.meterColdTwo" class="form-control cold" type="number">
-          </div>
-        </div>
-
-        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
-            <div class="col user-frame">
-            <span>Meleg I.:</span> <input [(ngModel)]="user.meterData.meterHotOne" class="form-control hot" type="number">
-          </div>
-            <div class="col user-frame" *ngIf="meterNumber === '4'">
-           <span>Meleg II.:</span> <input [(ngModel)]="user.meterData.meterHotTwo" class="form-control hot" type="number">
+            <div class="col-sm-12 col-lg-6 user-frame" *ngIf="meterNumber === '4'">
+           <span> Hideg-2:</span> <input [(ngModel)]="user.meterData.meterColdTwo" class="form-control cold" type="number">
           </div>
         </div>
 
         <div class="col row" *ngIf="user.personalData.hasMeter === 1">
-            <div class="col user-frame">
+            <div class="col-sm-12 col-lg-6 user-frame">
+            <span>Meleg-1:</span> <input [(ngModel)]="user.meterData.meterHotOne" class="form-control hot" type="number">
+          </div>
+            <div class="col-sm-12 col-lg-6 user-frame" *ngIf="meterNumber === '4'">
+           <span>Meleg-2:</span> <input [(ngModel)]="user.meterData.meterHotTwo" class="form-control hot" type="number">
+          </div>
+        </div>
+
+        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
+            <div class="col-sm-12 col-lg-6 user-frame">
            <span>Hőmennyiség:</span> <input [(ngModel)]="user.meterData.amountOfHeat" class="form-control warm" type="number">
           </div>
         </div>
@@ -76,12 +73,12 @@
           Nincs vízóra!
         </div>
 
-        <div class="col row" *ngIf="user.personalData.hasMeter === 1">
+        <div class="col-sm-12 col-lg-2 row" *ngIf="user.personalData.hasMeter === 1">
           <div class="col meters-actions">
             <a (click)="saveMeter(user.id)" class="buttons green">
               Mentés
             </a>
-            <a (click)="openPreviousData(modalContent, user.id, user.personalData.name)" class="buttons blue">
+            <a (click)="openPreviousData(modalContent, user.id, user.personalData.name)" class="buttons blue me-1">
               Előző
             </a>
           </div>

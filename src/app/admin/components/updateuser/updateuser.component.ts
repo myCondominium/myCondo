@@ -10,7 +10,7 @@ import { formFields } from '../../models/form-fields.data';
 @Component({
   selector: 'app-updateuser',
   templateUrl: './updateuser.component.html',
-  styleUrls: ['./updateuser.component.css']
+  styleUrls: ['./updateuser.component.css', '../../../shared/css/admin-shared.css']
 })
 export class UpdateuserComponent {
   userId: string = "";

@@ -8,7 +8,7 @@ import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-meters',
   templateUrl: './meters.component.html',
-  styleUrls: ['./meters.component.css']
+  styleUrls: ['./meters.component.css', '../../../shared/css/admin-shared.css']
 })
 export class MetersComponent {
   error: any;

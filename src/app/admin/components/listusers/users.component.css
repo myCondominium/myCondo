@@ -2,39 +2,6 @@
     margin-top: 4rem;
 }
 
-a {
-    cursor: pointer;
-}
-
-.search-input {
-    padding: 0.375rem;
-}
-
-::ng-deep .pagination .page-item .page-link {
-    color: #495464;
-    border: 1px solid #495464;
-    background-color: #fff;
-    border-radius: 0;
-}
-
-ngb-pagination {
-    border-radius: 0;
-}
-
-ngb-pagination::ng-deep .page-link:focus {
-    box-shadow: none;
-    background-color: #495464;
-    color: #fff;
-    border-radius: 0;
-
-}
-
-select {
-    background-color: #F4F4F2;
-    border: none;
-    cursor: pointer;
-}
-
 option {
     margin-left: 1rem;
 }
@@ -86,49 +53,7 @@ option:hover {
     background-color: #fff;
 }
 
-.buttons {
-    padding: 0.5rem;
-    margin-left: 0.25rem;
-    background-color: #555;
-    border-color: #555;
-    border-radius: 0;
-    color: #ddd;
-    text-decoration: none;
-}
-
-.buttons:focus {
-    background-color: #555;
-    border-color: #555;
-    color: #fff;
-}
-
-.buttons:hover {
-    background-color: #555;
-    color: #fff;
-}
-
-button {
-    border: none;
-}
-
-.green {
-    color: lightgreen;
-}
-
-.red {
-    color: lightcoral;
-}
-
-.blue {
-    color: lightblue;
-}
-
 .username {
     text-decoration: none;
     color: #333;
-}
-
-.alert {
-    text-align: center;
-    font-weight: bold;
 }

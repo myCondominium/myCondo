@@ -24,6 +24,7 @@ const userRoutes: Routes = [
             { path: "diktalas", component: SavemetersComponent },
             { path: "profilom", component: MyprofileComponent },
             { path: '**', component: NotfoundComponent },
+
         ]
     },
     { path: '', component: HomeComponent, canActivate: [UserGuard] },

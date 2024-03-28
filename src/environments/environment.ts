@@ -8,7 +8,7 @@ export const environment = {
         messagingSenderId: "833046861712",
         appId: "1:833046861712:web:c277fb118a6b6c1efd8515",
         measurementId: "G-F69QPYZYLP",
-        persistence: 'session', // Azonosítási állapot megőrzése az oldal frissítésekor
+        persistence: 'session',
 
     }
 

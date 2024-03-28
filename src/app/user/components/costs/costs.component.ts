@@ -4,7 +4,7 @@ import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-costs',
   templateUrl: './costs.component.html',
-  styleUrls: ['./costs.component.css']
+  styleUrls: ['./costs.component.css', '../../../shared/css/user-shared.css']
 })
 export class CostsComponent {
   meterDatas: any = {};

@@ -46,6 +46,7 @@ h2 span {
 
 input[type=number] {
     height: 2rem;
+    max-width: 97%;
     border-radius: 0;
     padding-right: 0.5rem;
     background-color: #fff;
@@ -61,57 +62,9 @@ input[type=number] {
     flex-direction: row-reverse;
 }
 
-.buttons {
-    padding: 0.5rem;
-    margin-left: 0.25rem;
-    background-color: #555;
-    border-color: #555;
-    border-radius: 0;
-    color: #ddd;
-    text-decoration: none;
-}
-
-.buttons:focus {
-    background-color: #555;
-    border-color: #555;
-    color: #fff;
-}
-
-.buttons:hover {
-    background-color: #555;
-    color: #fff;
-}
-
-button {
-    border: none;
-}
-
-a {
-    cursor: pointer;
-}
-
-::ng-deep .pagination .page-item .page-link {
-    color: #495464;
-    border: 1px solid #495464;
-    background-color: #fff;
-    border-radius: 0;
-}
-
-ngb-pagination::ng-deep .page-link:focus {
-    box-shadow: none;
-    background-color: #495464;
-    color: #eee;
-}
-
 .paginationControl {
     display: flex;
     align-items: center;
-}
-
-select {
-    background-color: #F4F4F2;
-    border: none;
-    cursor: pointer;
 }
 
 option:checked,
@@ -119,11 +72,6 @@ option:hover {
     background-color: #495464;
     color: #F4F4F2;
 }
-
-.search-input {
-    padding: 0.375rem;
-}
-
 
 .cold {
     color: blue;
@@ -155,27 +103,10 @@ option:hover {
 }
 
 
-.green {
-    color: lightgreen;
-}
-
-.red {
-    color: lightcoral;
-}
-
-.blue {
-    color: lightblue;
-}
-
 .btn-close,
 .modal-body,
 .modal-content {
     border-radius: 0;
-}
-
-.alert {
-    text-align: center;
-    font-weight: bold;
 }
 
 .modal-dialog {

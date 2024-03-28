@@ -1,0 +1,26 @@
+.data {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.title-container,
+.data-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.title-row {
+    width: 80%;
+    height: 2rem;
+    font-weight: bold;
+    display: grid;
+    align-items: start;
+    color: #444;
+}
+
+.data-row {
+    width: 80%;
+    height: 2rem;
+    margin-top: -0.5rem;
+    padding: 0 0.2rem 0.7rem 0;
+}

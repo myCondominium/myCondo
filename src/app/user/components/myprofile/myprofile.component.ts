@@ -6,7 +6,7 @@ import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
-  styleUrls: ['./myprofile.component.css']
+  styleUrls: ['./myprofile.component.css', '../../../shared/css/user-shared.css']
 })
 export class MyprofileComponent {
   userId = localStorage.getItem('userId') || '';

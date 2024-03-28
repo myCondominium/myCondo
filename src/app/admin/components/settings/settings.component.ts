@@ -4,7 +4,7 @@ import { SettingsService } from '../../services/settings.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css', '../../../shared/css/admin-shared.css']
 })
 export class SettingsComponent {
 

@@ -8,7 +8,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-bboard',
   templateUrl: './bboard.component.html',
-  styleUrls: ['./bboard.component.css']
+  styleUrls: ['./bboard.component.css', '../../../shared/css/admin-shared.css']
 })
 export class BboardComponent {
   error: any;

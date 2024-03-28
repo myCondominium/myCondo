@@ -8,7 +8,7 @@ import { AdduserComponent } from '../adduser/adduser.component';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css', '../../../shared/css/admin-shared.css']
 })
 export class UsersComponent {
   error: any;

@@ -4,7 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 @Component({
   selector: 'app-userdelconfirm',
   templateUrl: './userdelconfirm.component.html',
-  styleUrls: ['./userdelconfirm.component.css']
+  styleUrls: ['./userdelconfirm.component.css', '../../../shared/css/admin-shared.css']
 })
 export class UserdelconfirmComponent {
   title: string | null = null;

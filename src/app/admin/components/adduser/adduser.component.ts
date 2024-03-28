@@ -10,7 +10,7 @@ import { formFields } from '../../models/form-fields.data';
 @Component({
   selector: 'app-adduser',
   templateUrl: './adduser.component.html',
-  styleUrls: ['./adduser.component.css']
+  styleUrls: ['./adduser.component.css', '../../../shared/css/admin-shared.css'],
 })
 export class AdduserComponent {
   addForm: any;

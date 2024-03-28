@@ -3,7 +3,7 @@ import { sharedService } from 'src/app/shared/services/shared.service';
 @Component({
   selector: 'app-condodatas',
   templateUrl: './condodatas.component.html',
-  styleUrls: ['./condodatas.component.css']
+  styleUrls: ['./condodatas.component.css', '../../../shared/css/user-shared.css']
 })
 export class CondodatasComponent {
   condoDatas: any[] = [];

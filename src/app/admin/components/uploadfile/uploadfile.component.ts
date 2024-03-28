@@ -5,7 +5,7 @@ import { UploadfileService } from '../../services/uploadfile.service';
 @Component({
   selector: 'app-uploadfile',
   templateUrl: './uploadfile.component.html',
-  styleUrls: ['./uploadfile.component.css']
+  styleUrls: ['./uploadfile.component.css', '../../../shared/css/admin-shared.css']
 })
 export class UploadfileComponent {
   selectedFile: File | null = null;

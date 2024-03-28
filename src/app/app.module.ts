@@ -16,6 +16,8 @@ import { UserGuard } from './shared/guards/userguard';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,6 @@ import { UserModule } from './user/user.module';
     UserModule
   ],
   providers: [AuthguardService, AdminGuard, UserGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

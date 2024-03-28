@@ -1,11 +1,14 @@
 input {
     font-weight: bold;
     display: inline;
-    margin-left: 1rem;
+}
+
+input[type=radio] {
+    margin-right: 1rem;
 }
 
 label {
-    width: 10rem;
+    width: 12rem;
 }
 
 .short {
@@ -18,46 +21,9 @@ label {
     text-align: right;
 }
 
-.container {
-    margin-top: 4rem;
-}
-
 .editor-buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-}
-
-.buttons {
-    padding: 0.5rem;
-    background-color: #555;
-    border-color: #555;
-    border-radius: 0;
-    color: #ddd;
-    text-decoration: none;
-}
-
-.buttons:focus {
-    background-color: #555;
-    border-color: #555;
-    color: #fff;
-}
-
-.buttons:hover {
-    background-color: #555;
-    color: #fff;
-    cursor: pointer;
-}
-
-.red {
-    color: lightcoral;
-}
-
-.blue {
-    color: lightblue;
-}
-
-.green {
-    color: lightgreen;
 }

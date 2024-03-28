@@ -36,24 +36,10 @@
     </div>
 
     <div class="col-sm-12 text-end">
-      <a [href]="file.downloadURL" download><button class="buttons green me-4">Letöltés</button></a>
+      <a [href]="file.downloadURL" download><button class="buttons green me-1">Letöltés</button></a>
       <button class="buttons red mt-2" (click)="deleteFile(file.id, file.filePath)">Törlés</button>
     </div>
   </div>
 </div>
-
-
-
-
   <app-adminfooter></app-adminfooter>
   
-  <!-- <ul>
-    <li *ngFor="let file of uploadedFiles">
-      <div><i>Fájlnév:</i> {{ file.fileName }}</div>
-      <div *ngIf="file.description != null"><i>Leírás:</i> {{ file.description }}</div>
-      <div>
-        <a [href]="file.downloadURL" download><button class="buttons green me-4">Letöltés</button></a>
-        <button class="buttons blue" (click)="deleteFile(file.id, file.filePath)">Törlés</button>
-      </div>
-    </li>
-  </ul> -->
