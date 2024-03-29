@@ -2,6 +2,9 @@
     <p><b>Feltöltött fájlok:</b></p>
     <div class="row" *ngFor="let file of uploadedFiles">
       <div class="col-sm-12">
+        <div *ngIf="isFileNewer(file.timestamp)">
+          <span class="red">Új fájl!</span>
+        </div>
         <div><i>Fájlnév:</i> {{ file.fileName }}</div>
         <div *ngIf="file.description != ''"><i>Leírás:</i> {{ file.description }}</div>
       </div>

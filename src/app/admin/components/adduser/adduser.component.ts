@@ -42,7 +42,7 @@ export class AdduserComponent {
   onSave() {
 
     this.service.addUser(this.addForm.value);
-    this.modalRefNew.close();
+    this.close();
   }
 
   close() {

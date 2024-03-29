@@ -18,6 +18,8 @@ export class UsersService {
 
   // lakó hozzáadása
   async addUser(userData: any) {
+    const originalUser = this.auth.currentUser
+
     const email = userData.email;
 
     const isUserExists = await this.isUserExists(email);
@@ -37,6 +39,7 @@ export class UsersService {
     try {
       const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
+
       const uid = user?.uid;
 
       const currentDateAndTime = this.date.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -60,9 +63,11 @@ export class UsersService {
 
       console.log('Hiba a felhasználó létrehozása során!');
     }
+    this.auth.updateCurrentUser(await originalUser)
+
   }
 
-  //ellenőrzés hogy létezik-e már a lakó
+  // ellenőrzés hogy létezik-e már a lakó
   isUserExists(email: any): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.getAllData().subscribe({
@@ -77,6 +82,7 @@ export class UsersService {
       });
     });
   }
+
 
   // lakó és a mérőórák lekérdezése és egyesítése
   getAllData(): Observable<any[]> {

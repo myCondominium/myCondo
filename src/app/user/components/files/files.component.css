@@ -26,3 +26,9 @@
 .green {
     color: lightgreen;
 }
+
+.red {
+    padding: 0 0.5rem;
+    background-color: #555;
+    color: lightcoral;
+}

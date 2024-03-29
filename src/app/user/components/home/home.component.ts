@@ -97,7 +97,7 @@ export class HomeComponent {
   }
 
   // fájlok lekérése
-  getFiles() {
+  async getFiles() {
     this.file.getUploadedFiles().subscribe((uFiles: any) => {
       this.uploadedFiles = uFiles;
 

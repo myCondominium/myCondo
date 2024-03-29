@@ -16,6 +16,7 @@ export class FilesComponent {
   constructor(private service: UploadfileService, private homeservice: Homeservice) {
     this.service.getUploadedFiles().subscribe(uFiles => {
       this.uploadedFiles = uFiles;
+      this.getLoginDates();
     });
   }
 
@@ -25,5 +26,9 @@ export class FilesComponent {
     } catch (error) {
       console.error('Hiba a bejelentkezési adatok lekérésekor:', error);
     }
+  }
+
+  isFileNewer(timestamp: any) {
+    return this.lastLogin <= timestamp;
   }
 }

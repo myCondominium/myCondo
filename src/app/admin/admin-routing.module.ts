@@ -15,7 +15,7 @@ import { UploadfileComponent } from './components/uploadfile/uploadfile.componen
 const adminRoutes: Routes = [
     {
         path: 'admin',
-        canActivate: [AdminGuard],  // Guard itt alkalmazva
+        canActivate: [AdminGuard],
         children: [
             { path: 'home', component: AdminhomeComponent },
             { path: 'bboard', component: BboardComponent },
