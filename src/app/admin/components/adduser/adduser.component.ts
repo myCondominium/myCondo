@@ -4,7 +4,7 @@ import { UsersService } from '../../services/users.service';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 
 import { formFields } from '../../models/form-fields.data';
-
+import { EmailService } from '../../services/email.service';
 
 
 @Component({
@@ -15,11 +15,14 @@ import { formFields } from '../../models/form-fields.data';
 export class AdduserComponent {
   addForm: any;
   formFields: any;
+  mydata: any;
 
   constructor(
     public modalRefNew: MdbModalRef<AdduserComponent>,
     private formBuilder: FormBuilder,
     private service: UsersService,
+    private emailService: EmailService
+
   ) {
     this.formFields = formFields;
 
@@ -38,12 +41,26 @@ export class AdduserComponent {
     });
 
   }
-
   onSave() {
 
-    this.service.addUser(this.addForm.value);
-    this.close();
+    this.service.addUser(this.addForm.value)
+      .then(() => {
+        const emailData = {
+          recipient: this.addForm.value.email,
+          recipientName: this.addForm.value.name,
+          subject: 'Regisztráció a társasházhoz',
+          message: 'Önt sikeresen regisztráltuk a mycondo.hu weboldalon amit az ön társasházkezelője üzemeltet'
+        };
+        this.emailService.sendEmail(emailData);
+      })
+      .catch(error => {
+        console.error('Hiba történt a felhasználó hozzáadása során:', error);
+      })
+      .finally(() => {
+        this.close();
+      });
   }
+
 
   close() {
     this.modalRefNew.close();

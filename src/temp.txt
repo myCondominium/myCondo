@@ -1,0 +1,83 @@
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Szükséges, hogy a PHPMailer könyvtárat betöltsük
+require 'vendor/autoload.php';
+
+// Ellenőrizzük, hogy a POST kérés tartalmazza-e az 'emailData' adatot
+if (isset($_POST['emailData'])) {
+    // Kinyerjük az 'emailData' adatot a POST kérésből és dekódoljuk JSON formátumban
+    $emailData = json_decode($_POST['emailData'], true);
+
+    // Ellenőrizzük, hogy az 'emailData' érvényes JSON adat-e
+    if ($emailData !== null) {
+        // Készítünk egy új PHPMailer példányt
+        $mail = new PHPMailer(true);
+        $mail->CharSet = 'UTF-8'; // Beállítjuk az UTF-8 karakterkódolást
+        $mail->isSMTP();
+        $mail->Host = 'mail.nethely.hu';  // SMTP szerver címe
+        $mail->SMTPAuth = true;
+        $mail->Username = 'admin@mycondo.hu'; // Küldő e-mail cím
+        $mail->Password = 'Zombie80_1972'; // Küldő e-mail jelszó
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+
+        try {
+            // Beállítjuk a levél küldőjét és címzettjét
+            $mail->setFrom('admin@mycondo.hu', 'Feladó Neve');
+            $mail->addAddress($emailData['recipient'], $emailData['recipientName']);
+
+            // Beállítjuk az e-mail tartalmát és tárgyát
+            $mail->isHTML(true);
+            $mail->Subject = $emailData['subject'];
+            $mail->Body    = $emailData['message'];
+
+            // Elküldjük az e-mailt
+            $mail->send();
+            echo json_encode(['success' => true, 'message' => 'Az e-mail sikeresen elküldve!']);
+        } catch (Exception $e) {
+            // Hiba kezelése, ha valami nem sikerült
+            echo json_encode(['success' => false, 'message' => 'Hiba történt az e-mail küldése közben: ' . $mail->ErrorInfo]);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Hibás vagy hiányzó adatok!']);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Hibás vagy hiányzó kérés!']);
+}
+
+
+
+
+sendEmail(data: any) {
+    const emailData: {
+      [key: string]: string;
+    } = {
+      recipient: 'csabafarago1972@gmail.com',
+      recipientName: 'c',
+      subject: 'Regisztráció',
+      message: 'Önt sikeresen regisztráltuk a mycondo.hu weboldalon amit az ön társasházkezelője üzemeltet'
+    };
+
+
+    // Definiálj egy HttpHeaders objektumot a fejlécekkel
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded' // Példa: egyszerű szöveges adat küldése
+    });
+
+    // Átalakítsuk adatainkat az általános formátumba (pl. emailData)
+    let formData = '';
+    for (const key in emailData) {
+      if (emailData.hasOwnProperty(key)) {
+        formData += key + '=' + emailData[key] + '&';
+      }
+    }
+    formData = formData.slice(0, -1); // Utolsó '&'-t eltávolítjuk
+
+    // Átadjuk a form adatokat a post metódusnak a fejlécekkel
+    this.http.post('/php/sendmail.php', formData, { headers }).subscribe(response => {
+      console.log('Email küldése sikeres:', response);
+    }, error => {
+      console.error('Hiba történt az email küldése során:', error);
+    });
+  }

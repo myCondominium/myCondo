@@ -21,8 +21,7 @@ export class Homeservice {
         const loginData: any = snapshot?.data() || {};
 
         const sortedTimestamps = Object.keys(loginData).sort((a, b) => +b - +a);
-        const secondToLastDate = sortedTimestamps[1];
-
+        const secondToLastDate = sortedTimestamps[1] !== undefined ? sortedTimestamps[1] : 0;
         resolve(secondToLastDate);
       } catch (error) {
         console.error('Hiba a bejelentkezési adatok lekérésekor:', error);
