@@ -4,7 +4,7 @@
 body {
     font-family: 'Space Mono', monospace;
     padding-bottom: 2rem;
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
     box-sizing: border-box;
     background-color: #f1f2f6;
     overflow-y: scroll;

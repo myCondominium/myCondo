@@ -83,8 +83,7 @@ export class SettingsService {
   }
 
   // a sor felülírása
-  async updateRowData(id: any, title: any, data: any) {
-    console.log('update')
+  async updateRow(id: any, title: any, data: any) {
     await this.firestore.collection('condodatas').doc(id).update({
       title: title,
       data: data
@@ -93,7 +92,6 @@ export class SettingsService {
 
   // új sor mentése
   async saveNewRow(title: any, data: any) {
-    console.log('új mentés')
     const timestamp = new Date();
     const id = timestamp.getTime().toString() + '_otherdata';
     await this.firestore.collection('condodatas').doc(id).set({
@@ -107,7 +105,6 @@ export class SettingsService {
 
   // sor törlése
   async deleteRow(id: any) {
-    console.log('delete')
     await this.firestore.collection('condodatas').doc(id).delete();
   }
 }

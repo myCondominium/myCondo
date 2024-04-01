@@ -18,6 +18,7 @@ export class SettingsComponent {
   subdeposit: any;
 
   condoDatas: any[] = [];
+
   title: any;
   data: any;
 
@@ -120,14 +121,12 @@ export class SettingsComponent {
   // társasház adatainak kezelése
   async initCondoDatas() {
     await this.getCondoDatas();
-    this.addNewRow();
   }
 
   // ellenőrizzük hogy létezik-e a társasház adatait tartalmazó kollekció, ha nem akkor létrehozzuk
   async checkIsCollectionExists() {
     const exists = await this.settingService.checkIsCollectionExists('condodatas');
     if (!exists) {
-      console.log('A kollekció létezik.');
     } else {
       await this.settingService.createCollection();
     }
@@ -138,7 +137,7 @@ export class SettingsComponent {
     return new Promise<void>((resolve, reject) => {
       this.settingService.getCondoDatas().subscribe(data => {
         this.condoDatas = data;
-        console.log('condoDatas:', this.condoDatas);
+        this.addNewRow();
         resolve();
       }, error => {
         reject(error);
@@ -148,29 +147,28 @@ export class SettingsComponent {
 
 
   // új sor hozzáadása ha az utolsó elem nem üres
-  addNewRow() {
+  async addNewRow() {
     const lastItem = this.condoDatas[this.condoDatas.length - 1];
     if (lastItem.title.trim() !== '' || lastItem.data.trim() !== '') {
       const newId = '';
       this.condoDatas.push({ id: newId, title: '', data: '', editable: true });
     }
+
   }
 
   // új sor mentése vagy törlése ha nincs title érték
   async saveDataRow(id: any, title: any, data: any) {
     if (!title && id) {
       await this.settingService.deleteRow(id);
-      await this.initCondoDatas();
       return;
     }
     if (id) {
-      await this.settingService.updateRowData(id, title, data);
-      await this.initCondoDatas();
+      await this.settingService.updateRow(id, title, data);
     }
     if (!id && title) {
       await this.settingService.saveNewRow(title, data);
-      await this.initCondoDatas();
     }
+    await this.initCondoDatas();
 
   }
 

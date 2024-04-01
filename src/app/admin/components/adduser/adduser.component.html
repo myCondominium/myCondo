@@ -11,6 +11,10 @@
   <div class="addsection">
     <div class="row">
       <div class="col-lg-12">
+        <ng-container *ngIf="!nameError; else noname"></ng-container>
+        <ng-container *ngIf="!emailError; else falseemail"></ng-container>
+
+
         <div class="data-input">
           <form [formGroup]="addForm" novalidate class="form">
             <ng-container *ngFor="let field of formFields">
@@ -49,3 +53,15 @@
     </div>
   </div>
 </div>
+
+<ng-template #noname>
+  <div class="alert alert-warning" role="alert">
+      A név kitöltése kötelező!
+    </div>
+</ng-template>
+
+<ng-template #falseemail>
+  <div class="alert alert-warning" role="alert">
+      Nem érvényes email cím!
+    </div>
+</ng-template>

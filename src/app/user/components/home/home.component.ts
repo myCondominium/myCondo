@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BBoardService } from '../../../shared/services/bboard.service';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import { sharedService } from 'src/app/shared/services/shared.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   bulletinBoardData: any[] | undefined;
   metersData: any;
   currentDay: any;
@@ -39,15 +39,13 @@ export class HomeComponent {
     private auth: AuthService,
     private file: UploadfileService,
     private SharedService: sharedService
-
-  ) {
-    this.getLoginDates();
+  ) { this.getLoginDates(); }
+  ngOnInit(): void {
     this.getCondoName();
     this.getBbData();
     this.initMetersData();
     this.getDateValues();
     this.getFiles();
-
   }
 
   // megvizsgáljuk hogy lehet-e diktálni
@@ -100,7 +98,6 @@ export class HomeComponent {
   async getFiles() {
     this.file.getUploadedFiles().subscribe((uFiles: any) => {
       this.uploadedFiles = uFiles;
-
       this.uploadedFiles.forEach((item: any) => {
         const timestamp = item.timestamp;
         if (this.isFileNewer(timestamp)) {
