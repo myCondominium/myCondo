@@ -21,7 +21,8 @@ export class CostsComponent {
       commoncost: await this.service.getMetersData('commoncost'),
       heatingbase: await this.service.getMetersData('heatingbase'),
       heatingmulti: await this.service.getMetersData('heatingmulti'),
-      waterheating: await this.service.getMetersData('waterheating')
+      waterheating: await this.service.getMetersData('waterheating'),
+      subdeposit: await this.service.getMetersData('subdeposit')
     };
     this.createArray();
   }
@@ -33,7 +34,8 @@ export class CostsComponent {
       { title: "Közös költség", value: this.meterDatas.commoncost.value + " Ft/m<sup>2</sup>" },
       { title: "Fűtés alapdíj", value: this.meterDatas.heatingbase.value + " Ft" },
       { title: "Fűtés egység szorzó", value: this.meterDatas.heatingmulti.value + " Ft" },
-      { title: "Vízfelmelegítési díj", value: this.meterDatas.waterheating.value + " Ft/m<sup>3</sup>" }
+      { title: "Vízfelmelegítési díj", value: this.meterDatas.waterheating.value + " Ft/m<sup>3</sup>" },
+      { title: "Albetét(ha nincs vízóra)", value: this.meterDatas.subdeposit.value + " Ft" }
     ];
   }
 }

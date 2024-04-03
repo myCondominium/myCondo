@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { sharedService } from 'src/app/shared/services/shared.service';
-
+import { SenddataService } from '../../services/senddata.service';
 @Component({
   selector: 'app-savemeters',
   templateUrl: './savemeters.component.html',
   styleUrls: ['./savemeters.component.css']
 })
 export class SavemetersComponent {
+
   userId = localStorage.getItem('userId') || '';
   metersData: any;
   currentDay: any;
@@ -34,10 +35,15 @@ export class SavemetersComponent {
 
   constructor(
     private sharedService: sharedService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private senddataService: SenddataService
   ) {
     this.getDateValues();
     this.initMetersData();
+  }
+
+  sendEnableDictateData(boolean: boolean) {
+    this.senddataService.sendEnableDictateData(boolean);
   }
 
   // diktálási időpont kezdete és vége
@@ -49,6 +55,7 @@ export class SavemetersComponent {
     const mnum = await this.sharedService.getMetersData('meternumber')
     this.meterNum = mnum.value;
     this.checkEnableDictate();
+
   }
 
   // az aktuális dátum yyyy-m és d formátumra bontása
@@ -69,6 +76,7 @@ export class SavemetersComponent {
     } else {
       this.enableDictate = false;
     }
+    this.sendEnableDictateData(this.enableDictate);
   }
 
   // összehasonlítjuk a jelenlegi évet-hónapot, ha nincs a listában akkor lehet diktálni
@@ -94,11 +102,11 @@ export class SavemetersComponent {
           amountOfHeat: this.heat !== undefined ? this.heat : 0
         }
       }
-      console.log(meterData);
       this.sharedService.saveMeter(this.userId, meterData);
       if (await this.isDictateThisMonth()) {
         this.message = "Az óraállások mentése sikeres.";
-        this.enableDictate = false;
+        this.errorMessage = false;
+        this.checkEnableDictate();
       } else {
         this.message = "Az óraállások mentése nem sikerült.";
       }

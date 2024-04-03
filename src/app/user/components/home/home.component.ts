@@ -6,6 +6,7 @@ import { Homeservice } from '../../services/home.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UploadfileService } from 'src/app/admin/services/uploadfile.service';
 import { sharedService } from 'src/app/shared/services/shared.service';
+import { SenddataService } from '../../services/senddata.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   isDictate = false;
   enableDictate: any;
   startDictate: any;
-  endDictate: any;
+  endDictate: boolean = false;
   condoName: any;
   lastLogin: any;
   newBulletin = 0;
@@ -38,8 +39,15 @@ export class HomeComponent implements OnInit {
     private homeservice: Homeservice,
     private auth: AuthService,
     private file: UploadfileService,
-    private SharedService: sharedService
-  ) { this.getLoginDates(); }
+    private SharedService: sharedService,
+    private senddataService: SenddataService
+  ) {
+    this.getLoginDates();
+
+    this.senddataService.data$.subscribe(data => {
+      this.enableDictate = data;
+    });
+  }
   ngOnInit(): void {
     this.getCondoName();
     this.getBbData();
@@ -50,8 +58,7 @@ export class HomeComponent implements OnInit {
 
   // megvizsgáljuk hogy lehet-e diktálni
   async checkEnableDictate() {
-    const isD = await this.isDictateThisMonth();
-    this.isDictate = isD;
+    this.isDictate = await this.isDictateThisMonth();
     if (!this.isDictate && (this.startDictate <= this.currentDay && this.endDictate >= this.currentDay)) {
       this.enableDictate = true;
     } else {

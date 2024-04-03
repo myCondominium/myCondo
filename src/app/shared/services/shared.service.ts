@@ -7,6 +7,7 @@ import { Observable, map } from 'rxjs';
 })
 export class sharedService {
   userId: string | undefined;
+  enableDictateChanged: any;
 
   constructor(private firestore: AngularFirestore) { }
 

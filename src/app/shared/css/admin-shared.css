@@ -60,6 +60,8 @@ ngb-pagination::ng-deep .page-link:focus {
 
 .search-input {
     padding: 0.375rem;
+    border: 1px solid #555;
+    border-radius: 0;
 }
 
 select {
