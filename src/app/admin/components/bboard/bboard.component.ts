@@ -50,6 +50,7 @@ export class BboardComponent {
   getBbData() {
     this.bboardService.getAllBulletinBoardData().subscribe((data) => {
       this.bulletinBoardData = data;
+      console.log(this.bulletinBoardData);
       this.error = data;
     });
   }
